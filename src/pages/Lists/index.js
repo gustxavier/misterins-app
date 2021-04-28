@@ -28,7 +28,7 @@ export default function Lists() {
         setTaskList(response.data.data);
       }
     }).catch(err => {
-      alert(err)
+      alert(err+ "oi")
     })
   }, [token]);
 

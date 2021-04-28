@@ -26,7 +26,6 @@ export default function Logon() {
 
       history.push('/lists');
     } catch (err) {
-      // setTimeout(function() {
         new Noty({
           text: "Oops! Falha ao realizar o login!",
           theme: "metroui",

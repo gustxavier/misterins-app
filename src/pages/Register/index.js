@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import Noty from 'noty';
 
 import api from '../../services/api';
 import './styles.css';
@@ -33,7 +34,13 @@ export default function Register() {
         }
       });
     } catch (err) {
-      alert('Erro no cadastro, tente novamente.');
+      new Noty({
+        text: "Oops! Falha ao realizar o login!",
+        theme: "metroui",
+        timeout: 2000,
+        progressBar: true,
+        type: "warning"
+      }).show();
     }
   }
 
