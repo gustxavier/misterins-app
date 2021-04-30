@@ -9,8 +9,13 @@
 
 body {
   font: 400 14px Roboto, sans-serif;
-  background: #f0f0f5;
+  background: #4c535a;
   -webkit-font-smoothing: antialiased;
+}
+
+h1, p{
+  color: #fafafa;
+  margin-bottom: 10px;
 }
 
 input, button, textarea {
@@ -66,7 +71,7 @@ form textarea {
   display: flex;
   align-items: center;
   margin-top: 40px;
-  color: #41414d;
+  color: #3498db;
   font-size: 18px;
   text-decoration: none;
   font-weight: 500;
@@ -79,4 +84,8 @@ form textarea {
 
 .back-link:hover {
   opacity: 0.8;
+}
+
+.mr-text-dark{
+  color: #444;
 }

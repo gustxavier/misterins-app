@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import Noty from 'noty';
+import WarningIcon from '@material-ui/icons/Warning';
 
 import api from '../../services/api';
 import './styles.css';
+import "../../../node_modules/noty/lib/noty.css";  
+import "../../../node_modules/noty/lib/themes/metroui.css";
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -26,16 +29,24 @@ export default function Register() {
     
     try {
       await api.post('api/register', data)
-      .then(async (res) =>{
-        if(res.data.status){
+      .then(async (res) =>{        
+        if(res.data.status && !res.data.alertType){
           const responseLogin = await api.post('api/login', { email, password });
           localStorage.setItem('token', responseLogin.data.token);
-          history.push('/lists');
+          history.push('/lives');
+        }else{
+          new Noty({
+            text: '<p><svg class="MuiSvgIcon-root icon-alert" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></svg>'+res.data.msg+'</p>',
+            theme: "metroui",
+            timeout: 2000,
+            progressBar: true,
+            type: res.data.alertType
+          }).show();
         }
       });
     } catch (err) {
       new Noty({
-        text: "Oops! Falha ao realizar o login!",
+        text: "Oops! Falha ao realizar o cadastro!",
         theme: "metroui",
         timeout: 2000,
         progressBar: true,
@@ -48,8 +59,10 @@ export default function Register() {
     <div className="register-container">
       <div className="content">
         <section>
-          <h1>Cadastro</h1>
-          <p>Faça seu cadastro, entre na plataforma e organize a suas finanças.</p>
+        <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" />
+
+          <h1>Cadastro<WarningIcon /></h1>
+          <p>Faça seu cadastro, entre na plataforma e aproveite os conteúdos que temos à oferecer.</p>
 
           <Link className="back-link" to="/">
             <FiArrowLeft size={16} color="#3498db" />
