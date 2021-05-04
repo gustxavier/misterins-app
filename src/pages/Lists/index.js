@@ -32,7 +32,7 @@ export default function Lists() {
     }).catch(err => {
       alert(err)
     })
-  }, [token]);
+  }, [token, history]);
 
   async function onInsertList(data) {
     api.post("/api/v1/tasklist", data, {

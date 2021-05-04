@@ -1,22 +1,23 @@
-import React from 'react'
-import { Container, Grid, Card, CardContent } from '@material-ui/core';
+import React, { useState } from 'react'
+import { Container, Grid, Card, CardContent, TextField, FormGroup, IconButton } from '@material-ui/core';
 import Header from '../../components/Header';
-import { PusherProvider } from 'react-pusher-hoc';
-import Pusher from 'pusher-js';
 import './styles.css';
+import ChatMessage from '../../components/ChatMessage';
+import { SendSharp } from '@material-ui/icons';
 
-export default function Lives() {
-    const pusherClient = new Pusher('1197059', {
-        cluster: 'us2',
-        auth: {
-            params: { 
-                email: 'bar',
-                password: 'bar',
-            },
-            headers: { Authorization: 'boo' }
-        }
-    });
+export default function Lives(onInsert) {
+    const [comment, setComment] = useState("");
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        await onInsert({
+            "title": comment,
+            "status": 0
+        });
+
+        setComment("");
+    };
     return (
         <React.Fragment>
             <Header />
@@ -26,17 +27,44 @@ export default function Lives() {
                         <h1>Live</h1>
                     </Grid>
                     <Grid item sm={8}>
-                        <iframe width="800vh" height="480px" src="https://www.youtube.com/embed/EpyerKQEWGI?controls=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="disable-controls"></iframe>
+                        <iframe width="800vh" height="480px" src="https://www.youtube.com/embed/EpyerKQEWGI?controls=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="disable-controls"></iframe>
                     </Grid>
                     <Grid item sm={4}>
                         <Card className="min-height-480">
                             <CardContent>
-                                <h3 className="mr-text-dark">Comentários</h3>
-                                <hr />
+                                <h3 className="mr-text-light mr-font-weight-200">Comentários</h3>
                                 <div className="comments">
-                                    <PusherProvider value={pusherClient}>
-                                        
-                                    </PusherProvider>
+                                    <ChatMessage />
+                                </div>
+                                <div className="form-inline">
+                                    <form autoComplete="off" className="send-comment" onSubmit={handleSubmit}>
+                                        <FormGroup display="inline">
+                                            <Grid container>
+                                                <Grid item sm={10}>
+                                                    <TextField
+                                                        name="comment"
+                                                        id="comment"
+                                                        label="Adicionar comentário"
+                                                        className="ext-input"
+                                                        fullWidth="true"
+                                                        value={comment}
+                                                        onChange={e => setComment(e.target.value)}
+                                                        required
+                                                    />
+                                                </Grid>
+                                                <Grid item sm={2}>
+                                                    <IconButton 
+                                                        color="light" 
+                                                        aria-label="add to shopping cart"
+                                                        type="submit"
+                                                    >
+                                                        <SendSharp />
+                                                    </IconButton>
+                                                    {/* <button type="submit"><SendSharp /></button> */}
+                                                </Grid>
+                                            </Grid>
+                                        </FormGroup>
+                                    </form>
                                 </div>
                             </CardContent>
                         </Card>

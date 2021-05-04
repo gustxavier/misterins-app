@@ -1,12 +1,30 @@
 .min-height-480{
     min-height: 480px;
+    background-color:#343A40 !important;
 }
 
 .comments{
     min-height: 320px;
-    background-color: #fafafa;
+    background-color: #2d3238;
 }
 
 .disable-controls{
     pointer-events: none;
+}
+
+form .text-input{
+    width: 100%;
+    color: #fafafa;
+}
+
+form.send-comment .MuiButtonBase-root{
+    padding: 7px 5px;
+}
+
+ul{
+    list-style: none;
+}
+
+li{
+    margin-bottom: 5px;
 }

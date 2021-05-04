@@ -11,10 +11,10 @@
 
 .register-container .content {
   width: 100%;
-  padding: 96px;
+  padding: 30px;
   background: #303035;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 5px;
 
   display: flex;
   justify-content: space-between;
@@ -39,11 +39,7 @@
 
 .register-container .content form {
   width: 100%;
-  max-width: 450px;
-}
-
-.register-container .content form input {
-  margin-top: 8px;
+  /* max-width: 450px; */
 }
 
 .register-container .content form .input-group {
