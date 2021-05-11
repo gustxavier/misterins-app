@@ -19,6 +19,7 @@ form .text-input{
 
 form.send-comment .MuiButtonBase-root{
     padding: 7px 5px;
+    margin-top: 18px;
 }
 
 ul{

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 
 export default function InsertLive({ onInsertLive }) {
     const [liveTitle, setLiveTitle] = useState("");
@@ -21,31 +21,34 @@ export default function InsertLive({ onInsertLive }) {
     };
 
     return (
-        <div className="form">
-            <strong>Cadastrar Live</strong>
+        <div className="form card">
+            <Typography><strong>Cadastrar Live</strong></Typography>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
+                    label="Título da live"
+                    variant="outlined"
                     name="liveTitle"
                     id="liveTitle"
-                    label="Título da live"
                     className="TextFieldBlock"
                     value={liveTitle}
                     onChange={e => setLiveTitle(e.target.value)}
                     required
                 />
                 <TextField
+                    label="URL da Live"
+                    variant="outlined"
                     name="liveUrl"
                     id="liveUrl"
-                    label="URL da Live"
                     className="TextFieldBlock"
                     value={liveUrl}
                     onChange={e => setLiveUrl(e.target.value)}
                     required
                 />
                 <TextField
+                    label="Descrição da Live"
+                    variant="outlined"
                     name="liveDescription"
                     id="standard-textarea"
-                    label="Descrição da Live"
                     className="TextFieldBlock"
                     value={liveDescription}
                     onChange={e => setLiveDescription(e.target.value)}

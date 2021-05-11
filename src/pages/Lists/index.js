@@ -6,8 +6,12 @@ import InsertList from '../../components/InsertList';
 import InsertTask from '../../components/InsertTask';
 import { Container, Grid } from '@material-ui/core';
 import api from '../../services/api';
-import './styles.css';
 import InsertLive from '../../components/InsertLive';
+import InsertCopy from '../../components/Forms/FormCopy/InsertCopy';
+import UpdateCopy from '../../components/Forms/FormCopy/UpdateCopy';
+import UploadVideoSocio from '../../components/Forms/FormSocioVideo/UploadVideoSocio';
+
+import './styles.css';
 
 export default function Lists() {
   const [token] = useState(localStorage.getItem('token'));
@@ -89,19 +93,34 @@ export default function Lists() {
   return (
     <React.Fragment>
       <Header />
-      <Container maxWidth="xl">
+      <Container className="theme-dark" maxWidth="xl">
         <Grid container>
           {localStorage.getItem('permission') === 'admin' &&
-            <Grid item xs={3}>
-              <InsertList onInsertList={onInsertList} />
-              <InsertTask onInsertTask={onInsertTask} taskList={taskList} />
-              <InsertLive onInsertLive={onInsertLive} />
+            <Grid item xs={12}>
+              <Grid container>
+                <Grid item xs={3}>
+                  <InsertList onInsertList={onInsertList} />
+                </Grid>
+                <Grid item xs={3}>
+                <UpdateCopy />
+                  {/* <InsertTask onInsertTask={onInsertTask} taskList={taskList} /> */}
+                </Grid>
+                <Grid item xs={3}>
+                  <InsertLive onInsertLive={onInsertLive} />
+                </Grid>
+                <Grid item xs={3}>
+                  <InsertCopy />
+                </Grid>
+                <Grid item xs={3}>
+                  <UploadVideoSocio />
+                </Grid>
+              </Grid>
             </Grid>
           }
           <Grid item xs={8}>
             <Container maxWidth="xl">
               <Grid container>
-                {taskList.length > 0 ? taskList.map((list) =>
+                {/* {taskList.length > 0 ? taskList.map((list) =>
                 (
                   <Grid item xs={4} key={list.id}>
                     <div className="ListContainer">
@@ -123,7 +142,7 @@ export default function Lists() {
                     </div>
                   </Grid>
                 )) : null
-                }
+                } */}
               </Grid>
             </Container>
           </Grid>

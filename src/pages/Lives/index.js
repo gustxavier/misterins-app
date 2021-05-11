@@ -21,7 +21,7 @@ export default function Lives(onInsert) {
     return (
         <React.Fragment>
             <Header />
-            <Container maxWidth="lg">
+            <Container className="theme-dark" maxWidth="lg">
                 <Grid container>
                     <Grid item sm={12}>
                         <h1>Live</h1>
@@ -30,7 +30,7 @@ export default function Lives(onInsert) {
                         <iframe width="800vh" height="480px" src="https://www.youtube.com/embed/EpyerKQEWGI?controls=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="disable-controls"></iframe>
                     </Grid>
                     <Grid item sm={4}>
-                        <Card className="min-height-480">
+                        <Card className="min-height-480 card-dark">
                             <CardContent>
                                 <h3 className="mr-text-light mr-font-weight-200">Comentários</h3>
                                 <div className="comments">
@@ -46,15 +46,14 @@ export default function Lives(onInsert) {
                                                         id="comment"
                                                         label="Adicionar comentário"
                                                         className="ext-input"
-                                                        fullWidth="true"
+                                                        fullWidth
                                                         value={comment}
                                                         onChange={e => setComment(e.target.value)}
                                                         required
                                                     />
                                                 </Grid>
                                                 <Grid item sm={2}>
-                                                    <IconButton 
-                                                        color="light" 
+                                                    <IconButton                                                         
                                                         aria-label="add to shopping cart"
                                                         type="submit"
                                                     >

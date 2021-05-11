@@ -21,6 +21,10 @@
   margin-bottom: 32px;
 }
 
+.logon-container section.form form p.spin{
+  margin-left: 10px;
+}
+
 .inline{
   display: inline-flex;
 }

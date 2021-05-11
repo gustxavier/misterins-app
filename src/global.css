@@ -81,9 +81,9 @@ form textarea {
   align-items: center;
   margin-top: 40px;
   color: #3498db;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 200;
   text-decoration: none;
-  font-weight: 500;
   transition: opacity 0.2s;
 }
 
@@ -116,7 +116,8 @@ form textarea {
 
 #root .MuiInputBase-input{
   color: #fafafa;
-  background-color: #27272d;
+  background-color: #2d3238;
+  padding: 15px;
 }
 
 #root .MuiOutlinedInput-root{
@@ -137,4 +138,27 @@ form textarea {
 
 #root .MuiInput-underline:before{
   border-color: rgb(88 88 101);
+}
+
+#root .MuiFormHelperText-root{
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+#root .MuiOutlinedInput-multiline,
+#root {
+  padding: 0;
+}
+
+input:-internal-autofill-selected {
+  color: #fafafa;
+  background-color: #27272d;
+}
+
+#root .white{
+  color: #fafafa;
+}
+
+.card{
+  background-color: #343A40 !important;
 }

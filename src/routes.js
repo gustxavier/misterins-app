@@ -5,11 +5,15 @@ import Logon from './pages/Logon';
 import Register from './pages/Register';
 import Lists from './pages/Lists';
 import Lives from './pages/Lives';
+import Socio from './pages/Socio';
 
 export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/socio">
+          <Socio />
+        </Route>
         <Route path="/lives">
           <Lives />
         </Route>

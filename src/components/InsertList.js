@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField  } from '@material-ui/core';
+import { TextField, Typography  } from '@material-ui/core';
 
 export default function InsertList({ onInsertList }) {
   const [listName, setListName] = useState("");
@@ -16,13 +16,14 @@ export default function InsertList({ onInsertList }) {
   };
 
   return (
-    <div className="form">
-      <strong>Cadastrar Lista</strong>
+    <div className="form card">
+      <Typography><strong>Cadastrar Lista</strong></Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField 
           name="listName" 
           id="listName" 
           label="Titulo da Lista de Tarefas"
+          variant="outlined"
           className="TextFieldBlock" 
           value={listName}
           onChange={e => setListName(e.target.value)}

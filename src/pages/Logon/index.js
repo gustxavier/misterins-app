@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 import Noty from 'noty';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
 
 import "../../../node_modules/noty/lib/noty.css";
 import "../../../node_modules/noty/lib/themes/metroui.css";
@@ -12,26 +9,50 @@ import "../../../node_modules/noty/lib/themes/metroui.css";
 import api from '../../services/api';
 
 import './styles.css';
-import { Typography } from '@material-ui/core';
+import { Button, Container, Grid, Typography } from '@material-ui/core';
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 
-export default function Logon() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
+class Logon extends React.Component {
 
-  async function handleLogin(e) {
-    e.preventDefault();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+      email: '',
+      password: '',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  handleChange(event) {
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    const name = event.target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  async handleLogin(event) {
+    event.preventDefault();
+
+    const email = this.state.email
+    const password = this.state.password
 
     try {
-      setLoading(true);
+      this.setState({ loading: true })
       const response = await api.post('api/login', { email, password });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('permission', response.data.permission);
-      history.push('/lives');
+      this.props.history.push('/socio');
     } catch (err) {
-      setLoading(false);
+      this.setState({ loading: false })
       new Noty({
         text: "Oops! Usuário ou senha inválido!",
         theme: "metroui",
@@ -42,35 +63,59 @@ export default function Logon() {
     }
   }
 
-  return (
-    <div className="logon-container">
-      <section className="form">
-        <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="Mister Ins" />
-        <Form onSubmit={handleLogin}>
-          <Input
+  render() {
+    const loading = this.state.loading;
+    return (
+      <Container maxWidth="lg">
+        <div className="logon-container">
+          <section className="form card">
+            <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="Mister Ins" />
+            <ValidatorForm
+              // ref="form"
+              ref={r => (this.form = r)}
+              onSubmit={this.handleLogin}
+              onError={errors => console.log(errors)}
+            >
+              <Grid container>
+                <Grid item sm={12}>
+                  <TextValidator
+                    label="E-mail"
+                    variant="outlined"
+                    type="email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['Por favor, insira seu e-mail', 'E-mail inválido!']}
+                  />
+                  <TextValidator
+                    label="Digite uma senha"
+                    variant="outlined"
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    validators={['required']}
+                    errorMessages={['Por favor, insira sua senha']}
+                  />
 
-            placeholder="Seu e-mail"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <Input
-            placeholder="Sua Senha"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
+                  <Button className="button" type="submit" disabled={loading}>
+                    {loading && <span className="inline"><FontAwesomeIcon icon={faSync} spin /> <Typography className="spin"> Entrando...</Typography></span>}
+                    {!loading && <span className="inline"><Typography>Entrar</Typography></span>}
+                  </Button>
 
-          <button className="button" type="submit" disabled={loading}>
-            {loading && <span className="inline"><AutorenewIcon /><Typography>Entrando...</Typography></span>}
-            {!loading && <span className="inline"><Typography>Entrar</Typography></span>}
-          </button>
-
-          <Link className="back-link" to="/register">
-            <FiLogIn size={16} color="#3498db" />
-            Não tenho cadastro
-          </Link>
-        </Form>
-      </section>
-    </div>
-  );
+                  <Link className="back-link" to="/register">
+                    <FiLogIn size={16} color="#3498db" />
+                    Não tenho cadastro
+                  </Link>
+                </Grid>
+              </Grid>
+            </ValidatorForm>
+          </section>
+        </div>
+      </Container>
+    );
+  }
 }
+
+export default withRouter(Logon);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { TextField, FormControl, InputLabel, Select, MenuItem, Typography } from '@material-ui/core';
 
 export default function InsertTask({ onInsertTask, taskList }) {
   const [lists, setLists] = useState([]);
@@ -30,15 +30,15 @@ export default function InsertTask({ onInsertTask, taskList }) {
   };
 
   return (
-    <div className="form">
-      <strong>Cadastrar Tarefa</strong>
+    <div className="form card">
+      <Typography><strong>Cadastrar Tarefa</strong></Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        
         <div>
           <TextField 
             name="taskName" 
             id="taskName" 
             label="Titulo da Lista de Tarefas"
+            variant="outlined"
             className="TextFieldBlock" 
             value={taskName}
             onChange={e => setTaskName(e.target.value)}
@@ -52,6 +52,7 @@ export default function InsertTask({ onInsertTask, taskList }) {
               labelId="select-list-label"
               id="select-list"
               name="taskList" 
+              variant="outlined"
               value={selectList}
               onChange={handleChangeSelect}
             >

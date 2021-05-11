@@ -1,92 +1,91 @@
-import React, { useState, Component } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
-import Noty from 'noty';
-
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import api from '../../services/api';
-import './styles.css';
-import "../../../node_modules/noty/lib/noty.css";
-import "../../../node_modules/noty/lib/themes/metroui.css";
-import {Container, Grid, TextField} from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
+import { Link, withRouter} from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 import InputMask from 'react-input-mask';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { SimpleNoty } from '../../helpers/NotyFeedBack';
+import { SimpleSwal } from '../../helpers/SwalFeedBack';
+import './styles.css'
 
-export default function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [facebook, setFacebook] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const history = useHistory();
+class Register extends React.Component {
 
-  async function handleRegister(e) {
-    e.preventDefault();
+  constructor(props) {
+    super(props);
 
-    const data = {
-      "name": name,
-      "email": email,
-      "facebook": facebook,
-      "instagram": instagram,
-      "cpf": cpf,
-      "password": password,
-      "password_confirmation": confirmPassword,
+    if (!ValidatorForm.hasValidationRule('isPasswordMatch')) {
+      ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+        if (value !== this.state.password) {
+          return false;
+        }
+        return true;
+      });
+    }
+
+    this.state = {
+      loading: false,
+      name: '',
+      email: '',
+      facebook: '',
+      instagram: '',
+      cpf: '',
+      password: '',
+      password_confirm: '',
     };
 
-    const MySwal = withReactContent(Swal)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    try {
-      await api.post('api/register', data)
-        .then(async (res) => {
-          if (res.data.status && !res.data.alertType) {
-            const responseLogin = await api.post('api/login', { email, password });
-            localStorage.setItem('token', responseLogin.data.token);
-            history.push('/lives');
-          } else {     
-            MySwal.fire({
-              title: '<strong>HTML <u>example</u></strong>',
-              icon: 'erro',
-              html:
-                'You can use <b>bold text</b>, ' +
-                '<a href="//sweetalert2.github.io">links</a> ' +
-                'and other HTML tags',
-              showCloseButton: true,
-              showCancelButton: true,
-              focusConfirm: false,
-              confirmButtonText:
-                '<i class="fa fa-thumbs-up"></i> Great!',
-              confirmButtonAriaLabel: 'Thumbs up, great!',
-              cancelButtonText:
-                '<i class="fa fa-thumbs-down"></i>',
-              cancelButtonAriaLabel: 'Thumbs down'
-            })       
-            // new Noty({
-            //   // text: '<p><svg class="MuiSvgIcon-root icon-alert" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></svg>' + res.data.msg + '</p>',
-            //   text: '<Alert variant="filled" severity="warning">This is a warning alert — check it out!</Alert>',
-            //   theme: "metroui",
-            //   timeout: 4000,
-            //   progressBar: true,
-            //   type: res.data.alertType
-            // }).show();
-          }
-        });
-    } catch (err) {
-      new Noty({
-        text: "Oops! Falha ao realizar o cadastro!",
-        theme: "metroui",
-        timeout: 2000,
-        progressBar: true,
-        type: "warning"
-      }).show();
+  handleChange(event) {
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    const name = event.target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  componentWillUnmount() {
+    if (ValidatorForm.hasValidationRule('isPasswordMatch')) {
+      ValidatorForm.removeValidationRule('isPasswordMatch')
     }
   }
 
-  return (
+  handleSubmit(event) {
+    event.preventDefault()
+    this.setState({ loading: true })
+    try {
+      api.post('api/register', this.state).then((res) => {
+        if (res.data.status && !res.data.alertType) {
+          const email = this.state.email
+          const password = this.state.password
+          api.post('api/login', { email, password }).then(async (response) => {
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('permission', response.data.permission);
+            this.props.history.push('/socio')
+          });
+        } else {
+          this.setState({ loading: false })
+          SimpleSwal('<strong>Atenção</strong>',res.data.msg,'warning')         
+        }
+      });
+    } catch (err) {
+      this.setState({ loading: false })
+      SimpleNoty('Oops! Falha ao realizar o cadastro!','warning')
+    }
+  }
+
+
+  render() {
+    return (
       <Container maxWidth="lg">
         <div className="register-container">
-          <div className="content">
+          <div className="content card">
             <Grid container>
               <Grid item sm={4}>
                 <section>
@@ -101,87 +100,117 @@ export default function Register() {
                 </section>
               </Grid>
               <Grid item sm={8}>
-                <form onSubmit={handleRegister}>
+                <ValidatorForm
+                  // ref="form"
+                  ref={r => (this.form = r)}
+                  onSubmit={this.handleSubmit}
+                  onError={errors => console.log(errors)}
+                >
                   <Grid container>
                     <Grid item sm={6}>
-                      <TextField
-                        label="Seu Nome"
+                      <TextValidator
+                        label="Nome"
                         variant="outlined"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        required
+                        type="text"
+                        name="name"
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                        validators={['required']}
+                        errorMessages={['Por favor, insira seu nome']}
                       />
                     </Grid>
                     <Grid item sm={6}>
-                      <TextField
-                        label="Seu Facebook"
+                      <TextValidator
+                        label="Facebook"
                         variant="outlined"
-                        value={facebook}
-                        onChange={e => setFacebook(e.target.value)}
-                        required
+                        type="text"
+                        name="facebook"
+                        value={this.state.facebook}
+                        onChange={this.handleChange}
+                        validators={['required']}
+                        errorMessages={['Por favor, insira o seu do facebook']}
                       />
                     </Grid>
                     <Grid item sm={6}>
-                      <TextField
+                      <TextValidator
+                        label="E-mail"
+                        variant="outlined"
                         type="email"
-                        label="Seu E-mail"
-                        variant="outlined"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['Por favor, insira seu e-mail', 'E-mail inválido!']}
                       />
                     </Grid>
                     <Grid item sm={6}>
-                      <TextField
-                        label="Seu Instagram"
+                      <TextValidator
+                        label="Instagram"
                         variant="outlined"
-                        value={instagram}
-                        onChange={e => setInstagram(e.target.value)}
-                        required
+                        type="text"
+                        name="instagram"
+                        value={this.state.instagram}
+                        onChange={this.handleChange}
+                        validators={['required']}
+                        errorMessages={['Por favor, insira o seu @ do instagram']}
                       />
                     </Grid>
                     <Grid item sm={6}>
                       <InputMask
-                        value={cpf}
-                        onChange={e => setCpf(e.target.value)}
-                        required
+                        value={this.state.cpf}
+                        onChange={this.handleChange}
                         mask="999.999.999-99"
                         maskChar={null}
                       >
                         {inputProps =>
-                          <TextField
+                          <TextValidator
                             {...inputProps}
                             fullWidth
                             label="CPF"
                             variant="outlined"
                             maxLength={14}
+                            name="cpf"
+                            validators={['required']}
+                            onChange={this.handleChange}
+                            errorMessages={['Por favor, insira o seu CPF']}
                           />
                         }
                       </InputMask>
                     </Grid>
                     <Grid item sm={12}>
-                      <TextField
+                      <TextValidator
                         label="Digite uma senha"
                         variant="outlined"
-                        value={password}
                         type="password"
-                        onChange={e => setPassword(e.target.value)}
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.handleChange}
+                        validators={['required', 'minStringLength:8']}
+                        errorMessages={['Por favor, insira uma senha', 'Mínimo 8 caracteres']}
                       />
-                      <TextField
+                      <TextValidator
                         label="Confirme sua senha"
                         variant="outlined"
-                        value={confirmPassword}
                         type="password"
-                        onChange={e => setConfirmPassword(e.target.value)}
+                        name="password_confirm"
+                        value={this.state.password_confirm}
+                        onChange={this.handleChange}
+                        validators={['isPasswordMatch', 'required']}
+                        errorMessages={['As senhas não parecem ser iguais', 'Por favor, confirme sua senha']}
                       />
-                      <button className="button" type="submit">Cadastrar</button>
+                      <Button className="button register" type="submit" disabled={this.state.loading}>
+                        {this.state.loading && <span className="inline"><FontAwesomeIcon icon={faSync} spin /> <Typography> Cadastrando...</Typography></span>}
+                        {!this.state.loading && <span className="inline"><Typography>Cadastrar</Typography></span>}
+                      </Button>
                     </Grid>
                   </Grid>
-                </form>
+                </ValidatorForm>
               </Grid>
             </Grid>
           </div>
         </div>
       </Container>
-  );
+    );
+  }
 }
+export default withRouter(Register);
