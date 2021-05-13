@@ -12,9 +12,7 @@ import { SimpleSwal } from '../../../helpers/SwalFeedBack';
 class UpdateCopy extends React.Component {
 
     constructor(props) {
-        super(props);
-
-        
+        super(props);     
 
         this.state = {
             loading: false,

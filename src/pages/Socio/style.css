@@ -1,6 +1,19 @@
-.copy{
+.copy,
+.videos{
     background-color: #2d3238;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 5px;
+}
+
+.videos .button{
+    margin-bottom: 10px;
+    background: #3498db;
+    color: #fff;
+    padding: 15px;
+}
+
+
+.videos .button:hover{
+    background-color: #369bdf ;
 }

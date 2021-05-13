@@ -9,6 +9,7 @@ import { SimpleNoty } from "../../helpers/NotyFeedBack"
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
 
 import "./style.css"
+import ListVideos from "../../components/Socio/ListVideos";
 
 export default function Socio() {
   const [items, setItems] = useState([]);
@@ -23,7 +24,7 @@ export default function Socio() {
     }).then((response) => {
       if (!response.data.status && (response.data.status === 401 || response.data.status === 498)) {
         localStorage.clear();
-        SimpleSwal('<strong>Atenção</strong>',response.data.message,'warning');        
+        SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning');
         history.push('/')
       } else {
         setItems(response.data.data);
@@ -69,13 +70,28 @@ export default function Socio() {
                           onCopy={() => SimpleNoty("Sucesso!", 'success')}>
                           <Button variant="contained" color="secondary" size="small" startIcon={<FileCopyIcon />}>Copiar Descrição</Button>
                         </CopyToClipboard>
-                      <Typography variant="h6" component="h6" className="white">Descrição</Typography>
-                      <Typography variant="body2">{list.description}</Typography>
+                        <Typography variant="h6" component="h6" className="white">Descrição</Typography>
+                        <Typography variant="body2">{list.description}</Typography>
                       </Box>
                     </div>
                   )) : null
                   }
                 </List>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={8}>
+            <Card className='card'>
+              <CardContent>
+                <Typography gutterBottom variant="h4" component="h2" className="white">
+                  Vídeos
+                </Typography>
+                <div className="videos">
+                  <ListVideos type={'story'}></ListVideos>
+                </div>
+                <div className="videos">
+                  <ListVideos type={'feed'}></ListVideos>
+                </div>
               </CardContent>
             </Card>
           </Grid>

@@ -7,9 +7,9 @@ import InsertTask from '../../components/InsertTask';
 import { Container, Grid } from '@material-ui/core';
 import api from '../../services/api';
 import InsertLive from '../../components/InsertLive';
-import InsertCopy from '../../components/Forms/FormCopy/InsertCopy';
-import UpdateCopy from '../../components/Forms/FormCopy/UpdateCopy';
-import UploadVideoSocio from '../../components/Forms/FormSocioVideo/UploadVideoSocio';
+import InsertCopy from '../../components/Forms/Copy/InsertCopy';
+import UpdateCopy from '../../components/Forms/Copy/UpdateCopy';
+import UploadVideoSocio from '../../components/Forms/SocioVideo/UploadVideoSocio';
 
 import './styles.css';
 

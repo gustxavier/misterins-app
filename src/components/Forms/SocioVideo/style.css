@@ -1,0 +1,9 @@
+.input-file{
+    margin-bottom: 10px;
+    border: 1px solid rgb(41, 41, 41) !important;
+    border-radius: 5px;
+}
+
+#root .MuiInput-underline:before{
+    display: none;
+}
