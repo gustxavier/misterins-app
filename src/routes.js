@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Logon from './pages/Logon';
 import Register from './pages/Register';
-import Lists from './pages/Lists';
+import Admin from './pages/Admin';
 import Lives from './pages/Lives';
 import Socio from './pages/Socio';
+import ProtectedRoute from './components/ProtectedRoutes';
 
 export default function Routes() {
   return (
@@ -17,8 +18,8 @@ export default function Routes() {
         <Route path="/lives">
           <Lives />
         </Route>
-        <Route path="/lists">
-          <Lists />
+        <Route path="/admin">
+          <Admin />
         </Route>
         <Route path="/logon">
           <Logon />
@@ -29,7 +30,8 @@ export default function Routes() {
         <Route path="/">
           <Logon />
         </Route>
-      </Switch>     
+        <ProtectedRoute path="/hidden" component={'Socio'} />
+      </Switch>
     </BrowserRouter>
   );
 }

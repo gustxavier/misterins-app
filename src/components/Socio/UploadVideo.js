@@ -5,11 +5,11 @@ import { Button, FormControl, Grid, Input, InputLabel, makeStyles, MenuItem, Sel
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { withRouter } from 'react-router';
 import './style.css'
-import { SimpleSwal } from '../../../helpers/SwalFeedBack';
-import { SimpleNoty } from '../../../helpers/NotyFeedBack';
-import api from '../../../services/api';
+import { SimpleSwal } from '../../helpers/SwalFeedBack';
+import { SimpleNoty } from '../../helpers/NotyFeedBack';
+import api from '../../services/api';
 
-class UploadVideoSocio extends React.Component {
+class UploadVideo extends React.Component {
 
     constructor(props) {
         super(props)
@@ -86,7 +86,7 @@ class UploadVideoSocio extends React.Component {
           }));
         return (            
             <div className="form card">
-                <Typography><strong>Cadastrar Vídeo</strong></Typography>
+                <Typography><strong>Cadastrar Vídeo Sócio</strong></Typography>
                 <ValidatorForm
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
@@ -146,4 +146,4 @@ class UploadVideoSocio extends React.Component {
     }
 }
 
-export default withRouter(UploadVideoSocio);
+export default withRouter(UploadVideo);

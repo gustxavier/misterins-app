@@ -86,12 +86,8 @@ export default function Socio() {
                 <Typography gutterBottom variant="h4" component="h2" className="white">
                   Vídeos
                 </Typography>
-                <div className="videos">
                   <ListVideos type={'story'}></ListVideos>
-                </div>
-                <div className="videos">
                   <ListVideos type={'feed'}></ListVideos>
-                </div>
               </CardContent>
             </Card>
           </Grid>
