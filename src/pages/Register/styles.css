@@ -3,7 +3,6 @@
   max-width: 1120px;
   height: 100vh;
   margin: 0 auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,4 +56,11 @@
 
 .register p{
   padding-left: 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .register-container{
+    display: block;
+    margin-top: 70px;
+  }
 }

@@ -1,0 +1,19 @@
+.link{
+    background-color: crimson;
+    color: #fafafa;
+    text-decoration: none;
+    margin-right: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+#root .affiliate-button{
+    background-color: darkgreen;
+    color: #fafafa;
+    margin-right: 15px;
+    padding: 10px 15px;
+}
+
+#root .affiliate-button:hover{
+    background-color: rgb(19, 122, 19);
+}

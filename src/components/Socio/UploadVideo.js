@@ -62,7 +62,6 @@ class UploadVideo extends React.Component {
                 Authorization: `Bearer ${this.state.token}`,
             }
         }).then(response => {
-            console.log(response);
             if (response.data.status && response.data.status === (401 || 498)) {
                 localStorage.clear();
                 SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')

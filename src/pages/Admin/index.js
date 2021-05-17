@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from '../../components/Header';
 // import Task from '../../components/Task';
 // import InsertList from '../../components/InsertList';
 // import InsertTask from '../../components/InsertTask';
@@ -12,6 +11,7 @@ import UpdateCopy from '../../components/Forms/Copy/UpdateCopy';
 
 import './styles.css';
 import UploadVideo from '../../components/Socio/UploadVideo';
+import Header from '../../components/Header';
 
 export default function Admin() {
   const [token] = useState(localStorage.getItem('token'));
@@ -85,24 +85,24 @@ export default function Admin() {
           {localStorage.getItem('permission') === 'admin' &&
             <Grid item xs={12}>
               <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <InsertCopy />
                   {/* <InsertList onInsertList={onInsertList} /> */}
                   {/* <InsertTask onInsertTask={onInsertTask} taskList={taskList} /> */}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <UpdateCopy />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <UploadVideo />                  
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                  <InsertLive onInsertLive={onInsertLive} />
                 </Grid>
               </Grid>
             </Grid>
           }
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <Container maxWidth="xl">
               <Grid container>
                 {/* {taskList.length > 0 ? taskList.map((list) =>

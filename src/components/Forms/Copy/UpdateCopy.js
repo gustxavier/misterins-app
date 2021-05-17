@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import api from '../../../services/api';
 
 import { Button, Grid, TextField, Typography } from '@material-ui/core';
@@ -12,25 +12,28 @@ import { SimpleSwal } from '../../../helpers/SwalFeedBack';
 class UpdateCopy extends React.Component {
 
     constructor(props) {
-        super(props);     
+        super(props);        
 
         this.state = {
             loading: false,
+            id: '',
             title: '',
             important_text: '',
             description: '',
-            token: localStorage.getItem('token'),
+            token: localStorage.getItem('token')
         }
-
-        const copy = this.getCopy(1);
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount(){
+        this.getCopy(1)
+    }
+
     getCopy($id) {
         api.get('api/v1/copy/' + $id,
-            this.state, {
+            {
             headers: {
                 Authorization: `Bearer ${this.state.token}`,
             }
@@ -39,7 +42,12 @@ class UpdateCopy extends React.Component {
             if (response.data.status && response.data.status === (401 || 498)) {
                 return response.data.status;
             }
-            console.log(response.data)
+            this.setState({
+                id: response.data.data.id,
+                title: response.data.data.title,
+                important_text: response.data.data.important_text,
+                description: response.data.data.description !== null ? response.data.data.description : '',
+            });
             return response.data;
         })
     }
@@ -118,8 +126,8 @@ class UpdateCopy extends React.Component {
                                 onChange={this.handleChange}
                             />
                             <Button className="button" type="submit" disabled={this.state.loading}>
-                                {this.state.loading && <span className="inline"><FontAwesomeIcon icon={faSync} spin /> <Typography> Adicionando...</Typography></span>}
-                                {!this.state.loading && <span className="inline"><Typography>Adicionar</Typography></span>}
+                                {this.state.loading && <span className="inline"><FontAwesomeIcon icon={faSync} spin /> <Typography> Atualizando...</Typography></span>}
+                                {!this.state.loading && <span className="inline"><Typography>Atualizar</Typography></span>}
                             </Button>
                         </Grid>
                     </Grid>

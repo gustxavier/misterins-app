@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Container, Grid, Card, CardContent, TextField, FormGroup, IconButton } from '@material-ui/core';
-import Header from '../../components/Header';
 import './styles.css';
 import ChatMessage from '../../components/ChatMessage';
 import { SendSharp } from '@material-ui/icons';
+import Header from '../../components/Header';
 
 export default function Lives(onInsert) {
     const [comment, setComment] = useState("");

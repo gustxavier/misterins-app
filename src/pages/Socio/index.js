@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useHistory } from "react-router";
 import api from "../../services/api";
-import Header from "../../components/Header";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { SimpleNoty } from "../../helpers/NotyFeedBack"
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
 
 import "./style.css"
+import Header from "../../components/Header";
 import ListVideos from "../../components/Socio/ListVideos";
 
 export default function Socio() {
@@ -39,7 +39,7 @@ export default function Socio() {
       <Header />
       <Container className="theme-dark" maxWidth="lg">
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Card className='card'>
               <CardContent>
                 <Typography gutterBottom variant="h4" component="h2" className="white">
@@ -80,7 +80,7 @@ export default function Socio() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Card className='card'>
               <CardContent>
                 <Typography gutterBottom variant="h4" component="h2" className="white">
