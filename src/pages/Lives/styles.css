@@ -1,6 +1,14 @@
 .min-height-480{
     min-height: 480px;
+}
+
+.bg-dark{
     background-color:#343A40 !important;
+}
+
+.chat{
+    margin: auto;
+    display: block;
 }
 
 .comments{
@@ -18,7 +26,7 @@ form .text-input{
 }
 
 form.send-comment .MuiButtonBase-root{
-    padding: 7px 5px;
+    padding: 11px 5px;
     margin-top: 18px;
 }
 

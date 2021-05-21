@@ -47,7 +47,9 @@ class Logon extends React.Component {
     try {
       this.setState({ loading: true })
       const response = await api.post('api/login', { email, password });
+      localStorage.setItem('userid', response.data.id);
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('useremail', response.data.useremail);
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('permission', response.data.permission);
       this.props.history.push('/socio');

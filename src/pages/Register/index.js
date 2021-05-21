@@ -80,7 +80,6 @@ class Register extends React.Component {
     }
   }
 
-
   render() {
     return (
       <Container maxWidth="lg">
@@ -91,7 +90,7 @@ class Register extends React.Component {
                 <section>
                   <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="Mister Ins" />
                   <h1>Cadastro</h1>
-                  <p>Faça seu cadastro, entre na plataforma e aproveite os conteúdos que temos à oferecer.</p>
+                  <p className="text-white">Faça seu cadastro, entre na plataforma e aproveite os conteúdos que temos à oferecer.</p><p className="text-danger"><strong>ATENÇÃO! O campo de e-mail deve ser o mesmo utilizado na compra do curso na Hotmart.</strong></p>
 
                   <Link className="back-link" to="/">
                     <FiArrowLeft size={16} color="#3498db" />

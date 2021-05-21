@@ -12,6 +12,7 @@ function ListVideos(param) {
     const [items, setItems] = useState([]);
     const [token] = useState(localStorage.getItem('token'));
     const history = useHistory();
+    const [percentage, setPercent] = useState(0)  
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -40,7 +41,10 @@ function ListVideos(param) {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            responseType: 'blob'
+            responseType: 'blob',
+            onDownloadProgress: (progressEvent) => {
+                setPercent(Math.round((progressEvent.loaded * 100) / progressEvent.total)); // you can use this to show user percentage of file downloaded
+            }
         }).then((response) => {
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(new Blob([response.data]));
@@ -55,11 +59,11 @@ function ListVideos(param) {
     }
 
     return (
-        <div>
+        <div>            
+        {/* <p>{percentage}</p> */}
             {items.length > 0 ? (
                 <div className="videos">
                     <Grid container>
-
                         <Grid item md={12}>
                             <Typography variant="h5" component="h5" align="center" gutterBottom className="white">Anúncios para {items[0]['type']}</Typography>
                         </Grid>
@@ -78,7 +82,7 @@ function ListVideos(param) {
                                     disabled={loading}
                                 >
                                     {loading && <span className="inline"><FontAwesomeIcon icon={faSync} spin /> <Typography className="spin"> Baixando...</Typography></span>}
-                                    {!loading && <span className="inline"><Typography>{list.title}</Typography></span>}       
+                                    {!loading && <span className="inline"><Typography>{list.title}</Typography></span>}
                                 </Button>
                             </Grid>
                         )) : null

@@ -2,7 +2,7 @@
     background-color: crimson;
     color: #fafafa;
     text-decoration: none;
-    margin-right: 15px;
+    margin-right: 15px !important;
     padding: 10px 15px;
     border-radius: 5px;
 }
