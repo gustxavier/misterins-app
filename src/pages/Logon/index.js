@@ -45,14 +45,23 @@ class Logon extends React.Component {
     const password = this.state.password
 
     try {
+
       this.setState({ loading: true })
       const response = await api.post('api/login', { email, password });
+      
       localStorage.setItem('userid', response.data.id);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('useremail', response.data.useremail);
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('permission', response.data.permission);
-      this.props.history.push('/socio');
+      localStorage.setItem('courses', response.data.courses);
+
+      if(localStorage.getItem('courses').search('1442311') === 8 || localStorage.getItem('courses').search('448026') === 8){
+        this.props.history.push('/socio');
+      }else{
+        this.props.history.push('/lives');
+      }
+      
     } catch (err) {
       this.setState({ loading: false })
       new Noty({

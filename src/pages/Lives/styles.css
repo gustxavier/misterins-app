@@ -14,6 +14,13 @@
 .comments{
     min-height: 320px;
     background-color: #2d3238;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.comments span{
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .disable-controls{
@@ -36,4 +43,24 @@ ul{
 
 li{
     margin-bottom: 5px;
+}
+
+#root .MuiAlert-root{
+    background-color: #fff;
+    margin-bottom: 15px;
+}
+
+.spinner{
+    background: #00000052;
+    position: fixed;
+    z-index: 1000;
+    height: 100%;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+.spinner .MuiCircularProgress-root{
+    top: 50%;
+    position: absolute;
 }

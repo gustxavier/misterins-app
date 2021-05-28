@@ -111,6 +111,14 @@ form textarea {
   font-weight: 200;
 }
 
+.mr-text-center{
+  text-align: center;
+}
+
+.mt2{
+  margin-top: 15px;
+}
+
 /* Input Form */
 
 #root .MuiFormControl-root{
@@ -127,6 +135,11 @@ form textarea {
 
 #root .MuiOutlinedInput-root{
   margin-bottom: 10px;
+}
+
+#root .MuiInput-root{
+  width: 100%;
+  display: flex;
 }
 
 #root .MuiInput-underline:after {

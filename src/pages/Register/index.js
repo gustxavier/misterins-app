@@ -59,6 +59,7 @@ class Register extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.setState({ loading: true })
+    let self = this;
     try {
       api.post('api/register', this.state).then((res) => {
         if (res.data.status && !res.data.alertType) {
@@ -70,12 +71,33 @@ class Register extends React.Component {
             this.props.history.push('/socio')
           });
         } else {
-          this.setState({ loading: false })
+          self.setState({ loading: false })
           SimpleSwal('<strong>Atenção</strong>',res.data.msg,'warning')         
         }
+      }).catch(function (error) {
+        self.setState({ loading: false })
+        if (error.response) {
+          let msg = error.response.data.errors['email'] ? error.response.data.errors['email'][0] : error.response.data.msg
+          SimpleSwal('<strong>Atenção</strong>',msg,'warning')         
+
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          // console.log(error.response.data.msg);
+          // console.log(error.response.status);
+          // console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          // console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          // console.log('Error', error.message);
+        }
+        // console.log(error.config);
       });
     } catch (err) {
-      this.setState({ loading: false })
+      self.setState({ loading: false })
       SimpleNoty('Oops! Falha ao realizar o cadastro!','warning')
     }
   }

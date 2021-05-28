@@ -130,25 +130,23 @@ export default function Header() {
     <div className="header">
       <AppBar className="menu" position="static">
         <Toolbar>
-          <Link to="/socio" className="menuTitle">
+          <Link to="/" className="menuTitle">
             <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="mister-ins" />
           </Link>
-          {/* {localStorage.getItem('permission') === 'admin' &&
+          {localStorage.getItem('permission') === 'admin' &&
             <Link className="link" color="secondary" to="/admin">
               Administração
           </Link>
-          } */}
-          {localStorage.getItem('permission') === 'admin' &&
-            <Link
-              variant="contained"
-              color="secondary"
-              title="Assistir Live"
-              className="link"
-              to="/lives"
-            >
-              Assistir Live
-            </Link>
           }
+          <Link
+            variant="contained"
+            color="secondary"
+            title="Assistir Live"
+            className="link"
+            to="/lives"
+          >
+            Assistir Live
+            </Link>
           {localStorage.getItem('permission') !== 'admin' &&
             <Button
               title="Seja um afiliado Mister Ins"

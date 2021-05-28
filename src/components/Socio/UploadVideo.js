@@ -85,7 +85,7 @@ class UploadVideo extends React.Component {
           }));
         return (            
             <div className="form card">
-                <Typography><strong>Cadastrar Vídeo Sócio</strong></Typography>
+                <Typography><strong>Inserir Vídeo Sócio</strong></Typography>
                 <ValidatorForm
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}

@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField, Typography } from '@material-ui/core';
+import api from '../../services/api';
 
 export default function InsertLive({ onInsertLive }) {
     const [liveTitle, setLiveTitle] = useState("");
     const [liveUrl, setLiveUrl] = useState("");
     const [liveDescription, setLiveDescription] = useState("");
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        api.get('api/v1/lives/1',
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }
+    ).then(response => {
+        if (response.data.status && response.data.status === (401 || 498)) {
+            return response.data.status;
+        }
+            setLiveTitle(response.data.data.title)
+            setLiveUrl(response.data.data.url)
+            setLiveDescription(response.data.data.description)
+            //     return response.data;
+        })
+    }, [token])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,7 +42,7 @@ export default function InsertLive({ onInsertLive }) {
 
     return (
         <div className="form card">
-            <Typography><strong>Cadastrar Live</strong></Typography>
+            <Typography><strong>Atualizar Info</strong></Typography>
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                     label="Título da live"
