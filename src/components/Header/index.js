@@ -103,7 +103,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPower } from 'react-icons/fi';
-import { AppBar, Button, Toolbar, Tooltip, Typography } from '@material-ui/core';
+import { AppBar, Button, Menu, MenuItem, Toolbar, Tooltip, Typography, Fade } from '@material-ui/core';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import './style.css'
@@ -126,10 +126,21 @@ export default function Header() {
     window.open('https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760')
   }
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className="header">
       <AppBar className="menu" position="static">
-        <Toolbar>
+        <Toolbar>          
           <Link to="/" className="menuTitle">
             <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="mister-ins" />
           </Link>
@@ -152,8 +163,25 @@ export default function Header() {
               title="Seja um afiliado Mister Ins"
               className="affiliate-button"
               onClick={handleAffiliate}
-            ><ThumbUpAltIcon></ThumbUpAltIcon> Seja um Afiliado</Button>
+            ><ThumbUpAltIcon></ThumbUpAltIcon> Afiliar-se</Button>
           }
+          {/* <div>
+            <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
+              Open with fade transition
+            </Button>
+            <Menu
+              id="fade-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+          </div> */}
           <Tooltip title="Desconectar">
             <button className="menuButton" onClick={handleLogout} type="button">
               <Typography title="sair">{username}</Typography><FiPower size={16} color="#fff" />

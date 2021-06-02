@@ -248,28 +248,23 @@ export default function Lives() {
           <Grid item sm={12}>
             <h1>Live</h1>
           </Grid>
-          {courses.search('1442311') !== -1 &&
+          {(
+            courses.search('1442311') !== -1 ||
+            courses.search('448026') !== -1
+          ) &&
             <Grid item sm={12} xs={12}>
               <Alert variant="outlined" severity="info">Para fazer uma pergunta acesse o instagram do Maico (maicoandrade) e faça uma pergunta nas caixinhas do storys.</Alert>
               <iframe width="100%" height="600px" src={livelink} title="Live" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen ></iframe>
             </Grid>
           } 
-          {courses.search('448026') !== -1 &&
-            <Grid item sm={12} xs={12}>
-              <Alert variant="outlined" severity="info">Para fazer uma pergunta acesse o instagram do Maico (maicoandrade) e faça uma pergunta nas caixinhas do storys.</Alert>
-              <iframe width="100%" height="600px" src={livelink} title="Live" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen ></iframe>
-            </Grid>
-          }
-          {courses.search('1442311') === -1 &&
+          {(
+            courses.search('1442311') === -1 ||
+            courses.search('448026') === -1
+          ) &&
             <Grid item sm={12} xs={12}>
               <Alert variant="outlined" severity="warning">Nenhuma live disponível. Se você ouviu rumores sobre live e não está vendo, provavelmente a live é fechada para alunos de um determinado curso.</Alert>
             </Grid>
-          }    
-          {courses.search('448026') === -1 &&
-            <Grid item sm={12} xs={12}>
-              <Alert variant="outlined" severity="warning">Nenhuma live disponível. Se você ouviu rumores sobre live e não está vendo, provavelmente a live é fechada para alunos de um determinado curso.</Alert>
-            </Grid>
-          }         
+          }           
           {/* <Grid item md={4} xs={12}>
             <Card>
               <CardContent className="bg-dark">
