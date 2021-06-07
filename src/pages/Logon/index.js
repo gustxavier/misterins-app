@@ -56,7 +56,7 @@ class Logon extends React.Component {
       localStorage.setItem('permission', response.data.permission);
       localStorage.setItem('courses', response.data.courses);
 
-      if(localStorage.getItem('courses').search('1442311') >= -1 || localStorage.getItem('courses').search('448026') >= -1){
+      if(localStorage.getItem('courses').search('1442311') !== -1 || localStorage.getItem('courses').search('448026') !== -1){
         this.props.history.push('/socio');
       }else{
         this.props.history.push('/lives');
