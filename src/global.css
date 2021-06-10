@@ -34,6 +34,10 @@ button {
   width: 100%;
 }
 
+.theme-dark{
+  background-color: #27272d;
+}
+
 form input {
   width: 100%;
   height: 45px;
@@ -180,3 +184,39 @@ input:-internal-autofill-selected {
 .card{
   background-color: #343A40 !important;
 }
+
+.content {
+  flex-grow: 1;
+  height: 100vh;
+  overflow: 'auto';
+}
+
+#root .content-dark {
+  flex-grow: 1;
+  height: 100vh;
+  overflow: auto;
+  background: #3e3e44;
+}
+
+.container {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+#root   .paper{
+  padding: 15px;
+  background-color: #27272d;
+}
+
+.d-flex{
+  display: flex;
+}
+
+#root .nested{
+  padding-left: 35px;
+}
+
+#root .app-bar-spacer{
+  margin-bottom: 80px;
+}
+

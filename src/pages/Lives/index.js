@@ -1,114 +1,8 @@
-// import React, { useState } from 'react';
-// import {makeStyles} from '@material-ui/core/styles';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-// import Header from '../../components/Header';
-// import Sidebar from '../../components/Sidebar';
-// import { Card, CardContent, Container, FormGroup, Grid, IconButton, TextField } from '@material-ui/core';
-// import { SendSharp } from '@material-ui/icons';
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     display: 'flex',
-//   },
-//   toolbar: {
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'flex-end',
-//     padding: theme.spacing(0, 1),
-//     // necessary for content to be below app bar
-//     ...theme.mixins.toolbar,
-//   },
-//   content: {
-//     flexGrow: 1,
-//     padding: theme.spacing(3),
-//   },
-// }));
-
-// export default function Lives(onInsert) {
-//   const [comment, setComment] = useState("");
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-
-//     await onInsert({
-//       "title": comment,
-//       "status": 0
-//     });
-
-//     setComment("");
-//   };
-
-//   const classes = useStyles();
-
-//   return (
-//     <React.Fragment>
-//       {/* <div className={classes.root}> */}
-//         <CssBaseline />
-//         <Header />  
-//         {/* <Sidebar />       */}
-//         <main className={classes.content}>
-//           <div className={classes.toolbar} />
-//           <Container className="theme-dark" maxWidth="lg">
-//              <Grid container>
-//                  <Grid item sm={12}>
-//                      <h1>Live</h1>
-//                  </Grid>
-//                  <Grid item sm={8}>
-//                      <iframe width="800vh" height="480px" src="https:www.youtube.com/embed/EpyerKQEWGI?controls=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="disable-controls"></iframe>
-//                  </Grid>
-//                  <Grid item sm={4}>
-//                      <Card className="min-height-480 card-dark">
-//                          <CardContent>
-//                              <h3 className="mr-text-light mr-font-weight-200">Comentários</h3>
-//                              <div className="comments">
-//                                  {/* <ChatMessage /> */}
-//                              </div>
-//                              <div className="form-inline">
-//                                  <form autoComplete="off" className="send-comment" onSubmit={handleSubmit}>
-//                                      <FormGroup display="inline">
-//                                          <Grid container>
-//                                              <Grid item sm={10}>
-//                                                  <TextField
-//                                                      name="comment"
-//                                                      id="comment"
-//                                                      label="Adicionar comentário"
-//                                                      className="ext-input"
-//                                                      fullWidth
-//                                                      value={comment}
-//                                                      onChange={e => setComment(e.target.value)}
-//                                                      required
-//                                                  />
-//                                              </Grid>
-//                                              <Grid item sm={2}>
-//                                                  <IconButton                                                         
-//                                                      aria-label="add to shopping cart"
-//                                                      type="submit"
-//                                                  >
-//                                                      <SendSharp />
-//                                                  </IconButton>
-//                                                  {/* <button type="submit"><SendSharp /></button> */}
-//                                              </Grid>
-//                                          </Grid>
-//                                      </FormGroup>
-//                                  </form>
-//                              </div>
-//                          </CardContent>
-//                      </Card>
-//                  </Grid>
-//              </Grid>
-//          </Container>
-//         </main>
-//       {/* </div> */}
-//     </React.Fragment>    
-//   )
-// }
-
-
 import React, { useEffect, useState } from 'react'
-import { Container, Grid, Card, CardContent, TextField, FormGroup, IconButton, CircularProgress } from '@material-ui/core';
-import './styles.css';
+import { Container, Grid, Card, CardContent, TextField, FormGroup, IconButton, CircularProgress, Paper } from '@material-ui/core';
 import ChatMessage from '../../components/ChatMessage';
 import { SendSharp } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../components/Header';
 import api from '../../services/api';
 import { SimpleSwal } from '../../helpers/SwalFeedBack';
@@ -117,6 +11,8 @@ import { forEach, isSet, map } from 'lodash';
 import Alert from '@material-ui/lab/Alert';
 import { useHistory } from 'react-router';
 import { DataGrid } from '@material-ui/data-grid';
+import './styles.css';
+
 
 export default function Lives() {
   const [comment, setComment] = useState("")
@@ -128,6 +24,7 @@ export default function Lives() {
   const courses = localStorage.getItem('courses')
   const history = useHistory()
   const [spinner, setSpinner] = useState(true)
+
 
   useEffect(() => {
     setSpinner(false)
@@ -212,8 +109,10 @@ export default function Lives() {
         SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
         history.push('/')
       } else {
-        setLiveLink(response.data.data[0].url)
-        setHotmartLiveId(response.data.data[0].hotmart_id)
+        if (response.data.data.length > 0) {
+          setLiveLink(response.data.data[0].url)
+          setHotmartLiveId(response.data.data[0].hotmart_id)
+        }
       }
     });
   }
@@ -237,35 +136,37 @@ export default function Lives() {
 
   return (
     <React.Fragment>
-      { spinner &&
-        <div id="spinner-live" className="spinner">
-          <CircularProgress />
-        </div>
-      }
-      <Header />
-      <Container className="theme-dark" maxWidth="lg">
-        <Grid container>
-          <Grid item sm={12}>
-            <h1>Live</h1>
-          </Grid>
-          {(
-            courses.search('1442311') !== -1 ||
-            courses.search('448026') !== -1
-          ) &&
-            <Grid item sm={12} xs={12}>
-              <Alert variant="outlined" severity="info">Para fazer uma pergunta acesse o instagram do Maico (maicoandrade) e faça uma pergunta nas caixinhas do storys.</Alert>
-              <iframe width="100%" height="600px" src={livelink} title="Live" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen ></iframe>
-            </Grid>
-          } 
-          {(
-            courses.search('1442311') === -1 ||
-            courses.search('448026') === -1
-          ) &&
-            <Grid item sm={12} xs={12}>
-              <Alert variant="outlined" severity="warning">Nenhuma live disponível. Se você ouviu rumores sobre live e não está vendo, provavelmente a live é fechada para alunos de um determinado curso.</Alert>
-            </Grid>
-          }           
-          {/* <Grid item md={4} xs={12}>
+      <div className={'d-flex'}>
+        {spinner &&
+          <div id="spinner-live" className="spinner">
+            <CircularProgress />
+          </div>
+        }
+        <Header title={'Live'} />
+        <main className={'content-dark'}>
+        <div className={'app-bar-spacer'} />
+        <Container maxWidth="lg" className={'container'}>
+          <Grid container spacing={3}>
+              {(
+                courses.search('1442311') !== -1 ||
+                courses.search('448026') !== -1
+              ) &&
+                <Grid item sm={12} xs={12}>
+                  <Paper className="paper">
+                    <Alert variant="outlined" severity="info">Para fazer uma pergunta acesse o instagram do Maico (maicoandrade) e faça uma pergunta nas caixinhas do storys.</Alert>
+                    <iframe width="100%" height="600px" src={livelink} title="Live" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen ></iframe>
+                  </Paper>
+                </Grid>
+              }
+              {(
+                courses.search('1442311') === -1 ||
+                courses.search('448026') === -1
+              ) &&
+                <Grid item sm={12} xs={12}>
+                  <Alert variant="outlined" severity="warning">Nenhuma live disponível. Se você ouviu rumores sobre live e não está vendo, provavelmente a live é fechada para alunos de um determinado curso.</Alert>
+                </Grid>
+              }
+              {/* <Grid item md={4} xs={12}>
             <Card>
               <CardContent className="bg-dark">
                 <h3 className="mr-text-light mr-font-weight-200">Minhas Perguntas</h3>
@@ -305,7 +206,7 @@ export default function Lives() {
               </CardContent>
             </Card>
           </Grid> */}
-          {/* <Grid item sm={12}>
+              {/* <Grid item sm={12}>
             <ul>
               {commentList.length > 0 ? commentList.map((list) =>
               (                
@@ -314,8 +215,10 @@ export default function Lives() {
               }
             </ul>
           </Grid> */}
-        </Grid>
-      </Container>
-    </React.Fragment>
+            </Grid>
+          </Container>
+        </main>
+      </div>
+    </React.Fragment >
   )
 }

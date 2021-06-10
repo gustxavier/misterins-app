@@ -1,12 +1,3 @@
-.link{
-    background-color: crimson;
-    color: #fafafa;
-    text-decoration: none;
-    margin-right: 15px !important;
-    padding: 10px 15px;
-    border-radius: 5px;
-}
-
 #root .affiliate-button{
     background-color: darkgreen;
     color: #fafafa;
@@ -16,4 +7,11 @@
 
 #root .affiliate-button:hover{
     background-color: rgb(19, 122, 19);
+}
+#root .inset{
+    padding-left: 72px;
+}
+
+#root .toolbar{
+    padding-right: 24px;
 }

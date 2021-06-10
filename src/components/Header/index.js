@@ -1,43 +1,223 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { useHistory } from 'react-router';
+import { Badge, Collapse, ListSubheader } from '@material-ui/core';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import LiveTvIcon from '@material-ui/icons/LiveTv';
+import TuneIcon from '@material-ui/icons/Tune';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import './style.css'
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  toolbarIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+  },
+  appBar: {
+    background: '#27272d',
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  menuButtonHidden: {
+    display: 'none',
+  },
+  title: {
+    flexGrow: 1,
+  },
+  drawerPaper: {
+    background: '#27272d',
+    color: '#efefef',
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerPaperClose: {
+    overflowX: 'hidden',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    width: theme.spacing(7),
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9),
+    },
+  },
+}));
+
+export default function Header(page) {
+  const classes = useStyles()
+  const [open, setOpen] = useState(true)
+  const [openList, setOpenList] = useState(false)
+  const history = useHistory()
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  }
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  }
+
+  function handlePush(link) {
+    history.push(link)
+  }
+
+  const handleClickList = () => {
+    setOpenList(!openList);
+  };
+
+  return (
+    <div className="d-flex">
+      <CssBaseline />
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={'toolbar'}>
+          <IconButton
+            edge="start"
+            color="secondary"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            {page.title}
+          </Typography>
+          <IconButton color="secondary">
+            <Badge badgeContent={4} color="secondary">
+              {/* <NotificationsIcon /> */}
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      {/******** Sidebar ********/}
+
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        className="theme-dark"
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <Link to="/">
+            <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="mister-ins" />
+          </Link>
+          <IconButton color="secondary" onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListItem button style={{ marginBottom: 8 }} onClick={() => handlePush('/')}>
+            <ListItemIcon><DashboardIcon style={{ color: '#fafafa' }} /></ListItemIcon>
+            <ListItemText primary='Bem-vindo' />
+          </ListItem>
+          <Divider />
+          <ListItem button onClick={() => handlePush('/lives')}>
+            <ListItemIcon><LiveTvIcon style={{ color: '#fafafa' }} /></ListItemIcon>
+            <ListItemText primary='Live' />
+          </ListItem>
+          <ListItem button onClick={() => handlePush('/socio')}>
+            <ListItemIcon><RecentActorsIcon style={{ color: '#fafafa' }} /></ListItemIcon>
+            <ListItemText primary='Sócio' />
+          </ListItem>
+        </List>
+        <Divider />
+        <List
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" className={'inset'} style={{ color: '#f50057' }}>
+              Administração
+        </ListSubheader>
+          }
+          className={classes.root}
+        >
+          <ListItem button onClick={handleClickList}>
+            <ListItemIcon>
+              <TuneIcon style={{ color: '#fafafa' }} />
+            </ListItemIcon>
+            <ListItemText primary="Configurações" />
+            {openList ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={openList} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className="nested">
+                <ListItemIcon><RadioButtonUncheckedIcon style={{ fontSize: 15, color: '#fafafa' }} /></ListItemIcon>
+                <ListItemText primary='Live' />
+              </ListItem>
+              <ListItem button className="nested">
+                <ListItemIcon><RadioButtonUncheckedIcon style={{ fontSize: 15, color: '#fafafa' }} /></ListItemIcon>
+                <ListItemText primary='Sócio' />
+              </ListItem>
+              <ListItem button className="nested">
+                <ListItemIcon><RadioButtonUncheckedIcon style={{ fontSize: 15, color: '#fafafa' }} /></ListItemIcon>
+                <ListItemText primary='Usuários' />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
+      </Drawer>
+    </div>
+  );
+}
+
+
+
 // import React, { useState } from 'react';
-// import clsx from 'clsx';
-// import { useHistory } from 'react-router-dom';
+// import { Link, useHistory } from 'react-router-dom';
 // import { FiPower } from 'react-icons/fi';
-// import { AppBar, Button, IconButton, Toolbar, Tooltip, Typography } from '@material-ui/core';
-// import MenuIcon from '@material-ui/icons/Menu';
-// import { makeStyles } from '@material-ui/core/styles';
+// import { AppBar, Button, Menu, MenuItem, Toolbar, Tooltip, Typography, Fade } from '@material-ui/core';
+// import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 // import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 // import './style.css'
-
-// const drawerWidth = 240;
-
-// const useStyles = makeStyles((theme) => ({
-//   appBar: {
-//     zIndex: theme.zIndex.drawer + 1,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.leavingScreen,
-//     }),
-//   },
-//   appBarShift: {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   },
-//   menuButton: {
-//     marginRight: 36,
-//   },
-//   hide: {
-//     display: 'none',
-//   },
-// }));
 
 // export default function Header() {
 //   const [token] = useState(localStorage.getItem('token'));
 //   const [username] = useState(localStorage.getItem('username'));
-//   const [open, setOpen] = React.useState(false);
 //   const history = useHistory();
 
 //   if (token === '' || token === null) {
@@ -53,43 +233,62 @@
 //     window.open('https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760')
 //   }
 
-//   const handleDrawerOpen = () => {
-//     setOpen(true);
+//   const [anchorEl, setAnchorEl] = React.useState(null);
+//   const open = Boolean(anchorEl);
+
+//   const handleClick = (event) => {
+//     setAnchorEl(event.currentTarget);
 //   };
 
-//   const classes = useStyles();
+//   const handleClose = () => {
+//     setAnchorEl(null);
+//   };
 
 //   return (
 //     <div className="header">
-//       <AppBar
-//         position="fixed"
-//         className={clsx(classes.appBar, {
-//           [classes.appBarShift]: open,
-//         })}
-//       >
-//         <Toolbar>
-//           <IconButton
-//             color="inherit"
-//             aria-label="open drawer"
-//             onClick={handleDrawerOpen}
-//             edge="start"
-//             className={clsx(classes.menuButton, {
-//               [classes.hide]: open,
-//             })}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           <span className="menuTitle"></span>
-//           {/* <Link to="/socio" className="menuTitle">
+//       <AppBar className="menu" position="static">
+//         <Toolbar>          
+//           <Link to="/" className="menuTitle">
 //             <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="mister-ins" />
-//           </Link> */}
-//           {/* {localStorage.getItem('permission') !== 'admin' && */}
-//           <Button
-//             title="Seja um afiliado Mister Ins"
-//             className="affiliate-button"
-//             onClick={handleAffiliate}
-//           ><ThumbUpAltIcon></ThumbUpAltIcon> Seja um Afiliado</Button>
-//           {/* } */}
+//           </Link>
+//           {localStorage.getItem('permission') === 'admin' &&
+//             <Link className="link" color="secondary" to="/admin">
+//               Administração
+//           </Link>
+//           }
+//           <Link
+//             variant="contained"
+//             color="secondary"
+//             title="Assistir Live"
+//             className="link"
+//             to="/lives"
+//           >
+//             Assistir Live
+//             </Link>
+//           {localStorage.getItem('permission') !== 'admin' &&
+//             <Button
+//               title="Seja um afiliado Mister Ins"
+//               className="affiliate-button"
+//               onClick={handleAffiliate}
+//             ><ThumbUpAltIcon></ThumbUpAltIcon> Afiliar-se</Button>
+//           }
+//           {/* <div>
+//             <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
+//               Open with fade transition
+//             </Button>
+//             <Menu
+//               id="fade-menu"
+//               anchorEl={anchorEl}
+//               keepMounted
+//               open={open}
+//               onClose={handleClose}
+//               TransitionComponent={Fade}
+//             >
+//               <MenuItem onClick={handleClose}>Profile</MenuItem>
+//               <MenuItem onClick={handleClose}>My account</MenuItem>
+//               <MenuItem onClick={handleClose}>Logout</MenuItem>
+//             </Menu>
+//           </div> */}
 //           <Tooltip title="Desconectar">
 //             <button className="menuButton" onClick={handleLogout} type="button">
 //               <Typography title="sair">{username}</Typography><FiPower size={16} color="#fff" />
@@ -100,95 +299,3 @@
 //     </div>
 //   );
 // }
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiPower } from 'react-icons/fi';
-import { AppBar, Button, Menu, MenuItem, Toolbar, Tooltip, Typography, Fade } from '@material-ui/core';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import './style.css'
-
-export default function Header() {
-  const [token] = useState(localStorage.getItem('token'));
-  const [username] = useState(localStorage.getItem('username'));
-  const history = useHistory();
-
-  if (token === '' || token === null) {
-    history.push('/');
-  }
-
-  function handleLogout() {
-    localStorage.clear();
-    history.push('/');
-  }
-
-  function handleAffiliate() {
-    window.open('https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760')
-  }
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div className="header">
-      <AppBar className="menu" position="static">
-        <Toolbar>          
-          <Link to="/" className="menuTitle">
-            <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="mister-ins" />
-          </Link>
-          {localStorage.getItem('permission') === 'admin' &&
-            <Link className="link" color="secondary" to="/admin">
-              Administração
-          </Link>
-          }
-          <Link
-            variant="contained"
-            color="secondary"
-            title="Assistir Live"
-            className="link"
-            to="/lives"
-          >
-            Assistir Live
-            </Link>
-          {localStorage.getItem('permission') !== 'admin' &&
-            <Button
-              title="Seja um afiliado Mister Ins"
-              className="affiliate-button"
-              onClick={handleAffiliate}
-            ><ThumbUpAltIcon></ThumbUpAltIcon> Afiliar-se</Button>
-          }
-          {/* <div>
-            <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
-              Open with fade transition
-            </Button>
-            <Menu
-              id="fade-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
-          </div> */}
-          <Tooltip title="Desconectar">
-            <button className="menuButton" onClick={handleLogout} type="button">
-              <Typography title="sair">{username}</Typography><FiPower size={16} color="#fff" />
-            </button>
-          </Tooltip>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-}
