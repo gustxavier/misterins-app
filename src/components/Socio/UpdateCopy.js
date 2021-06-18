@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import api from '../../../services/api';
+import api from '../../services/api';
 
 import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router';
-import { SimpleNoty } from '../../../helpers/NotyFeedBack';
-import { SimpleSwal } from '../../../helpers/SwalFeedBack';
+import { SimpleNoty } from '../../helpers/NotyFeedBack';
+import { SimpleSwal } from '../../helpers/SwalFeedBack';
 
 class UpdateCopy extends React.Component {
 
@@ -17,7 +17,7 @@ class UpdateCopy extends React.Component {
         this.state = {
             loading: false,
             id: '',
-            title: '',
+            title:   '',
             important_text: '',
             description: '',
             token: localStorage.getItem('token')
@@ -39,9 +39,10 @@ class UpdateCopy extends React.Component {
             }
         }
         ).then(response => {
-            if (response.data.status && response.data.status === (401 || 498)) {
+            if (response.data.status && (response.data.status === 401 || response.data.status === 498)) {
                 return response.data.status;
             }
+            console.log(response.data)
             this.setState({
                 id: response.data.data.id,
                 title: response.data.data.title,
@@ -69,7 +70,7 @@ class UpdateCopy extends React.Component {
                 this.props.history.push('/')
             } else {
                 SimpleNoty('Sucesso!', 'success')
-                this.props.history.push('/socio')
+                this.props.history.push('/admin/socio')
             }
         });
     }

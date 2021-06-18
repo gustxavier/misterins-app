@@ -14,7 +14,7 @@ export default function ProtectedRoute(props) {
                 Authorization: `Bearer ${token}`,
             }
         }).then(response => {
-            console.log(response);
+            console.log(response, 'AEWWWWWWWWW');
             setIsAuthenticated(true)
         });
     }, [token])

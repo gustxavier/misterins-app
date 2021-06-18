@@ -38,7 +38,6 @@ class UploadVideo extends React.Component {
 
     onChangeInputFile(e) {
         let files = e.target.files || e.dataTransfer.files;
-        console.log(e.target)
         if (!files.length)
             return;
 
@@ -68,7 +67,7 @@ class UploadVideo extends React.Component {
                 this.props.history.push('/')
             } else {
                 SimpleNoty('Sucesso!', 'success')
-                this.props.history.push('/socio')
+                this.props.history.push('/admin/socio')
             }
         });
     }

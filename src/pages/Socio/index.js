@@ -1,100 +1,216 @@
-import { Box, Button, Card, CardContent, Container, Grid, List, Typography } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Typography,
+  CircularProgress,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useHistory } from "react-router";
 import api from "../../services/api";
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import { SimpleNoty } from "../../helpers/NotyFeedBack"
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import { SimpleNoty } from "../../helpers/NotyFeedBack";
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
-import "./style.css"
+import "./style.css";
 import Header from "../../components/Header";
 import ListVideos from "../../components/Socio/ListVideos";
 
 export default function Socio() {
   const [items, setItems] = useState([]);
-  const [token] = useState(localStorage.getItem('token'));
+  const [token] = useState(localStorage.getItem("token"));
   const history = useHistory();
+  const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
-    api.get('api/v1/copy', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    }).then((response) => {
-      if (!response.data.status && (response.data.status === 401 || response.data.status === 498)) {
-        localStorage.clear();
-        SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning');
-        history.push('/')
-      } else {
-        setItems(response.data.data);
-      }
-    }).catch((error) => {
-      console.log("Ocorreu um erro ao buscar os items" + error);
-    });
+    api
+      .get("api/v1/copy", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (
+          !response.data.status &&
+          (response.data.status === 401 || response.data.status === 498)
+        ) {
+          localStorage.clear();
+          SimpleSwal(
+            "<strong>Atenção</strong>",
+            response.data.message,
+            "warning"
+          );
+          history.push("/");
+        } else {
+          setItems(response.data.data);
+          setSpinner(false);
+        }
+      })
+      .catch((error) => {
+        console.log("Ocorreu um erro ao buscar os items" + error);
+      });
   }, [token, history]);
+
+  function handleAffiliate() {
+    window.open(
+      "https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760"
+    );
+  }
 
   return (
     <React.Fragment>
-      <Header />
-      <Container className="theme-dark" maxWidth="lg">
-        <Grid container>
-          <Grid item xs={12} md={4}>
-            <Card className='card'>
-              <CardContent>
-                <Typography gutterBottom variant="h4" component="h2" className="white">
-                  Copy dos Anúncios
-                </Typography>
-                <List>
-                  {items.length > 0 ? items.map((list) =>
-                  (
-                    <div className="copy" key={list.id}>
-                      <Box mb={3}>
-                        <CopyToClipboard text={list.title}
-                          onCopy={() => SimpleNoty("Sucesso!", 'success')}>
-                          <Button variant="contained" color="secondary" size="small" startIcon={<FileCopyIcon />}>Copiar Título</Button>
-                        </CopyToClipboard>
-                        <Typography variant="h6" className="white">Título</Typography>
-                        <Typography gutterBottom variant="body2" className="white">{list.title}</Typography>
-                      </Box>
-                      <Box mb={3}>
-                        <CopyToClipboard text={list.important_text}
-                          onCopy={() => SimpleNoty("Sucesso!", 'success')}>
-                          <Button variant="contained" color="secondary" size="small" startIcon={<FileCopyIcon />}>Copiar Texto Principal</Button>
-                        </CopyToClipboard>
-                        <Typography variant="h6" component="h6" className="white">Texto Principal</Typography>
-                        <Typography variant="body2" gutterBottom>{list.important_text}</Typography>
-                      </Box>
-                      <Box mb={3}>
-                        <CopyToClipboard text={list.description}
-                          onCopy={() => SimpleNoty("Sucesso!", 'success')}>
-                          <Button variant="contained" color="secondary" size="small" startIcon={<FileCopyIcon />}>Copiar Descrição</Button>
-                        </CopyToClipboard>
-                        <Typography variant="h6" component="h6" className="white">Descrição</Typography>
-                        <Typography variant="body2">{list.description}</Typography>
-                      </Box>
-                    </div>
-                  )) : null
-                  }
-                </List>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Card className='card'>
-              <CardContent>
-                <Typography gutterBottom variant="h4" component="h2" className="white">
-                  Vídeos
-                </Typography>
-                  <ListVideos type={'story'}></ListVideos>
-                  <ListVideos type={'feed'}></ListVideos>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
+      <div className={"d-flex"}>
+        <Header title={"Sócio"} />
+        <main className={"content-dark"}>
+          <div className={"app-bar-spacer"} />
+          {spinner && (
+            <div id="spinner-live" className="spinner">
+              <CircularProgress />
+            </div>
+          )}
+          <Container maxWidth="xl" className={"container"}>
+            <Grid container>
+              <Grid item xs={12} md={12}>
+                <Card className="card">
+                  <CardContent>
+                    <Button
+                      title="Seja um afiliado Mister Ins"
+                      className="affiliate-button"
+                      onClick={handleAffiliate}
+                    >
+                      <Typography variant="h5"><ThumbUpAltIcon />  Afiliar-se</Typography>
+                    </Button>
+                    <Typography
+                      gutterBottom
+                      variant="h4"
+                      component="h2"
+                      className="white"
+                    >
+                      Copy dos Anúncios
+                    </Typography>
+                    {items.length > 0
+                      ? items.map((list) => (
+                          <div className="copy" key={list.id}>
+                            <Grid item mb={4} md={4} xs={12}>
+                              <CopyToClipboard
+                                text={list.title}
+                                onCopy={() =>
+                                  SimpleNoty(
+                                    "Sucesso! Informação copiada.",
+                                    "success"
+                                  )
+                                }
+                              >
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  size="small"
+                                  startIcon={<FileCopyIcon />}
+                                >
+                                  Copiar Título
+                                </Button>
+                              </CopyToClipboard>
+                              <Typography variant="h6" className="white">
+                                Título
+                              </Typography>
+                              <Typography
+                                gutterBottom
+                                variant="body2"
+                                className="white"
+                              >
+                                {list.title}
+                              </Typography>
+                            </Grid>
+                            <Grid item mb={4} md={4} xs={12}>
+                              <CopyToClipboard
+                                text={list.important_text}
+                                onCopy={() =>
+                                  SimpleNoty(
+                                    "Sucesso! Informação copiada.",
+                                    "success"
+                                  )
+                                }
+                              >
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  size="small"
+                                  startIcon={<FileCopyIcon />}
+                                >
+                                  Copiar Texto Principal
+                                </Button>
+                              </CopyToClipboard>
+                              <Typography
+                                variant="h6"
+                                component="h6"
+                                className="white"
+                              >
+                                Texto Principal
+                              </Typography>
+                              <Typography variant="body2" gutterBottom>
+                                {list.important_text}
+                              </Typography>
+                            </Grid>
+                            <Grid item mb={4} md={4} xs={12}>
+                              <CopyToClipboard
+                                text={list.description}
+                                onCopy={() =>
+                                  SimpleNoty(
+                                    "Sucesso! Informação copiada.",
+                                    "success"
+                                  )
+                                }
+                              >
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  size="small"
+                                  startIcon={<FileCopyIcon />}
+                                >
+                                  Copiar Descrição
+                                </Button>
+                              </CopyToClipboard>
+                              <Typography
+                                variant="h6"
+                                component="h6"
+                                className="white"
+                              >
+                                Descrição
+                              </Typography>
+                              <Typography variant="body2">
+                                {list.description}
+                              </Typography>
+                            </Grid>
+                          </div>
+                        ))
+                      : null}
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <Card className="card">
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="h4"
+                      component="h2"
+                      className="white"
+                    >
+                      Vídeos
+                    </Typography>
+                    <ListVideos type={"story"}></ListVideos>
+                    <ListVideos type={"feed"}></ListVideos>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Container>
+        </main>
+      </div>
     </React.Fragment>
   );
 }
-
-// export default withRouter(Socio);

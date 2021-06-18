@@ -1,17 +1,11 @@
-#root .affiliate-button{
-    background-color: darkgreen;
-    color: #fafafa;
-    margin-right: 15px;
-    padding: 10px 15px;
-}
-
-#root .affiliate-button:hover{
-    background-color: rgb(19, 122, 19);
-}
-#root .inset{
+#root .inset {
     padding-left: 72px;
 }
 
-#root .toolbar{
+#root .toolbar {
     padding-right: 24px;
+}
+
+.menu-user-option {
+    margin-left: 5px;
 }

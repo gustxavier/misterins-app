@@ -29,7 +29,6 @@ function ListVideos(param) {
                 setItems(response.data.data);
             }
         }).catch((error) => {
-            console.log('On getByType')
             localStorage.clear();
             history.push('/')
         });
@@ -43,6 +42,7 @@ function ListVideos(param) {
             },
             responseType: 'blob',
             onDownloadProgress: (progressEvent) => {
+                console.log(progressEvent)
                 setPercent(Math.round((progressEvent.loaded * 100) / progressEvent.total)); // you can use this to show user percentage of file downloaded
             }
         }).then((response) => {
@@ -52,7 +52,6 @@ function ListVideos(param) {
             link.click();
             setLoading(false)
         }).catch((error) => {
-            console.log('On getByType')
             localStorage.clear();
             history.push('/')
         });

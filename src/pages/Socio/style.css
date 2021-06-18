@@ -1,19 +1,32 @@
 .copy,
-.videos{
-    background-color: #2d3238;
+.videos {
+    background-color: #212125;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 5px;
 }
 
-.videos .button{
+.videos .button {
     margin-bottom: 10px;
     background: #3498db;
     color: #fff;
     padding: 15px;
 }
 
+.videos .button:hover {
+    background-color: #369bdf;
+}
 
-.videos .button:hover{
-    background-color: #369bdf ;
+#root .affiliate-button {
+    background-color: #007eff;
+    color: #fafafa;
+    margin-right: 15px;
+    padding: 10px 15px;
+    margin: auto;
+    display: block;
+    width: 260px;
+}
+
+#root .affiliate-button:hover {
+    background-color: #005bb6;
 }

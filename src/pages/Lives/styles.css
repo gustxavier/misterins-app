@@ -1,66 +1,51 @@
-.min-height-480{
+.min-height-480 {
     min-height: 480px;
 }
 
-.bg-dark{
-    background-color:#343A40 !important;
+.bg-dark {
+    background-color: #343A40 !important;
 }
 
-.chat{
+.chat {
     margin: auto;
     display: block;
 }
 
-.comments{
+.comments {
     min-height: 320px;
     background-color: #2d3238;
     padding: 10px;
     font-weight: 500;
 }
 
-.comments span{
+.comments span {
     text-align: center;
     margin-bottom: 15px;
 }
 
-.disable-controls{
+.disable-controls {
     pointer-events: none;
 }
 
-form .text-input{
+form .text-input {
     width: 100%;
     color: #fafafa;
 }
 
-form.send-comment .MuiButtonBase-root{
+form.send-comment .MuiButtonBase-root {
     padding: 11px 5px;
     margin-top: 18px;
 }
 
-ul{
+ul {
     list-style: none;
 }
 
-li{
+li {
     margin-bottom: 5px;
 }
 
-#root .MuiAlert-root{
+#root .MuiAlert-root {
     background-color: #fff;
     margin-bottom: 15px;
-}
-
-.spinner{
-    background: #00000052;
-    position: fixed;
-    z-index: 1000;
-    height: 100%;
-    text-align: center;
-    width: 100%;
-    display: block;
-}
-
-.spinner .MuiCircularProgress-root{
-    top: 50%;
-    position: absolute;
 }

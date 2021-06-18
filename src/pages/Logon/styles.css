@@ -1,29 +1,28 @@
 .logon-container {
-  width: 100%;
-  max-width: 1120px;
-  height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .logon-container section.form {
-  background: #303035;
-  width: 100%;
-  max-width: 350px;
+    width: 100%;
+    max-width: 350px;
 }
 
 .logon-container section.form form h1 {
-  font-size: 32px;
-  margin-bottom: 32px;
+    font-size: 32px;
+    margin-bottom: 32px;
 }
 
-.logon-container section.form form p.spin{
-  margin-left: 10px;
+.logon-container section.form form p.spin {
+    margin-left: 10px;
 }
 
-.inline{
-  display: inline-flex;
+.inline {
+    display: inline-flex;
 }
