@@ -24,7 +24,7 @@ export default function Copy() {
   return (
     <React.Fragment>
       <div className={"d-flex"}>
-        <Header title={"Admin - Copy"} />
+        <Header title={"Admin - Sócio"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
           {spinner && (

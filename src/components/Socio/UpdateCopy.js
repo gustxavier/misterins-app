@@ -42,7 +42,6 @@ class UpdateCopy extends React.Component {
             if (response.data.status && (response.data.status === 401 || response.data.status === 498)) {
                 return response.data.status;
             }
-            console.log(response.data)
             this.setState({
                 id: response.data.data.id,
                 title: response.data.data.title,

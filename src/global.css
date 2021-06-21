@@ -188,6 +188,7 @@ input:-internal-autofill-selected {
 
 .card {
     background-color: #27272d !important;
+    border: 1px solid #1c1c20ad;
 }
 
 .content {
@@ -254,6 +255,18 @@ input:-internal-autofill-selected {
     background-color: #007bff;
 }
 
+#root .MuiButton-textPrimary {
+    color: #007bff;
+}
+
+#root .MuiBadge-colorPrimary {
+    background-color: crimson;
+}
+
 #root .MuiButton-root {
     text-transform: inherit;
+}
+
+#root .text-center {
+    text-align: center;
 }

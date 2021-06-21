@@ -1,0 +1,28 @@
+#root form .btn-inline {
+    padding: 12px 20px;
+    margin-top: 0px;
+    ;
+}
+
+#root .icon-profile {
+    font-size: 10.1875rem;
+    margin-bottom: 2rem;
+}
+
+#root .change-password {
+    background-color: #004271;
+    margin-top: 1rem;
+}
+
+#root .permissions {
+    background-color: #007161;
+    margin-top: 1rem;
+}
+
+#root .MuiCollapse-container {
+    background-color: #2d2d35;
+}
+
+#root .MuiFormControlLabel-root {
+    color: #fafafa;
+}

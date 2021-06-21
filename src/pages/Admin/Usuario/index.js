@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../../../components/Header";
 import ListUsuarios from "../../../components/Usuario/List";
-import "./styles.css";
 
 export default function Usuario() {
   const [token] = useState(localStorage.getItem("token"));

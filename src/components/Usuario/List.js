@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
 import "./style.css";
 
@@ -18,17 +18,20 @@ export default function ListUsuarios() {
   const [spinner, setSpinner] = useState(true);
   const history = useHistory();
   const columns = [
-    { field: "id", headerName: "#", width: 70 },
+    { field: "id", headerName: "#", width: 90 },
     { field: "name", headerName: "Nome", width: 250 },
     { field: "email", headerName: "Email", width: 250 },
     { field: "cpf", headerName: "CPF", width: 180 },
     { field: "instagram", headerName: "Instagram", width: 250 },
     { field: "facebook", headerName: "Facebook", width: 250 },
   ];
-  const [editRowsModel, setEditRowsModel] = React.useState({});
+  const [pageSize, setPageSize] = React.useState(50);
 
   const handleRowClick = React.useCallback((params) => {
-    history.push({pathname:"/admin/usuario/profile",state: {id: params.row.id}})
+    history.push({
+      pathname: "/admin/usuario/profile",
+      state: { id: params.row.id },
+    });
   }, []);
 
   useEffect(() => {
@@ -59,6 +62,10 @@ export default function ListUsuarios() {
       });
   }, [token, history]);
 
+  const handlePageSizeChange = (params) => {
+    setPageSize(params.pageSize);
+  };
+
   return (
     <div>
       {spinner && (
@@ -73,14 +80,26 @@ export default function ListUsuarios() {
               <CardContent>
                 <div style={{ height: "100%", width: "100%" }}>
                   <DataGrid
+                    // {...items}
                     rows={items}
                     columns={columns}
-                    pageSize={25}
-                    hideFooterRowCount={true}
+                    pagination
+                    pageSize={pageSize}
+                    onPageSizeChange={handlePageSizeChange}
                     autoHeight={true}
                     onRowClick={handleRowClick}
-                    // editRowsModel={editRowsModel}
-                    // onEditRowModelChange={handleEditRowModelChange}
+                    components={{
+                      Toolbar: GridToolbar,
+                    }}
+                    filterModel={{
+                      items: [
+                        {
+                          columnField: "",
+                          operatorValue: "",
+                          value: "",
+                        },
+                      ],
+                    }}
                   />
                 </div>
               </CardContent>
