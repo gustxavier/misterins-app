@@ -34,6 +34,7 @@ import TuneIcon from "@material-ui/icons/Tune";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import RecentActorsIcon from "@material-ui/icons/RecentActors";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import logo from "../../assets/images/misterins-logo.png";
 import "./style.css";
 
@@ -105,6 +106,7 @@ export default function Header(page) {
   const [openList, setOpenList] = useState(false);
   const username = localStorage.getItem("username");
   const courses = localStorage.getItem("courses");
+  const userID = localStorage.getItem("userid");
   const history = useHistory();
 
   const handleDrawerOpen = () => {
@@ -115,9 +117,11 @@ export default function Header(page) {
     setOpen(false);
   };
 
-  function handlePush(link) {
-    history.push(link);
-  }
+  const handlePush = React.useCallback((params) => {
+    history.push({
+      pathname: params.pathname,
+    });
+  }, []);
 
   const handleClickList = () => {
     setOpenList(!openList);
@@ -204,7 +208,9 @@ export default function Header(page) {
                 fontSize={"large"}
                 style={{ color: "#fafafa" }}
               />
-              <Typography style={{ marginLeft: "5px", fontStyle: "normal" }}>{username}</Typography>
+              <Typography style={{ marginLeft: "5px", fontStyle: "normal" }}>
+                {username}
+              </Typography>
               <ExpandMore style={{ color: "#fafafa" }} />
             </Button>
             <Popper
@@ -229,6 +235,16 @@ export default function Header(page) {
                         id="menu-list-grow"
                         onKeyDown={handleListKeyDown}
                       >
+                        <MenuItem
+                          onClick={() =>
+                            handlePush({
+                              pathname: "/admin/usuario/profile/" + userID,
+                            })
+                          }
+                        >
+                          <PermIdentityIcon />{" "}
+                          <span className={"menu-user-option"}>Perfil</span>
+                        </MenuItem>
                         <MenuItem onClick={handleLogout}>
                           <ExitToAppIcon />{" "}
                           <span className={"menu-user-option"}>Sair</span>
@@ -264,7 +280,7 @@ export default function Header(page) {
           <ListItem
             button
             style={{ marginBottom: 8 }}
-            onClick={() => handlePush("/dashboard")}
+            onClick={() => handlePush({ pathname: "/dashboard" })}
           >
             <ListItemIcon>
               <DashboardIcon style={{ color: "#fafafa" }} />
@@ -272,14 +288,14 @@ export default function Header(page) {
             <ListItemText primary="Bem-vindo" />
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => handlePush("/lives")}>
+          <ListItem button onClick={() => handlePush({ pathname: "/lives" })}>
             <ListItemIcon>
               <LiveTvIcon style={{ color: "#fafafa" }} />
             </ListItemIcon>
             <ListItemText primary="Live" />
           </ListItem>
           {courses.search("448026") !== -1 && (
-            <ListItem button onClick={() => handlePush("/socio")}>
+            <ListItem button onClick={() => handlePush({ pathname: "/socio" })}>
               <ListItemIcon>
                 <RecentActorsIcon style={{ color: "#fafafa" }} />
               </ListItemIcon>
@@ -312,7 +328,11 @@ export default function Header(page) {
             </ListItem>
             <Collapse in={openList} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button className="nested" onClick={() => handlePush("/admin/live")}>
+                <ListItem
+                  button
+                  className="nested"
+                  onClick={() => handlePush({ pathname: "/admin/live" })}
+                >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
                       style={{ fontSize: 15, color: "#fafafa" }}
@@ -320,7 +340,11 @@ export default function Header(page) {
                   </ListItemIcon>
                   <ListItemText primary="Live" />
                 </ListItem>
-                <ListItem button className="nested" onClick={() => handlePush("/admin/socio")}>
+                <ListItem
+                  button
+                  className="nested"
+                  onClick={() => handlePush({ pathname: "/admin/socio" })}
+                >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
                       style={{ fontSize: 15, color: "#fafafa" }}
@@ -328,7 +352,11 @@ export default function Header(page) {
                   </ListItemIcon>
                   <ListItemText primary="Sócio" />
                 </ListItem>
-                <ListItem button className="nested" onClick={() => handlePush("/admin/usuario")}>
+                <ListItem
+                  button
+                  className="nested"
+                  onClick={() => handlePush({ pathname: "/admin/usuario" })}
+                >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
                       style={{ fontSize: 15, color: "#fafafa" }}
@@ -344,96 +372,3 @@ export default function Header(page) {
     </div>
   );
 }
-
-// import React, { useState } from 'react';
-// import { Link, useHistory } from 'react-router-dom';
-// import { FiPower } from 'react-icons/fi';
-// import { AppBar, Button, Menu, MenuItem, Toolbar, Tooltip, Typography, Fade } from '@material-ui/core';
-// import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-// import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-// import './style.css'
-
-// export default function Header() {
-//   const [token] = useState(localStorage.getItem('token'));
-//   const [username] = useState(localStorage.getItem('username'));
-//   const history = useHistory();
-
-//   if (token === '' || token === null) {
-//     history.push('/');
-//   }
-
-//   function handleLogout() {
-//     localStorage.clear();
-//     history.push('/');
-//   }
-
-//   function handleAffiliate() {
-//     window.open('https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760')
-//   }
-
-//   const [anchorEl, setAnchorEl] = React.useState(null);
-//   const open = Boolean(anchorEl);
-
-//   const handleClick = (event) => {
-//     setAnchorEl(event.currentTarget);
-//   };
-
-//   const handleClose = () => {
-//     setAnchorEl(null);
-//   };
-
-//   return (
-//     <div className="header">
-//       <AppBar className="menu" position="static">
-//         <Toolbar>
-//           <Link to="/" className="menuTitle">
-//             <img src="https://misterins.com.br/wp-content/themes/misterins/assets/images/logo.png" alt="mister-ins" />
-//           </Link>
-//           {localStorage.getItem('permission') === 'admin' &&
-//             <Link className="link" color="secondary" to="/admin">
-//               Administração
-//           </Link>
-//           }
-//           <Link
-//             variant="contained"
-//             color="secondary"
-//             title="Assistir Live"
-//             className="link"
-//             to="/lives"
-//           >
-//             Assistir Live
-//             </Link>
-//           {localStorage.getItem('permission') !== 'admin' &&
-//             <Button
-//               title="Seja um afiliado Mister Ins"
-//               className="affiliate-button"
-//               onClick={handleAffiliate}
-//             ><ThumbUpAltIcon></ThumbUpAltIcon> Afiliar-se</Button>
-//           }
-//           {/* <div>
-//             <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
-//               Open with fade transition
-//             </Button>
-//             <Menu
-//               id="fade-menu"
-//               anchorEl={anchorEl}
-//               keepMounted
-//               open={open}
-//               onClose={handleClose}
-//               TransitionComponent={Fade}
-//             >
-//               <MenuItem onClick={handleClose}>Profile</MenuItem>
-//               <MenuItem onClick={handleClose}>My account</MenuItem>
-//               <MenuItem onClick={handleClose}>Logout</MenuItem>
-//             </Menu>
-//           </div> */}
-//           <Tooltip title="Desconectar">
-//             <button className="menuButton" onClick={handleLogout} type="button">
-//               <Typography title="sair">{username}</Typography><FiPower size={16} color="#fff" />
-//             </button>
-//           </Tooltip>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// }

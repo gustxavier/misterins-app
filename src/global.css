@@ -157,6 +157,9 @@ form textarea {
 
 #root .MuiInputLabel-animated {
     color: #fafafa;
+    z-index: 1000;
+    background-color: #2d3238;
+    padding: 0px 4px;
 }
 
 #root .MuiFormLabel-root.Mui-focused {
@@ -269,4 +272,8 @@ input:-internal-autofill-selected {
 
 #root .text-center {
     text-align: center;
+}
+
+#root .MuiOutlinedInput-notchedOutline {
+    top: -0px;
 }

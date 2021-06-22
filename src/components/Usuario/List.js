@@ -29,8 +29,8 @@ export default function ListUsuarios() {
 
   const handleRowClick = React.useCallback((params) => {
     history.push({
-      pathname: "/admin/usuario/profile",
-      state: { id: params.row.id },
+      pathname: "/admin/usuario/profile/"+params.row.id,
+      // state: { id: params.row.id },
     });
   }, []);
 

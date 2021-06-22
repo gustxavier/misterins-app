@@ -18,14 +18,16 @@ import {
   AccordionDetails,
   FormGroup,
   FormControlLabel,
-  Checkbox
+  Checkbox,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { SimpleNoty } from "../../../../helpers/NotyFeedBack";
+import equal from 'fast-deep-equal'
+
 import "./styles.css";
 
-class Profile extends React.Component {
+class Profile extends React.PureComponent  {
   constructor(props) {
     super(props);
 
@@ -39,7 +41,7 @@ class Profile extends React.Component {
     }
 
     this.state = {
-      id_user: props.location.state.id,
+      id_user: props.match.params.id,
       spinner: true,
       name: "",
       email: "",
@@ -50,12 +52,16 @@ class Profile extends React.Component {
       password_confirm: "",
       token: localStorage.getItem("token"),
       courses: [],
-      checkedItems: new Map(),
+      checkedState: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmitUpdateUser = this.handleSubmitUpdateUser.bind(this);
     this.handleSubmitNewPassword = this.handleSubmitNewPassword.bind(this);
+    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
+    this.handleSubmitPermission = this.handleSubmitPermission.bind(this);
+    this.getUserInfo = this.getUserInfo.bind(this);
+    this.getCourses = this.getCourses.bind(this);
   }
 
   handleChange(event) {
@@ -71,11 +77,23 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserInfo()
-    this.getCourses()
+    this.setState({spinner: true})
+    this.getUserInfo();
+    this.getCourses();
   }
 
-  getUserInfo(){
+  componentDidUpdate(prevProps) {    
+    
+    if(!equal(this.props.match.params.id, prevProps.match.params.id)) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+    {
+      this.setState({id_user: this.props.match.params.id, spinner: true})
+      this.getUserInfo();
+      this.getCourses();
+    }
+  }
+
+  getUserInfo() {
+    this.setState({spinner: true})
     api
       .get("api/v1/users/" + this.state.id_user, {
         headers: {
@@ -108,7 +126,8 @@ class Profile extends React.Component {
       });
   }
 
-  getCourses(){
+  getCourses() {
+    this.setState({spinner: true})
     api
       .get("api/v1/courses/getCoursesByUser/" + this.state.id_user, {
         headers: {
@@ -116,7 +135,6 @@ class Profile extends React.Component {
         },
       })
       .then((response) => {
-        console.log(response)
         if (
           response.data.status &&
           (response.data.status === 401 || response.data.status === 498)
@@ -131,7 +149,17 @@ class Profile extends React.Component {
         }
         this.setState({
           spinner: false,
-          courses: response.data.all
+          courses: response.data.all,
+        });
+
+        response.data.all.forEach((element) => {
+          response.data.checked.forEach((el) => {
+            element.id === el.course_id
+              ? this.setState((prevState) => ({
+                  checkedState: [...prevState.checkedState, el.course_id],
+                }))
+              : console.log();
+          });
         });
         return response.data;
       });
@@ -165,7 +193,7 @@ class Profile extends React.Component {
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
-          this.props.history.push("/admin/usuario/profile");
+          this.props.history.push("/admin/usuario/profile/"+ this.state.id_user);
         }
       });
   }
@@ -192,20 +220,52 @@ class Profile extends React.Component {
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
-          this.props.history.push("/admin/usuario/profile");
+          this.props.history.push("/admin/usuario/profile/"+ this.state.id_user);
         }
       });
   }
 
-  handleSubmitPermission(event) {}
+  handleSubmitPermission(event) {
+    event.preventDefault();
+    this.setState({ spinner: true });
 
-  handleChangeCheckbox(event) {
-    let isChecked = event.target.checked;
-    let item = event.target.value;
+    api
+      .put("api/v1/users/updateUserHasCourses/" + this.state.id_user, this.state.checkedState, {
+        headers: {
+          Authorization: `Bearer ${this.state.token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.status && response.data.status === (401 || 498)) {
+          localStorage.clear();
+          SimpleSwal(
+            "<strong>Atenção</strong>",
+            response.data.message,
+            "warning"
+          );
+          this.props.history.push("/");
+        } else {
+          SimpleNoty("Sucesso! Dados Atualizados.", "success");
+          this.setState({ spinner: false });
+          this.props.history.push("/admin/usuario/profile/"+ this.state.id_user);
+        }
+      });
+  }
 
-    this.setState((prevState) => ({
-      checkedItems: prevState.checkedItems.set(item, isChecked),
-    }));
+  handleChangeCheckbox(position) {
+    let arrayChecked = this.state.checkedState;
+    
+    // Se encontrar a posição quer dizer que já existe, então removemos o valor do array 
+    if(arrayChecked.includes(position)){
+      arrayChecked.splice(arrayChecked.indexOf(position), 1)
+      this.setState({
+        checkedState: arrayChecked,
+      })
+    } else{ // caso contrário quer dizer que não existe, então adiciona
+      this.setState((prevState) => ({
+        checkedState: [...prevState.checkedState, position],
+      }));
+    }     
   }
 
   render() {
@@ -326,34 +386,6 @@ class Profile extends React.Component {
                                   <Typography> Atualizar dados</Typography>
                                 </Button>
                               </Grid>
-                              {/* <Grid item sm={12}>
-                            {/* <TextValidator
-                              label="Digite uma senha"
-                              variant="outlined"
-                              type="password"
-                              name="password"
-                              value={this.state.password}
-                              onChange={this.handleChange}
-                              validators={["required", "minStringLength:8"]}
-                              errorMessages={[
-                                "Por favor, insira uma senha",
-                                "Mínimo 8 caracteres",
-                              ]}
-                            />
-                            <TextValidator
-                              label="Confirme sua senha"
-                              variant="outlined"
-                              type="password"
-                              name="password_confirm"
-                              value={this.state.password_confirm}
-                              onChange={this.handleChange}
-                              validators={["isPasswordMatch", "required"]}
-                              errorMessages={[
-                                "As senhas não parecem ser iguais",
-                                "Por favor, confirme sua senha",
-                              ]}
-                            /> 
-                          </Grid> */}
                             </Grid>
                           </ValidatorForm>
                         </CardContent>
@@ -427,6 +459,7 @@ class Profile extends React.Component {
                           </Grid>
                         </Grid>
                       </ValidatorForm>
+                      {localStorage.getItem("permission") === "admin" && (
                       <ValidatorForm
                         ref={(r) => (this.form = r)}
                         onSubmit={this.handleSubmitPermission}
@@ -447,23 +480,33 @@ class Profile extends React.Component {
                               <AccordionDetails>
                                 <Grid container>
                                   <Grid item sm={12}>
-                                    {this.state.courses.length > 0 ? this.state.courses.map((item) => (
-                                      <FormGroup row>
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              checked={true}
-                                              onChange={this.handleChangeCheckbox}
-                                              name="coursesChecked"
-                                              value={item.id}
-                                              color="primary"
+                                    {this.state.courses.length > 0
+                                      ? this.state.courses.map((item) => (
+                                          <FormGroup row key={item.id}>
+                                            <FormControlLabel
+                                              control={
+                                                <Checkbox
+                                                  checked={
+                                                    this.state.checkedState.includes(
+                                                      item.id
+                                                    )
+                                                      ? true
+                                                      : false
+                                                  }
+                                                  onChange={() =>
+                                                    this.handleChangeCheckbox(
+                                                      item.id
+                                                    )
+                                                  }
+                                                  name="checkedCourses"
+                                                  color="primary"
+                                                />
+                                              }
+                                              label={item.title}
                                             />
-                                          }
-                                          label={item.title}
-                                        />
-                                    </FormGroup>
-                                     
-                                    )): null}
+                                          </FormGroup>
+                                        ))
+                                      : null}
                                   </Grid>
                                   <Grid item sm={4}>
                                     <Button
@@ -479,6 +522,7 @@ class Profile extends React.Component {
                           </Grid>
                         </Grid>
                       </ValidatorForm>
+                      )}
                     </CardContent>
                   </Card>
                 </Grid>
