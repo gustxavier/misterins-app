@@ -19,7 +19,7 @@ export default function Copy() {
   const [spinner, setSpinner] = useState(false);
   const history = useHistory();
 
-  useEffect(() => {}, [token, history]);
+  useEffect(() => {}, [token,   history]);
 
   return (
     <React.Fragment>
