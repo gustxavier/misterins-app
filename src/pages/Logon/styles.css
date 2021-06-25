@@ -9,9 +9,15 @@
     justify-content: center;
 }
 
+.logon-container img {
+    max-width: 50%;
+    margin: auto;
+    margin-bottom: 25px;
+}
+
 .logon-container section.form {
     width: 100%;
-    max-width: 350px;
+    max-width: 400px;
 }
 
 .logon-container section.form form h1 {

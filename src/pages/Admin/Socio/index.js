@@ -11,6 +11,7 @@ import {
 import api from "../../../services/api";
 import UpdateCopy from "../../../components/Socio/UpdateCopy";
 import UploadVideo from "../../../components/Socio/UploadVideo";
+import InsertCopy from "../../../components/Socio/InsertCopy";
 import Header from "../../../components/Header";
 import "./styles.css";
 
@@ -44,6 +45,9 @@ export default function Copy() {
                             O SÓCIO
                           </h2>
                           <Grid container>
+                            <Grid item xs={12} md={6}>
+                              <InsertCopy />
+                            </Grid>
                             <Grid item xs={12} md={6}>
                               <UpdateCopy />
                             </Grid>

@@ -1,5 +1,7 @@
 import React from "react";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/scss/bootstrap.scss'
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+// import '../node_modules/bootstrap/dist/js/bootstrap.esm.js';
 
 
 import "./global.css";

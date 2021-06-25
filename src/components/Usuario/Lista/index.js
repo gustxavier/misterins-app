@@ -5,14 +5,14 @@ import {
   Grid,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import api from "../../services/api";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
+import api from "../../../services/api.js";
+import { SimpleSwal } from "../../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
 import "./style.css";
 
-export default function ListUsuarios() {
+export default function Lista() {
   const [items, setItems] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const [spinner, setSpinner] = useState(true);

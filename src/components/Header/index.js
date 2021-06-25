@@ -269,6 +269,11 @@ export default function Header(page) {
         className="theme-dark"
         open={open}
       >
+        <div className="row m-0">
+          <div className="col-md-4 pb-1 bg-dark"></div>
+          <div className="col-md-4 pb-1 bg-primary"></div>
+          <div className="col-md-4 pb-1 bg-danger"></div>
+        </div>
         <div className={classes.toolbarIcon}>
           <img src={logo} alt="mister-ins" />
           <IconButton color="secondary" onClick={handleDrawerClose}>

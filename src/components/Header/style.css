@@ -1,5 +1,6 @@
 #root .inset {
     padding-left: 72px;
+    border-top: 1px solid #3d3d48;
 }
 
 #root .toolbar {

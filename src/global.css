@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
 * {
     margin: 0;
     padding: 0;
@@ -72,7 +72,7 @@ form textarea {
     background: #3498db;
     border: 0;
     border-radius: 8px;
-    color: #FFF;
+    color: #fff;
     font-weight: 700;
     margin-top: 16px;
     display: inline-block;
@@ -137,7 +137,7 @@ form textarea {
 
 #root .MuiInputBase-input {
     color: #fafafa;
-    background-color: #2d3238;
+    background-color: #27272d;
     padding: 15px;
 }
 
@@ -152,14 +152,13 @@ form textarea {
 
 #root .MuiInput-underline:after {
     border-bottom-color: #3498db;
-    ;
 }
 
 #root .MuiInputLabel-animated {
     color: #fafafa;
     z-index: 1000;
-    background-color: #2d3238;
-    padding: 0px 4px;
+    background-color: #27272d;
+    padding: 0px 8px;
 }
 
 #root .MuiFormLabel-root.Mui-focused {
@@ -197,7 +196,7 @@ input:-internal-autofill-selected {
 .content {
     flex-grow: 1;
     height: 100vh;
-    overflow: 'auto';
+    overflow: "auto";
 }
 
 #root .content-dark {
@@ -276,4 +275,22 @@ input:-internal-autofill-selected {
 
 #root .MuiOutlinedInput-notchedOutline {
     top: -0px;
+}
+
+.modal {
+    z-index: 10000;
+}
+
+#root .modal .MuiInputBase-input {
+    color: #222;
+    background-color: #fff;
+}
+
+#root .modal .MuiInputLabel-animated {
+    color: #222 !important;
+    background-color: #fff;
+}
+
+.MuiGrid-item {
+    padding: 12px 8px;
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import api from "../../../../services/api";
-import { SimpleSwal } from "../../../../helpers/SwalFeedBack";
+import api from "../../../services/api";
+import { SimpleSwal } from "../../../helpers/SwalFeedBack";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
-import Header from "../../../../components/Header";
+import Header from "../../Header";
 import InputMask from "react-input-mask";
 import {
   Button,
@@ -22,12 +22,12 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { SimpleNoty } from "../../../../helpers/NotyFeedBack";
-import equal from 'fast-deep-equal'
+import { SimpleNoty } from "../../../helpers/NotyFeedBack";
+import equal from "fast-deep-equal";
 
 import "./styles.css";
 
-class Profile extends React.PureComponent  {
+class Profile extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -77,23 +77,22 @@ class Profile extends React.PureComponent  {
   }
 
   componentDidMount() {
-    this.setState({spinner: true})
+    this.setState({ spinner: true });
     this.getUserInfo();
     this.getCourses();
   }
 
-  componentDidUpdate(prevProps) {    
-    
-    if(!equal(this.props.match.params.id, prevProps.match.params.id)) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-    {
-      this.setState({id_user: this.props.match.params.id, spinner: true})
+  componentDidUpdate(prevProps) {
+    if (!equal(this.props.match.params.id, prevProps.match.params.id)) {
+      // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+      this.setState({ id_user: this.props.match.params.id, spinner: true });
       this.getUserInfo();
       this.getCourses();
     }
   }
 
   getUserInfo() {
-    this.setState({spinner: true})
+    this.setState({ spinner: true });
     api
       .get("api/v1/users/" + this.state.id_user, {
         headers: {
@@ -127,7 +126,7 @@ class Profile extends React.PureComponent  {
   }
 
   getCourses() {
-    this.setState({spinner: true})
+    this.setState({ spinner: true });
     api
       .get("api/v1/courses/getCoursesByUser/" + this.state.id_user, {
         headers: {
@@ -193,7 +192,9 @@ class Profile extends React.PureComponent  {
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
-          this.props.history.push("/admin/usuario/profile/"+ this.state.id_user);
+          this.props.history.push(
+            "/admin/usuario/profile/" + this.state.id_user
+          );
         }
       });
   }
@@ -220,7 +221,9 @@ class Profile extends React.PureComponent  {
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
-          this.props.history.push("/admin/usuario/profile/"+ this.state.id_user);
+          this.props.history.push(
+            "/admin/usuario/profile/" + this.state.id_user
+          );
         }
       });
   }
@@ -230,11 +233,15 @@ class Profile extends React.PureComponent  {
     this.setState({ spinner: true });
 
     api
-      .put("api/v1/users/updateUserHasCourses/" + this.state.id_user, this.state.checkedState, {
-        headers: {
-          Authorization: `Bearer ${this.state.token}`,
-        },
-      })
+      .put(
+        "api/v1/users/updateUserHasCourses/" + this.state.id_user,
+        this.state.checkedState,
+        {
+          headers: {
+            Authorization: `Bearer ${this.state.token}`,
+          },
+        }
+      )
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
@@ -247,25 +254,26 @@ class Profile extends React.PureComponent  {
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
-          this.props.history.push("/admin/usuario/profile/"+ this.state.id_user);
+          this.props.history.push(
+            "/admin/usuario/profile/" + this.state.id_user
+          );
         }
       });
   }
 
   handleChangeCheckbox(position) {
     let arrayChecked = this.state.checkedState;
-    
-    // Se encontrar a posição quer dizer que já existe, então removemos o valor do array 
-    if(arrayChecked.includes(position)){
-      arrayChecked.splice(arrayChecked.indexOf(position), 1)
-      this.setState({
-        checkedState: arrayChecked,
-      })
-    } else{ // caso contrário quer dizer que não existe, então adiciona
+
+    if (arrayChecked.includes(position)) {
+      // Se encontrar a posição quer dizer que já existe, então removemos o valor do array
+      arrayChecked.splice(arrayChecked.indexOf(position), 1);
+      this.setState({ checkedState: [...arrayChecked] });
+    } else {
+      // caso contrário quer dizer que não existe, então adiciona
       this.setState((prevState) => ({
         checkedState: [...prevState.checkedState, position],
       }));
-    }     
+    }
   }
 
   render() {
@@ -460,68 +468,68 @@ class Profile extends React.PureComponent  {
                         </Grid>
                       </ValidatorForm>
                       {localStorage.getItem("permission") === "admin" && (
-                      <ValidatorForm
-                        ref={(r) => (this.form = r)}
-                        onSubmit={this.handleSubmitPermission}
-                        onError={(errors) => console.log(errors)}
-                      >
-                        <Grid container>
-                          <Grid item sm={12}>
-                            <Accordion className="permissions">
-                              <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                              >
-                                <Typography className={"heading"}>
-                                  PERMISSÕES / CURSOS
-                                </Typography>
-                              </AccordionSummary>
-                              <AccordionDetails>
-                                <Grid container>
-                                  <Grid item sm={12}>
-                                    {this.state.courses.length > 0
-                                      ? this.state.courses.map((item) => (
-                                          <FormGroup row key={item.id}>
-                                            <FormControlLabel
-                                              control={
-                                                <Checkbox
-                                                  checked={
-                                                    this.state.checkedState.includes(
-                                                      item.id
-                                                    )
-                                                      ? true
-                                                      : false
-                                                  }
-                                                  onChange={() =>
-                                                    this.handleChangeCheckbox(
-                                                      item.id
-                                                    )
-                                                  }
-                                                  name="checkedCourses"
-                                                  color="primary"
-                                                />
-                                              }
-                                              label={item.title}
-                                            />
-                                          </FormGroup>
-                                        ))
-                                      : null}
+                        <ValidatorForm
+                          ref={(r) => (this.form = r)}
+                          onSubmit={this.handleSubmitPermission}
+                          onError={(errors) => console.log(errors)}
+                        >
+                          <Grid container>
+                            <Grid item sm={12}>
+                              <Accordion className="permissions">
+                                <AccordionSummary
+                                  expandIcon={<ExpandMoreIcon />}
+                                  aria-controls="panel1a-content"
+                                  id="panel1a-header"
+                                >
+                                  <Typography className={"heading"}>
+                                    PERMISSÕES / CURSOS
+                                  </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                  <Grid container>
+                                    <Grid item sm={12}>
+                                      {this.state.courses.length > 0
+                                        ? this.state.courses.map((item) => (
+                                            <FormGroup row key={item.id}>
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    checked={
+                                                      this.state.checkedState.includes(
+                                                        item.id
+                                                      )
+                                                        ? true
+                                                        : false
+                                                    }
+                                                    onChange={() =>
+                                                      this.handleChangeCheckbox(
+                                                        item.id
+                                                      )
+                                                    }
+                                                    name="checkedCourses"
+                                                    color="primary"
+                                                  />
+                                                }
+                                                label={item.title}
+                                              />
+                                            </FormGroup>
+                                          ))
+                                        : null}
+                                    </Grid>
+                                    <Grid item sm={4}>
+                                      <Button
+                                        className="button btn-inline"
+                                        type="submit"
+                                      >
+                                        <Typography>Atualizar</Typography>
+                                      </Button>
+                                    </Grid>
                                   </Grid>
-                                  <Grid item sm={4}>
-                                    <Button
-                                      className="button btn-inline"
-                                      type="submit"
-                                    >
-                                      <Typography>Atualizar</Typography>
-                                    </Button>
-                                  </Grid>
-                                </Grid>
-                              </AccordionDetails>
-                            </Accordion>
+                                </AccordionDetails>
+                              </Accordion>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </ValidatorForm>
+                        </ValidatorForm>
                       )}
                     </CardContent>
                   </Card>

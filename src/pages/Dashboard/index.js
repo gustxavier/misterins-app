@@ -1,24 +1,23 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { CircularProgress, Container, Grid } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { Container, Grid } from "@material-ui/core";
+import React from "react";
 import Header from "../../components/Header";
 import "./style.css";
 import cachimbo from '../../assets/images/cachimbo.png';
 
 
 export default function Dashboard() {
-  const [spinner, setSpinner] = useState(false);
   return (
     <React.Fragment>
       <div className={"d-flex"}>
         <Header title={"Dashboard"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
-          {spinner && (
+          {/* {spinner && (
             <div id="spinner-live" className="spinner">
               <CircularProgress />
             </div>
-          )}
+          )} */}
           <Container maxWidth="lg" className={"container"}>
             <Grid container>
               <Grid item md={12}>

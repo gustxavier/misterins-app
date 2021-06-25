@@ -9,7 +9,7 @@ import { withRouter } from 'react-router';
 import { SimpleSwal } from '../../../helpers/SwalFeedBack';
 import { SimpleNoty } from '../../../helpers/NotyFeedBack';
 
-class InsertCopy extends React.Component {
+class InsertCopy extends React.Component  {
 
     constructor(props) {
         super(props);
