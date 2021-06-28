@@ -1,9 +1,16 @@
-.input-file{
+.input-file {
     margin-bottom: 10px;
     border: 1px solid rgb(41, 41, 41) !important;
     border-radius: 5px;
 }
 
-#root .MuiInput-underline:before{
+#root .MuiInput-underline:before {
     display: none;
+}
+
+#root .single-video-download {
+    background-color: #ffffff;
+    margin: 10px auto;
+    border-radius: 5px;
+    padding: 0px 10px;
 }

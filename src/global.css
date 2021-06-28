@@ -32,7 +32,6 @@ button {
 
 #root .MuiGrid-item {
     padding: 0px 5px;
-    margin-bottom: 15px;
     width: 100%;
     display: inline-table;
 }
@@ -293,4 +292,19 @@ input:-internal-autofill-selected {
 
 .MuiGrid-item {
     padding: 12px 8px;
+}
+
+#root .download-progress {
+    position: fixed;
+    top: 0px;
+    width: 88%;
+    background: #000000cf;
+    z-index: 10;
+    height: 100%;
+}
+
+#root .MuiLinearProgress-colorSecondary {
+    top: 50%;
+    width: 50%;
+    margin: auto;
 }

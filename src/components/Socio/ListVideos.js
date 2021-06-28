@@ -1,18 +1,18 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Box, Button, Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
+import ReactPlayer from "react-player";
 
 function ListVideos(param) {
   const [items, setItems] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const history = useHistory();
-  const [percentage, setPercent] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -40,10 +40,14 @@ function ListVideos(param) {
         localStorage.clear();
         history.push("/");
       });
-  }, [token, history, param]);
+
+    if (param.onChange) {
+      param.onChange(progress);
+    }
+  }, [token, history, param, progress]);
 
   async function download(id, file_name) {
-    setLoading(true);
+    setProgress(0.5);
     api
       .get("api/v1/videovdi/downloadVideo/" + id, {
         headers: {
@@ -51,10 +55,11 @@ function ListVideos(param) {
         },
         responseType: "blob",
         onDownloadProgress: (progressEvent) => {
-          console.log(progressEvent);
-          setPercent(
-            Math.round((progressEvent.loaded * 100) / progressEvent.total)
-          ); // you can use this to show user percentage of file downloaded
+          const oldProgress =
+            (progressEvent.loaded * 100) / progressEvent.total;
+          setProgress(() => {
+            return oldProgress;
+          });
         },
       })
       .then((response) => {
@@ -62,7 +67,7 @@ function ListVideos(param) {
         link.href = window.URL.createObjectURL(new Blob([response.data]));
         link.download = file_name;
         link.click();
-        setLoading(false);
+        setProgress(0);
       })
       .catch((error) => {
         localStorage.clear();
@@ -72,14 +77,13 @@ function ListVideos(param) {
 
   return (
     <div>
-      {/* <p>{percentage}</p> */}
       {items.length > 0 ? (
-        <div className="videos">
+        <div className="videos mb-4">
           <Grid container>
             <Grid item md={12}>
               <Typography
-                variant="h5"
-                component="h5"
+                variant="h6"
+                component="h6"
                 align="center"
                 gutterBottom
                 className="white"
@@ -90,28 +94,33 @@ function ListVideos(param) {
 
             {items.length > 0
               ? items.map((list) => (
-                  <Grid key={list.id} item xs={12} md={2}>
+                  <Grid
+                    key={list.id}
+                    item
+                    xs={12}
+                    md={2}
+                    className="single-video-download"
+                  >
+                    <ReactPlayer
+                      url={
+                        "https://api.misterins.com.br/public/storage/" +
+                        list.path
+                      }
+                      width={"248px"}
+                    />
+
                     <Button
-                      className="button"
+                      className="button mt-2"
                       align="center"
                       onClick={() => download(list.id, list.file_name)}
-                      startIcon={<PlayCircleOutlineIcon />}
                       endIcon={<GetAppIcon />}
                       title="Download"
                       type="submit"
                       disabled={loading}
                     >
-                      {loading && (
-                        <span className="inline">
-                          <FontAwesomeIcon icon={faSync} spin />{" "}
-                          <Typography className="spin"> Baixando...</Typography>
-                        </span>
-                      )}
-                      {!loading && (
-                        <span className="inline">
-                          <Typography>{list.title}</Typography>
-                        </span>
-                      )}
+                      <span className="inline">
+                        <Typography>{list.title}</Typography>
+                      </span>
                     </Button>
                   </Grid>
                 ))

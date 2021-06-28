@@ -6,6 +6,7 @@ import {
   Grid,
   Typography,
   CircularProgress,
+  LinearProgress,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -25,6 +26,8 @@ export default function Socio() {
   const [token] = useState(localStorage.getItem("token"));
   const history = useHistory();
   const [spinner, setSpinner] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const eventhandler = (data) => setProgress(data);
 
   useEffect(() => {
     api
@@ -72,9 +75,18 @@ export default function Socio() {
               <CircularProgress />
             </div>
           )}
+          {progress > 0 ? (
+            <div className="download-progress">
+              <LinearProgress
+                variant="determinate"
+                color="secondary"
+                value={progress}
+              />
+            </div>
+          ) : null}
           <Container maxWidth="xl" className={"container"}>
             <Grid container>
-              <Grid item xs={12} md={12}>
+              <Grid item xs={12} md={12} className="mb-4">
                 <Card className="card">
                   <CardContent>
                     <Button
@@ -82,12 +94,14 @@ export default function Socio() {
                       className="affiliate-button"
                       onClick={handleAffiliate}
                     >
-                      <Typography variant="h5"><ThumbUpAltIcon />  Afiliar-se</Typography>
+                      <Typography variant="h6">
+                        <ThumbUpAltIcon /> Afiliar-se
+                      </Typography>
                     </Button>
                     <Typography
                       gutterBottom
-                      variant="h4"
-                      component="h2"
+                      variant="h6"
+                      component="h6"
                       className="white"
                     >
                       Copy dos Anúncios
@@ -196,13 +210,16 @@ export default function Socio() {
                   <CardContent>
                     <Typography
                       gutterBottom
-                      variant="h4"
-                      component="h2"
+                      variant="h6"
+                      component="h6"
                       className="white"
                     >
                       Vídeos
                     </Typography>
-                    <ListVideos type={"story"}></ListVideos>
+                    <ListVideos
+                      type={"story"}
+                      onChange={eventhandler}
+                    ></ListVideos>
                     <ListVideos type={"feed"}></ListVideos>
                   </CardContent>
                 </Card>

@@ -10,7 +10,6 @@
     margin-bottom: 10px;
     background: #3498db;
     color: #fff;
-    padding: 15px;
 }
 
 .videos .button:hover {
@@ -20,11 +19,9 @@
 #root .affiliate-button {
     background-color: #007eff;
     color: #fafafa;
-    margin-right: 15px;
-    padding: 10px 15px;
     margin: auto;
     display: block;
-    width: 260px;
+    width: 200px;
 }
 
 #root .affiliate-button:hover {
