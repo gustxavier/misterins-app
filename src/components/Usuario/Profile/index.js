@@ -31,15 +31,6 @@ class Profile extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    if (!ValidatorForm.hasValidationRule("isPasswordMatch")) {
-      ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
-        if (value !== this.state.password) {
-          return false;
-        }
-        return true;
-      });
-    }
-
     this.state = {
       id_user: props.match.params.id,
       spinner: true,
@@ -80,6 +71,12 @@ class Profile extends React.PureComponent {
     this.setState({ spinner: true });
     this.getUserInfo();
     this.getCourses();
+    ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
+      if (value !== this.state.password) {
+        return false;
+      }
+      return true;
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -94,7 +91,7 @@ class Profile extends React.PureComponent {
   getUserInfo() {
     this.setState({ spinner: true });
     api
-      .get("api/v1/users/" + this.state.id_user, {
+      .get("users/" + this.state.id_user, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -128,7 +125,7 @@ class Profile extends React.PureComponent {
   getCourses() {
     this.setState({ spinner: true });
     api
-      .get("api/v1/courses/getCoursesByUser/" + this.state.id_user, {
+      .get("courses/getCoursesByUser/" + this.state.id_user, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -175,7 +172,7 @@ class Profile extends React.PureComponent {
     this.setState({ spinner: true });
 
     api
-      .put("api/v1/users/" + this.state.id_user, this.state, {
+      .put("users/" + this.state.id_user, this.state, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -204,7 +201,7 @@ class Profile extends React.PureComponent {
     this.setState({ spinner: true });
 
     api
-      .put("api/v1/users/updatePassword/" + this.state.id_user, this.state, {
+      .put("users/updatePassword/" + this.state.id_user, this.state, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -234,7 +231,7 @@ class Profile extends React.PureComponent {
 
     api
       .put(
-        "api/v1/users/updateUserHasCourses/" + this.state.id_user,
+        "users/updateUserHasCourses/" + this.state.id_user,
         this.state.checkedState,
         {
           headers: {
@@ -401,7 +398,7 @@ class Profile extends React.PureComponent {
                       <ValidatorForm
                         ref={(r) => (this.form = r)}
                         onSubmit={this.handleSubmitNewPassword}
-                        onError={(errors) => console.log(errors)}
+                        // onError={(errors) => console.log(errors)}
                       >
                         <Grid container>
                           <Grid item sm={12}>
@@ -427,7 +424,7 @@ class Profile extends React.PureComponent {
                                       onChange={this.handleChange}
                                       validators={[
                                         "required",
-                                        "minStringLength:8",
+                                        "matchRegexp:^.{8,}$",
                                       ]}
                                       errorMessages={[
                                         "Por favor, insira uma senha",
