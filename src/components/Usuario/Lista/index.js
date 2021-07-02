@@ -30,13 +30,12 @@ export default function Lista() {
   const handleRowClick = React.useCallback((params) => {
     history.push({
       pathname: "/admin/usuario/profile/"+params.row.id,
-      // state: { id: params.row.id },
     });
   }, []);
 
   useEffect(() => {
     api
-      .get("api/v1/users", {
+      .get("users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import api from "../../services/api";
 
 import {
@@ -43,13 +43,13 @@ class UpdateLive extends React.Component {
   }
 
   componentDidMount() {
-    this.getLive(1);
     this.getCourses();
+    this.getLive(1);
   }
 
   getLive($id) {
     api
-      .get("api/v1/lives/" + $id, {
+      .get("lives/" + $id, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -80,7 +80,7 @@ class UpdateLive extends React.Component {
 
   getCourses() {
     api
-      .get("api/v1/courses/", {
+      .get("courses/", {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -103,7 +103,7 @@ class UpdateLive extends React.Component {
     this.setState({ loading: true, spinner: true });
 
     api
-      .put("api/v1/lives/1", this.state, {
+      .put("lives/1", this.state, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },

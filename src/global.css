@@ -280,6 +280,15 @@ input:-internal-autofill-selected {
     z-index: 10000;
 }
 
+.modal .MuiOutlinedInput-notchedOutline {
+    top: 0px;
+}
+
+.modal .MuiOutlinedInput-notchedOutline legend {
+    background-color: #fff;
+    top: -5px;
+}
+
 #root .modal .MuiInputBase-input {
     color: #222;
     background-color: #fff;

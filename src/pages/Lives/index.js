@@ -35,7 +35,7 @@ export default function Lives() {
   useEffect(() => {
     getLiveLink();
     // getAllComments()
-    // api.get('api/v1/live-comment', {
+    // api.get('live-comment', {
     //   headers: {
     //     Authorization: `Bearer ${token}`,
     //   },
@@ -67,7 +67,7 @@ export default function Lives() {
     };
 
     api
-      .post("api/v1/live-comment", data, {
+      .post("live-comment", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -113,7 +113,7 @@ export default function Lives() {
 
   async function getLiveLink() {
     api
-      .get("api/v1/lives", {
+      .get("lives", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -144,7 +144,7 @@ export default function Lives() {
 
   async function getAllComments() {
     api
-      .get("api/v1/live-comment/live/1", {
+      .get("live-comment/live/1", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

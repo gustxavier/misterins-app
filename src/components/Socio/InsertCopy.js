@@ -17,7 +17,7 @@ export default function InsertCopy() {
     let data
     data = {title,important_text,description}
     api
-      .post("api/v1/copy", data, {
+      .post("copy", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

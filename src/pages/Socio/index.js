@@ -27,11 +27,10 @@ export default function Socio() {
   const history = useHistory();
   const [spinner, setSpinner] = useState(true);
   const [progress, setProgress] = useState(0);
-  const eventhandler = (data) => setProgress(data);
 
   useEffect(() => {
     api
-      .get("api/v1/copy", {
+      .get("copy", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,6 +61,10 @@ export default function Socio() {
     window.open(
       "https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760"
     );
+  }
+
+  function handleProgress(event) {
+    setProgress(event);
   }
 
   return (
@@ -114,22 +117,23 @@ export default function Socio() {
                                 text={list.title}
                                 onCopy={() =>
                                   SimpleNoty(
-                                    "Sucesso! Informação copiada.",
+                                    "Sucesso! Título copiado.",
                                     "success"
                                   )
                                 }
                               >
                                 <Button
+                                  className="mb-1"
                                   variant="contained"
                                   color="secondary"
                                   size="small"
                                   startIcon={<FileCopyIcon />}
                                 >
-                                  Copiar Título
+                                  Copiar
                                 </Button>
                               </CopyToClipboard>
-                              <Typography variant="h6" className="white">
-                                Título
+                              <Typography className="white">
+                                <strong>Título</strong>
                               </Typography>
                               <Typography
                                 gutterBottom
@@ -144,26 +148,23 @@ export default function Socio() {
                                 text={list.important_text}
                                 onCopy={() =>
                                   SimpleNoty(
-                                    "Sucesso! Informação copiada.",
+                                    "Sucesso! Texto principal copiado.",
                                     "success"
                                   )
                                 }
                               >
                                 <Button
+                                  className="mb-1"
                                   variant="contained"
                                   color="secondary"
                                   size="small"
                                   startIcon={<FileCopyIcon />}
                                 >
-                                  Copiar Texto Principal
+                                  Copiar
                                 </Button>
                               </CopyToClipboard>
-                              <Typography
-                                variant="h6"
-                                component="h6"
-                                className="white"
-                              >
-                                Texto Principal
+                              <Typography className="white">
+                                <strong>Texto Principal</strong>
                               </Typography>
                               <Typography variant="body2" gutterBottom>
                                 {list.important_text}
@@ -174,26 +175,23 @@ export default function Socio() {
                                 text={list.description}
                                 onCopy={() =>
                                   SimpleNoty(
-                                    "Sucesso! Informação copiada.",
+                                    "Sucesso! descrição copiada.",
                                     "success"
                                   )
                                 }
                               >
                                 <Button
+                                  className="mb-1"
                                   variant="contained"
                                   color="secondary"
                                   size="small"
                                   startIcon={<FileCopyIcon />}
                                 >
-                                  Copiar Descrição
+                                  Copiar
                                 </Button>
                               </CopyToClipboard>
-                              <Typography
-                                variant="h6"
-                                component="h6"
-                                className="white"
-                              >
-                                Descrição
+                              <Typography className="white">
+                                <strong>Descrição</strong>
                               </Typography>
                               <Typography variant="body2">
                                 {list.description}
@@ -218,7 +216,7 @@ export default function Socio() {
                     </Typography>
                     <ListVideos
                       type={"story"}
-                      onChange={eventhandler}
+                      onChange={handleProgress}
                     ></ListVideos>
                     <ListVideos type={"feed"}></ListVideos>
                   </CardContent>

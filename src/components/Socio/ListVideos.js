@@ -1,11 +1,9 @@
-import { Box, Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, LinearProgress, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/free-solid-svg-icons";
 import ReactPlayer from "react-player";
 
 function ListVideos(param) {
@@ -13,17 +11,19 @@ function ListVideos(param) {
   const [token] = useState(localStorage.getItem("token"));
   const history = useHistory();
   const [progress, setProgress] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (param.onChange) {
+      param.onChange(progress);
+    }
+
     api
-      .get("api/v1/videovdi/getByType/" + param.type, {
+      .get("videovdi/getByType/" + param.type, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
           SimpleSwal(
@@ -40,26 +40,18 @@ function ListVideos(param) {
         localStorage.clear();
         history.push("/");
       });
-
-    if (param.onChange) {
-      param.onChange(progress);
-    }
   }, [token, history, param, progress]);
 
   async function download(id, file_name) {
-    setProgress(0.5);
+    setProgress(0.1);
     api
-      .get("api/v1/videovdi/downloadVideo/" + id, {
+      .get("videovdi/downloadVideo/" + id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         responseType: "blob",
         onDownloadProgress: (progressEvent) => {
-          const oldProgress =
-            (progressEvent.loaded * 100) / progressEvent.total;
-          setProgress(() => {
-            return oldProgress;
-          });
+          setProgress((progressEvent.loaded * 100) / progressEvent.total);
         },
       })
       .then((response) => {
@@ -91,7 +83,6 @@ function ListVideos(param) {
                 Anúncios para {items[0]["type"]}
               </Typography>
             </Grid>
-
             {items.length > 0
               ? items.map((list) => (
                   <Grid
@@ -101,27 +92,28 @@ function ListVideos(param) {
                     md={2}
                     className="single-video-download"
                   >
-                    <ReactPlayer
-                      url={
-                        "https://api.misterins.com.br/public/storage/" +
-                        list.path
-                      }
-                      width={"248px"}
-                    />
+                    <div className="player">
+                      <ReactPlayer
+                        url={
+                          "https://api.misterins.com.br/public/storage/" +
+                          list.path
+                        }
+                        width={"100%"}
+                      />
 
-                    <Button
-                      className="button mt-2"
-                      align="center"
-                      onClick={() => download(list.id, list.file_name)}
-                      endIcon={<GetAppIcon />}
-                      title="Download"
-                      type="submit"
-                      disabled={loading}
-                    >
-                      <span className="inline">
-                        <Typography>{list.title}</Typography>
-                      </span>
-                    </Button>
+                      <Button
+                        className="button mt-2"
+                        align="center"
+                        onClick={() => download(list.id, list.file_name)}
+                        endIcon={<GetAppIcon />}
+                        title="Download"
+                        type="submit"
+                      >
+                        <span className="inline">
+                          <Typography>{list.title}</Typography>
+                        </span>
+                      </Button>
+                    </div>
                   </Grid>
                 ))
               : null}

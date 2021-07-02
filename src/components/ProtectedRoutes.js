@@ -8,7 +8,7 @@ export default function ProtectedRoute(props) {
     const Component = props.component;
 
     useEffect(() => {
-        api.get('api/v1/users/isLogged/',
+        api.get('users/isLogged/',
             null, {
             headers: {
                 Authorization: `Bearer ${token}`,

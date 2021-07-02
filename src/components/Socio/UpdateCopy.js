@@ -32,7 +32,7 @@ class UpdateCopy extends React.Component {
     }
 
     getCopy($id) {
-        api.get('api/v1/copy/' + $id,
+        api.get('copy/' + $id,
             {
             headers: {
                 Authorization: `Bearer ${this.state.token}`,
@@ -56,7 +56,7 @@ class UpdateCopy extends React.Component {
         event.preventDefault();
         this.setState({ loading: true })
 
-        api.put('api/v1/copy/1',
+        api.put('copy/1',
             this.state, {
             headers: {
                 Authorization: `Bearer ${this.state.token}`,

@@ -9,8 +9,12 @@
 }
 
 #root .single-video-download {
-    background-color: #ffffff;
     margin: 10px auto;
-    border-radius: 5px;
     padding: 0px 10px;
+}
+
+#root .player {
+    background-color: #3e3e44;
+    padding: 0px 10px;
+    border-radius: 5px;
 }

@@ -51,6 +51,15 @@ class Register extends React.Component {
     });
   }
 
+  componentDidMount(){
+    ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
+      if (value !== this.state.password) {
+        return false;
+      }
+      return true;
+    });
+  }
+
   componentWillUnmount() {
     if (ValidatorForm.hasValidationRule("isPasswordMatch")) {
       ValidatorForm.removeValidationRule("isPasswordMatch");
@@ -231,7 +240,7 @@ class Register extends React.Component {
                         name="password"
                         value={this.state.password}
                         onChange={this.handleChange}
-                        validators={["required", "minStringLength:8"]}
+                        validators={["required", "matchRegexp:^.{8,}$"]}
                         errorMessages={[
                           "Por favor, insira uma senha",
                           "Mínimo 8 caracteres",

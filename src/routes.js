@@ -12,7 +12,6 @@ import LiveAdmin from "./pages/Admin/Live";
 import Usuario from "./pages/Admin/Usuario";
 import Profile from "./components/Usuario/Profile";
 
-
 export default function Routes() {
   return (
     <BrowserRouter>

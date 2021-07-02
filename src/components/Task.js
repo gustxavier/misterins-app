@@ -31,7 +31,7 @@ export default function Task({ list,listId }) {
 
   const getTasks = async(list_id='') =>{
     const getList = list_id === '' ? list : list_id;
-    const response = await api.get(`api/v1/list/tasks/${getList}`, {
+    const response = await api.get(`list/tasks/${getList}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -46,7 +46,7 @@ export default function Task({ list,listId }) {
     event.preventDefault();
     const taskId = parseInt(event.target.value);
 
-    api.put(`api/v1/task/close/${taskId}`, {} ,{
+    api.put(`task/close/${taskId}`, {} ,{
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -56,7 +56,7 @@ export default function Task({ list,listId }) {
   };
   
   const handleDelete = async (task) => {
-    api.delete(`/api/v1/tasks/${task}`, {
+    api.delete(`/tasks/${task}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }

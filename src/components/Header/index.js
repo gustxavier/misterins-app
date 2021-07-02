@@ -121,7 +121,7 @@ export default function Header(page) {
     history.push({
       pathname: params.pathname,
     });
-  }, []);
+  }, [history]);
 
   const handleClickList = () => {
     setOpenList(!openList);

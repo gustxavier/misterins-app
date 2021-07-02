@@ -48,7 +48,7 @@ class Logon extends React.Component {
 
     try {
       this.setState({ loading: true });
-      const response = await api.post("api/login", { email, password });
+      const response = await api.post("login", { email, password });
 
       localStorage.setItem("userid", response.data.id);
       localStorage.setItem("token", response.data.token);

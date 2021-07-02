@@ -30,7 +30,7 @@ class InsertCopy extends React.Component  {
         event.preventDefault();
         this.setState({ loading: true })
 
-        api.post('api/v1/copy', 
+        api.post('copy', 
         this.state, {
             headers: {
                 Authorization: `Bearer ${this.state.token}`,
