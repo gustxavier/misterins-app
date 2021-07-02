@@ -80,11 +80,11 @@ class UpdateLive extends React.Component {
 
   getCourses() {
     api
-      .get("courses/", {
-        headers: {
-          Authorization: `Bearer ${this.state.token}`,
-        },
-      })
+    .get("courses", {
+      headers: {
+        Authorization: `Bearer ${this.state.token}`,
+      },
+    })
       .then((response) => {
         if (
           response.data.status &&

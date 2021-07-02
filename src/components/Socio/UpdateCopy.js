@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import api from '../../services/api';
 
 import { Button, Grid, TextField, Typography } from '@material-ui/core';

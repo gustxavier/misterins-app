@@ -31,7 +31,7 @@ export default function Lista() {
     history.push({
       pathname: "/admin/usuario/profile/"+params.row.id,
     });
-  }, []);
+  }, [history]);
 
   useEffect(() => {
     api

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Button,
   Card,
   CardContent,
-  CircularProgress,
   Container,
   Grid,
 } from "@material-ui/core";
-import api from "../../../services/api";
 import UpdateCopy from "../../../components/Socio/UpdateCopy";
 import UploadVideo from "../../../components/Socio/UploadVideo";
 import InsertCopy from "../../../components/Socio/InsertCopy";
@@ -17,7 +14,6 @@ import "./styles.css";
 
 export default function Copy() {
   const [token] = useState(localStorage.getItem("token"));
-  const [spinner, setSpinner] = useState(false);
   const history = useHistory();
 
   useEffect(() => {}, [token,   history]);
@@ -28,11 +24,6 @@ export default function Copy() {
         <Header title={"Admin - Sócio"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
-          {spinner && (
-            <div id="spinner-live" className="spinner">
-              <CircularProgress />
-            </div>
-          )}
           <Container maxWidth="xl" className={"container"}>
             <Grid container>
               {localStorage.getItem("permission") === "admin" && (

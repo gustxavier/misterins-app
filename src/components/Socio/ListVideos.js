@@ -1,4 +1,4 @@
-import { Button, Grid, LinearProgress, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import GetAppIcon from "@material-ui/icons/GetApp";

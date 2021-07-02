@@ -20,98 +20,19 @@ import { useHistory } from "react-router";
 import "./styles.css";
 
 export default function Lives() {
-  const [comment, setComment] = useState("");
-  const [commentList, setCommentList] = useState([]);
+  // const [comment, setComment] = useState("");
+  // const [commentList, setCommentList] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
   const [hotmartID, setHotmartID] = useState("");
-  const userid = localStorage.getItem("userid");
+  // const userid = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
   const courses = localStorage.getItem("courses");
   const history = useHistory();
   const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
-    getLiveLink();
-    // getAllComments()
-    // api.get('live-comment', {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   params: {
-    //     'user_id': localStorage.getItem('userid')
-    //   }
-    // }
-    // ).then(response => {
-    //   if (response.data.status && response.data.status === (401 || 498)) {
-    //     localStorage.clear();
-    //     SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
-    //     history.push('/')
-    //   } else {
-    //     const div = document.createElement('div')
-    //     div.innerHTML = formatHtmlQuestion(response.data.data)
-    //     // document.getElementById('comments').append(div)
-    //     setSpinner(false)
-    //   }
-    // });
-  }, [token]);
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const data = {
-      user_id: event.target.user_id.value,
-      live_id: 1,
-      comment: event.target.comment.value,
-    };
-
-    api
-      .post("live-comment", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.status && response.status === (401 || 498)) {
-          localStorage.clear();
-          SimpleSwal("<strong>Atenção</strong>", "Oops", "warning");
-          this.props.history.push("/");
-        }
-        if ("msg" in response.data) {
-          SimpleSwal("<strong>Atenção</strong>", response.data.msg, "warning");
-        } else {
-          const div = document.createElement("div");
-          div.innerHTML = formatHtmlQuestion(response.data);
-          document.getElementById("comments").append(div);
-          setComment("");
-        }
-      });
-  }
-
-  function formatHtmlQuestion(data) {
-    let html = "";
-    for (var [key, value] of Object.entries(data)) {
-      if (key !== "status")
-        html +=
-          "<p><strong>" +
-          localStorage.getItem("username") +
-          "</strong> - " +
-          value["comment"] +
-          "</p>";
-    }
-    return html;
-  }
-
-  function handleChange(event) {
-    const value =
-      event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value;
-    setComment(value);
-  }
-
-  async function getLiveLink() {
     api
       .get("lives", {
         headers: {
@@ -140,32 +61,138 @@ export default function Lives() {
         }
         setSpinner(false);
       });
-  }
+    // getAllComments()
+    // api.get('live-comment', {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   params: {
+    //     'user_id': localStorage.getItem('userid')
+    //   }
+    // }
+    // ).then(response => {
+    //   if (response.data.status && response.data.status === (401 || 498)) {
+    //     localStorage.clear();
+    //     SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
+    //     history.push('/')
+    //   } else {
+    //     const div = document.createElement('div')
+    //     div.innerHTML = formatHtmlQuestion(response.data.data)
+    //     // document.getElementById('comments').append(div)
+    //     setSpinner(false)
+    //   }
+    // });
+  }, [history, token]);
 
-  async function getAllComments() {
-    api
-      .get("live-comment/live/1", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (
-          response.data.status &&
-          (response.data.status === 401 || response.data.status === 498)
-        ) {
-          localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
-          history.push("/");
-        } else {
-          setCommentList([...commentList, response.data.data]);
-        }
-      });
-  }
+  // function handleSubmit(event) {
+  //   event.preventDefault();
+
+  //   const data = {
+  //     user_id: event.target.user_id.value,
+  //     live_id: 1,
+  //     comment: event.target.comment.value,
+  //   };
+
+  //   api
+  //     .post("live-comment", data, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.status && response.status === (401 || 498)) {
+  //         localStorage.clear();
+  //         SimpleSwal("<strong>Atenção</strong>", "Oops", "warning");
+  //         this.props.history.push("/");
+  //       }
+  //       if ("msg" in response.data) {
+  //         SimpleSwal("<strong>Atenção</strong>", response.data.msg, "warning");
+  //       } else {
+  //         const div = document.createElement("div");
+  //         div.innerHTML = formatHtmlQuestion(response.data);
+  //         document.getElementById("comments").append(div);
+  //         setComment("");
+  //       }
+  //     });
+  // }
+
+  // function formatHtmlQuestion(data) {
+  //   let html = "";
+  //   for (var [key, value] of Object.entries(data)) {
+  //     if (key !== "status")
+  //       html +=
+  //         "<p><strong>" +
+  //         localStorage.getItem("username") +
+  //         "</strong> - " +
+  //         value["comment"] +
+  //         "</p>";
+  //   }
+  //   return html;
+  // }
+
+  // function handleChange(event) {
+  //   const value =
+  //     event.target.type === "checkbox"
+  //       ? event.target.checked
+  //       : event.target.value;
+  //   setComment(value);
+  // }
+
+  // async function getLiveLink(token) {
+  //   api
+  //     .get("lives", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (
+  //         response.data.status &&
+  //         (response.data.status === 401 || response.data.status === 498)
+  //       ) {
+  //         localStorage.clear();
+  //         SimpleSwal(
+  //           "<strong>Atenção</strong>",
+  //           response.data.message,
+  //           "warning"
+  //         );
+  //         history.push("/");
+  //       } else {
+  //         if (response.data.data.length > 0) {
+  //           setTitle(response.data.data[0].title);
+  //           setUrl(response.data.data[0].url);
+  //           setDescription(response.data.data[0].description);
+  //           setHotmartID(response.data.data[0].hotmart_id);
+  //         }
+  //       }
+  //       setSpinner(false);
+  //     });
+  // }
+
+  // async function getAllComments() {
+  //   api
+  //     .get("live-comment/live/1", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (
+  //         response.data.status &&
+  //         (response.data.status === 401 || response.data.status === 498)
+  //       ) {
+  //         localStorage.clear();
+  //         SimpleSwal(
+  //           "<strong>Atenção</strong>",
+  //           response.data.message,
+  //           "warning"
+  //         );
+  //         history.push("/");
+  //       } else {
+  //         setCommentList([...commentList, response.data.data]);
+  //       }
+  //     });
+  // }
 
   return (
     <React.Fragment>
