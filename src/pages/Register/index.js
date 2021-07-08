@@ -51,7 +51,7 @@ class Register extends React.Component {
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
       if (value !== this.state.password) {
         return false;
@@ -72,18 +72,16 @@ class Register extends React.Component {
     let self = this;
     try {
       api
-        .post("api/register", this.state)
+        .post("register", this.state)
         .then((res) => {
           if (res.data.status && !res.data.alertType) {
             const email = this.state.email;
             const password = this.state.password;
-            api
-              .post("api/login", { email, password })
-              .then(async (response) => {
-                localStorage.setItem("token", response.data.token);
-                localStorage.setItem("permission", response.data.permission);
-                this.props.history.push("/socio");
-              });
+            api.post("login", { email, password }).then(async (response) => {
+              localStorage.setItem("token", response.data.token);
+              localStorage.setItem("permission", response.data.permission);
+              this.props.history.push("/socio");
+            });
           } else {
             self.setState({ loading: false });
             SimpleSwal("<strong>Atenção</strong>", res.data.msg, "warning");
@@ -92,6 +90,7 @@ class Register extends React.Component {
         .catch(function (error) {
           self.setState({ loading: false });
           if (error.response) {
+            console.log(error.response.data);
             let msg = error.response.data.errors["email"]
               ? error.response.data.errors["email"][0]
               : error.response.data.msg;
@@ -123,7 +122,12 @@ class Register extends React.Component {
     return (
       <Container maxWidth="lg">
         <div className="register-container">
-          <div className="content card">
+          <div className="card">
+            <div className="row m-0 mb-5">
+              <div className="col-md-4 pb-1 bg-dark"></div>
+              <div className="col-md-4 pb-1 bg-primary"></div>
+              <div className="col-md-4 pb-1 bg-danger"></div>
+            </div>
             <Grid container>
               <Grid item sm={4}>
                 <section>

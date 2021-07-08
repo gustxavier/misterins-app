@@ -11,6 +11,8 @@ import SocioAdmin from "./pages/Admin/Socio";
 import LiveAdmin from "./pages/Admin/Live";
 import Usuario from "./pages/Admin/Usuario";
 import Profile from "./components/Usuario/Profile";
+import Reset from "./pages/Password/Reset";
+import Recouver from "./pages/Password/Recouver";
 
 export default function Routes() {
   return (
@@ -24,8 +26,10 @@ export default function Routes() {
         <Route path="/admin/live" component={LiveAdmin} /> 
         <Route path="/admin/socio" component={SocioAdmin} /> 
         <Route path="/logon" component={Logon} /> 
+        <Route path="/recouver/:hash" component={Recouver} /> 
+        <Route path="/reset" component={Reset} /> 
         <Route path="/register" component={Register} /> 
-        <Route exact path="/" component={Logon} /> 
+        <Route path="/" component={Logon} /> 
         {/* <ProtectedRoute path="/hidden" component={"Socio"} /> */}
       </Switch>
     </BrowserRouter>

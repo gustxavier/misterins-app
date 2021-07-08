@@ -1,66 +1,62 @@
 .register-container {
-  width: 100%;
-  max-width: 1120px;
-  height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.register-container .content {
-  width: 100%;
-  padding: 30px;
-  background: #303035;
-  box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.register-container .card {
+    width: 100%;
+    padding: 30px;
+    background: #303035;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.register-container .content section {
-  width: 100%;
-  max-width: 380px;
+.register-container .card section {
+    width: 100%;
+    max-width: 380px;
 }
 
-.register-container .content section h1 {
-  margin: 64px 0 32px;
-  font-size: 32px;
+.register-container .card section h1 {
+    margin: 64px 0 32px;
+    font-size: 32px;
 }
 
 .register-container .content section p {
-  font-size: 18px;
-  color: #fafafa;
-  line-height: 32px;
+    font-size: 18px;
+    color: #fafafa;
+    line-height: 32px;
 }
 
-.register-container .content form {
-  width: 100%;
-  /* max-width: 450px; */
+.register-container .card form {
+    width: 100%;
+    /* max-width: 450px; */
 }
 
-.register-container .content form .input-group {
-  display: flex;
+.register-container .card form .input-group {
+    display: flex;
 }
 
-.register-container .content form .input-group input + input {
-  margin-left: 8px;
+.register-container .card form .input-group input+input {
+    margin-left: 8px;
 }
 
-.icon-alert{
-  margin-bottom: -4px;
-  margin-right: 5px;
+.icon-alert {
+    margin-bottom: -4px;
+    margin-right: 5px;
 }
 
-.register p{
-  padding-left: 10px;
+.register p {
+    padding-left: 10px;
 }
 
 @media screen and (max-width: 900px) {
-  .register-container{
-    display: block;
-    margin-top: 70px;
-  }
+    .register-container {
+        display: block;
+        margin-top: 70px;
+    }
 }

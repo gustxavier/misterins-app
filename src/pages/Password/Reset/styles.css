@@ -1,0 +1,56 @@
+.reset-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reset-container img {
+    max-width: 50%;
+    margin: auto;
+    margin-bottom: 25px;
+}
+
+.reset-container section.form {
+    width: 100%;
+    max-width: 480px;
+}
+
+.reset-container section.form form h1 {
+    font-size: 32px;
+    margin-bottom: 32px;
+}
+
+.reset-container section.form form p.spin {
+    margin-left: 10px;
+}
+
+.reset-container img {
+    display: block;
+    margin: auto;
+    margin-bottom: 45px;
+}
+
+.reset-container .icon-info {
+    font-size: 80px;
+    color: #62cdff;
+}
+
+.reset-container .icon-success {
+    font-size: 80px;
+    color: #009c41;
+}
+
+.reset-container .icon-danger {
+    font-size: 80px;
+    color: #da231d;
+}
+
+.reset-container .icon-warning {
+    font-size: 80px;
+    color: #eeae00;
+}
+
+.inline {
+    display: inline-flex;
+}

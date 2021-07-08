@@ -26,6 +26,7 @@ class Logon extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
@@ -68,6 +69,10 @@ class Logon extends React.Component {
         type: "warning",
       }).show();
     }
+  }
+
+  handleClick(event){
+    this.props.history.push('/register')
   }
 
   render() {
@@ -130,10 +135,22 @@ class Logon extends React.Component {
                       </span>
                     )}
                   </Button>
-
-                  <Link className="back-link" to="/register">
+                  <Button
+                    className="button secondary mt-2"
+                    variant="contained"
+                    color="secondary"
+                    size="small"
+                    onClick={this.handleClick}
+                  >
+                    <span className="inline">
+                      <Typography className="spin">
+                        Não tenho cadastro
+                      </Typography>
+                    </span>
+                  </Button>
+                  <Link className="back-link" to="/reset">
                     <FiLogIn size={16} color="#3498db" />
-                    Não tenho cadastro
+                    Esqueci minha senha
                   </Link>
                 </Grid>
               </Grid>
