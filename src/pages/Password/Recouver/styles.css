@@ -1,28 +1,39 @@
-.logon-container {
+.recouver-container {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.logon-container img {
+.recouver-container img {
     max-width: 50%;
     margin: auto;
     margin-bottom: 25px;
 }
 
-.logon-container section.form {
+.recouver-container section.form {
     width: 100%;
-    max-width: 400px;
+    max-width: 480px;
 }
 
-.logon-container section.form form h1 {
+.recouver-container section.form form h1 {
     font-size: 32px;
     margin-bottom: 32px;
 }
 
-.logon-container section.form form p.spin {
+.recouver-container section.form form p.spin {
     margin-left: 10px;
+}
+
+.recouver-container img {
+    display: block;
+    margin: auto;
+    margin-bottom: 45px;
+}
+
+.recouver-container .icon-danger {
+    font-size: 80px;
+    color: #da231d;
 }
 
 .inline {
