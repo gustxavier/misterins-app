@@ -19,7 +19,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router";
 import { SimpleNoty } from "../../helpers/NotyFeedBack";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { Card } from "@material-ui/core";
 
 class UpdateLive extends React.Component {
@@ -59,12 +58,7 @@ class UpdateLive extends React.Component {
           response.data.status &&
           (response.data.status === 401 || response.data.status === 498)
         ) {
-          localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
+          localStorage.clear();          
           this.props.history.push("/");
         }
         this.setState({
@@ -74,7 +68,6 @@ class UpdateLive extends React.Component {
           course_id: response.data.data.course_id,
           spinner: false
         });
-        // return response.data;
       });
   }
 
@@ -111,11 +104,6 @@ class UpdateLive extends React.Component {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         } else {
           SimpleNoty("Sucesso! Live Atualizada.", "success");

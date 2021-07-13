@@ -11,13 +11,13 @@ import {
 // import { makeStyles } from "@material-ui/core/styles";
 import Header from "../../components/Header";
 import api from "../../services/api";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
 // import { SimpleNoty } from "../../helpers/NotyFeedBack";
 // import { forEach, isSet, map } from "lodash";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router";
 // import { DataGrid } from "@material-ui/data-grid";
 import "./styles.css";
+import Footer from "../../components/Footer";
 
 export default function Lives() {
   // const [comment, setComment] = useState("");
@@ -45,11 +45,6 @@ export default function Lives() {
           (response.data.status === 401 || response.data.status === 498)
         ) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           history.push("/");
         } else {
           if (response.data.data.length > 0) {
@@ -295,6 +290,7 @@ export default function Lives() {
             </ul>
           </Grid> */}
             </Grid>
+            <Footer />
           </Container>
         </main>
       </div>

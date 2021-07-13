@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import api from '../services/api';
+import React, { useEffect } from "react";
+import { Redirect, Route } from "react-router-dom";
+import { SimpleSwal } from "../helpers/SwalFeedBack";
 
-export default function ProtectedRoute(props) {
-    const [token] = localStorage.getItem('token');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const Component = props.component;
+function ProtectedRoute({ component: Component, ...restOfProps }) {
+  const token = localStorage.getItem("token");
 
-    useEffect(() => {
-        api.get('users/isLogged/',
-            null, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        }).then(response => {
-            console.log(response, 'AEWWWWWWWWW');
-            setIsAuthenticated(true)
-        });
-    }, [token])
+  useEffect(() => {
+    if (token == null) {
+      SimpleSwal(
+        "<strong>Atenção</strong>",
+        "Sua conexão expirou. Faça login novamente.",
+        "warning"
+      );
+    }
+  }, [token]);
 
-    return isAuthenticated ? <Component /> : <Redirect to={{ pathname: '/' }} />;
+  return (
+    <Route
+      {...restOfProps}
+      render={(props) =>
+        token ? <Component {...props} /> : <Redirect to="/" />
+      }
+    />
+  );
 }
+
+export default ProtectedRoute;

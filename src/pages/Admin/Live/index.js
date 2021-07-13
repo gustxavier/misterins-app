@@ -4,6 +4,7 @@ import UpdateLive from "../../../components/Live/UpdateLive";
 
 import "./styles.css";
 import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
 
 export default function Live() {
   const [token] = useState(localStorage.getItem("token"));
@@ -19,7 +20,8 @@ export default function Live() {
         <Header title={"Admin - Live"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
-          <UpdateLive />          
+          <UpdateLive />    
+          <Footer />      
         </main>
       </div>
     </React.Fragment>

@@ -14,6 +14,7 @@ import {
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import { SimpleNoty } from "../../../helpers/NotyFeedBack";
+import Footer from "../../../components/Footer";
 
 class Recouver extends React.Component {
   constructor(props) {
@@ -192,6 +193,7 @@ class Recouver extends React.Component {
             </div>
           )}
         </div>
+        <Footer />
       </Container>
     );
   }

@@ -13,6 +13,7 @@ import { Button, Container, Grid, Typography } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
+import Footer from "../../components/Footer";
 
 class Logon extends React.Component {
   constructor(props) {
@@ -157,6 +158,7 @@ class Logon extends React.Component {
             </ValidatorForm>
           </section>
         </div>
+        <Footer />
       </Container>
     );
   }

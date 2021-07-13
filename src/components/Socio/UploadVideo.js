@@ -15,7 +15,6 @@ import {
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { withRouter } from "react-router";
 import "./style.css";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { SimpleNoty } from "../../helpers/NotyFeedBack";
 import api from "../../services/api";
 
@@ -82,11 +81,6 @@ class UploadVideo extends React.Component {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         } else {
           this.setState({ progress: 0 });

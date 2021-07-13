@@ -12,7 +12,7 @@ import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
 import "./style.css";
 
-export default function Lista() {
+export default function ListaCampanha() {
   const [items, setItems] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const [spinner, setSpinner] = useState(true);

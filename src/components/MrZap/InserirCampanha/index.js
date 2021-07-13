@@ -11,7 +11,7 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader"
 import { Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap"
 import './style.css'
 
-class Inserir extends React.Component {
+class InserirCampanha extends React.Component {
   constructor(props) {
     super(props)
 
@@ -274,4 +274,4 @@ class Inserir extends React.Component {
   }
 }
 
-export default withRouter(Inserir);
+export default withRouter(InserirCampanha);

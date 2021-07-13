@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "../../../components/Header";
-import Lista from "../../../components/Usuario/Lista";
+import Lista from "../../../components/MrZap/Lista";
 
 import "./style.css";
 import Inserir from "../../../components/MrZap/InserirCampanha";
 import { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 
-export default function Usuario() {
+export default function MrZap() {
   const [spinner, setEventSpinner] = useState(false);
 
   function handleSpinner(event) {

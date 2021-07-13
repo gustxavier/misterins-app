@@ -2,7 +2,6 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
 import ReactPlayer from "react-player";
 
@@ -26,11 +25,6 @@ function ListVideos(param) {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           history.push("/");
         } else {
           setItems(response.data.data);

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Typography } from "@material-ui/core";
 import api from "../../services/api";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import { SimpleNoty } from "../../helpers/NotyFeedBack";
 import { useHistory } from "react-router-dom";
 
@@ -25,11 +24,6 @@ export default function InsertCopy() {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           history.push("/");
         } else {
           SimpleNoty("Sucesso!", "success");

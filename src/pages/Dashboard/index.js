@@ -4,6 +4,7 @@ import React from "react";
 import Header from "../../components/Header";
 import "./style.css";
 import cachimbo from '../../assets/images/cachimbo.png';
+import Footer from "../../components/Footer";
 
 
 export default function Dashboard() {
@@ -39,6 +40,7 @@ export default function Dashboard() {
                 </Card>
               </Grid>
             </Grid>
+            <Footer />
           </Container>
         </main>
       </div>

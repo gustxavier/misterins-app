@@ -1,0 +1,10 @@
+#root .icon-nosmile {
+    font-size: 70px;
+    margin-top: 20px;
+}
+
+.center {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

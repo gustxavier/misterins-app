@@ -244,8 +244,8 @@ input:-internal-autofill-selected {
 
 .spinner .MuiCircularProgress-root {
     top: 50%;
-    left: 49%;
-    position: absolute;
+    left: -40px;
+    position: relative;
 }
 
 .noty_theme__metroui.noty_bar {

@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router';
 import { SimpleNoty } from '../../helpers/NotyFeedBack';
-import { SimpleSwal } from '../../helpers/SwalFeedBack';
 
 class UpdateCopy extends React.Component {
 
@@ -28,6 +27,7 @@ class UpdateCopy extends React.Component {
     }
 
     componentDidMount(){
+        this.props.onSpinner(true)
         this.getCopy(1)
     }
 
@@ -42,12 +42,16 @@ class UpdateCopy extends React.Component {
             if (response.data.status && (response.data.status === 401 || response.data.status === 498)) {
                 return response.data.status;
             }
+            
             this.setState({
                 id: response.data.data.id,
                 title: response.data.data.title,
                 important_text: response.data.data.important_text,
                 description: response.data.data.description !== null ? response.data.data.description : '',
             });
+
+            this.props.onSpinner(false)
+
             return response.data;
         })
     }
@@ -65,7 +69,6 @@ class UpdateCopy extends React.Component {
         ).then(response => {
             if (response.data.status && response.data.status === (401 || 498)) {
                 localStorage.clear();
-                SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
                 this.props.history.push('/')
             } else {
                 SimpleNoty('Sucesso!', 'success')

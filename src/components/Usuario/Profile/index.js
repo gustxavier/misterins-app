@@ -1,6 +1,5 @@
 import React from "react";
 import api from "../../../services/api";
-import { SimpleSwal } from "../../../helpers/SwalFeedBack";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
 import Header from "../../Header";
@@ -102,11 +101,6 @@ class Profile extends React.PureComponent {
           (response.data.status === 401 || response.data.status === 498)
         ) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         }
         this.setState({
@@ -136,11 +130,6 @@ class Profile extends React.PureComponent {
           (response.data.status === 401 || response.data.status === 498)
         ) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         }
         this.setState({
@@ -180,11 +169,6 @@ class Profile extends React.PureComponent {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
@@ -209,11 +193,6 @@ class Profile extends React.PureComponent {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");
@@ -242,11 +221,6 @@ class Profile extends React.PureComponent {
       .then((response) => {
         if (response.data.status && response.data.status === (401 || 498)) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           this.props.history.push("/");
         } else {
           SimpleNoty("Sucesso! Dados Atualizados.", "success");

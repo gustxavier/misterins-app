@@ -14,12 +14,12 @@ import { useHistory } from "react-router";
 import api from "../../services/api";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { SimpleNoty } from "../../helpers/NotyFeedBack";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 import "./style.css";
 import Header from "../../components/Header";
 import ListVideos from "../../components/Socio/ListVideos";
+import Footer from "../../components/Footer";
 
 export default function Socio() {
   const [items, setItems] = useState([]);
@@ -41,11 +41,6 @@ export default function Socio() {
           (response.data.status === 401 || response.data.status === 498)
         ) {
           localStorage.clear();
-          SimpleSwal(
-            "<strong>Atenção</strong>",
-            response.data.message,
-            "warning"
-          );
           history.push("/");
         } else {
           setItems(response.data.data);
@@ -223,6 +218,7 @@ export default function Socio() {
                 </Card>
               </Grid>
             </Grid>
+            <Footer />
           </Container>
         </main>
       </div>

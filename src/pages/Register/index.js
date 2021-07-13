@@ -11,6 +11,7 @@ import InputMask from "react-input-mask";
 import { SimpleNoty } from "../../helpers/NotyFeedBack";
 import { SimpleSwal } from "../../helpers/SwalFeedBack";
 import "./styles.css";
+import Footer from "../../components/Footer";
 
 class Register extends React.Component {
   constructor(props) {
@@ -287,6 +288,7 @@ class Register extends React.Component {
             </Grid>
           </div>
         </div>
+        <Footer />
       </Container>
     );
   }

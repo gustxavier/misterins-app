@@ -11,6 +11,7 @@ import {
   Typography,
   CircularProgress,
 } from "@material-ui/core"
+import Footer from "../../../components/Footer"
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator"
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined"
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined'
@@ -41,11 +42,12 @@ class Reset extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     this.setState({ spinner: true });
+    let self = this
     api
       .post("forgot-password", this.state)
       .then((res) => {
         if (res.data.status) {
-          this.setState({
+          self.setState({
             spinner: false,
             return: res.data.msg,
             icon: res.data.icon,
@@ -53,7 +55,7 @@ class Reset extends React.Component {
         }
       })
       .catch(function (error) {
-        this.setState({ spinner: false });
+        self.setState({ spinner: false });
         if (error) {
           console.log(error);
         }
@@ -161,6 +163,7 @@ class Reset extends React.Component {
             </div>
           )}
         </div>
+        <Footer />
       </Container>
     );
   }
