@@ -1,0 +1,10 @@
+#root .icon-warning {
+    font-size: 100px;
+    margin-top: 20px;
+}
+
+.center {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+}

@@ -25,7 +25,7 @@ export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <ProtectedRoute path="/socio" component={Socio} /> 
+        <ProtectedRoute path="/socio/:id" component={Socio} /> 
         <ProtectedRoute path="/lives" component={Lives} /> 
         <ProtectedRoute path="/dashboard" component={Dashboard} /> 
         <ProtectedRoute path="/admin/usuario/profile/:id" component={Profile} /> 

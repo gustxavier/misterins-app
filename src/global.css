@@ -220,7 +220,8 @@ input:-internal-autofill-selected {
 }
 
 #root .nested {
-    padding-left: 35px;
+    padding-left: 20px;
+    overflow: hidden;
 }
 
 #root .app-bar-spacer {
@@ -232,7 +233,6 @@ input:-internal-autofill-selected {
     position: fixed;
     z-index: 10000;
     height: 100%;
-    text-align: center;
     width: 100%;
     display: block;
     -webkit-transition: opacity 3s ease-in-out;
@@ -243,9 +243,9 @@ input:-internal-autofill-selected {
 }
 
 .spinner .MuiCircularProgress-root {
-    top: 50%;
-    left: -40px;
-    position: relative;
+    top: 53%;
+    left: 49%;
+    position: sticky;
 }
 
 .noty_theme__metroui.noty_bar {

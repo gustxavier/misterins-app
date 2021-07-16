@@ -3,7 +3,7 @@ import Header from "../../../components/Header";
 import Lista from "../../../components/Usuario/Lista";
 
 import "./style.css";
-import Inserir from "../../../components/MrZap/InserirCampanha";
+import Inserir from "../../../components/Usuario/Inserir";
 import { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 

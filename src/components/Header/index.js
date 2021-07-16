@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -32,10 +32,11 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import LiveTvIcon from "@material-ui/icons/LiveTv";
 import TuneIcon from "@material-ui/icons/Tune";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import AccountBoxIcon from '@material-ui/icons/AccountBox';import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import ListIcon from '@material-ui/icons/List';
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+import ListIcon from "@material-ui/icons/List";
 import logo from "../../assets/images/misterins-logo.png";
 import "./style.css";
 import api from "../../services/api";
@@ -102,17 +103,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header(page) {
-  const classes = useStyles()
-  const [open, setOpen] = useState(true)
-  const [configuration, setConfiguration] = useState(false)
+export default function Header(pageInfo) {
+  const classes = useStyles();
+  const [open, setOpen] = useState(true);
+  const [configuration, setConfiguration] = useState(false);
   const [mrzap, setMrZap] = useState(false);
-  const [socioCourses, setSocioCourses] = useState([]);
-  const username = localStorage.getItem("username")
-  const courses = localStorage.getItem("courses")
-  const userID = localStorage.getItem("userid")
-  const token = localStorage.getItem('token')
-  const history = useHistory()
+  const [openSocio, setOpenSocio] = useState(false);
+  const menuSocio = JSON.parse(localStorage.getItem("menu-socio"));
+  const username = localStorage.getItem("username");
+  const courses = localStorage.getItem("courses");
+  const userID = localStorage.getItem("userid");
+  const history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -122,26 +123,22 @@ export default function Header(page) {
     setOpen(false);
   };
 
-  const handlePush = React.useCallback((params) => {
-    history.push({
-      pathname: params.pathname,
-    });
-  }, [history]);
-
-  const handleClickListConfiguration = () => {
-    setConfiguration(!configuration);
-  };
-
-  const handleClickListMrZap = () => {
-    setMrZap(!mrzap);
-  };
+  const handlePush = React.useCallback(
+    (params) => {
+      history.push({
+        pathname: params.pathname,
+      });
+    },
+    [history]
+  );
 
   /**
    * Menu de navegação de opções de usuário
    */
 
-  const [openMenuUser, setOpenMenuUser] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const [openMenuUser, setOpenMenuUser] = useState(false);
+  const anchorRef = useRef(null);
+  const prevOpen = useRef(openMenuUser);
 
   const handleToggle = () => {
     setOpenMenuUser((prevOpen) => !prevOpen);
@@ -167,37 +164,12 @@ export default function Header(page) {
     history.push("/");
   }
 
-  const prevOpen = React.useRef(openMenuUser);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (prevOpen.current === true && openMenuUser === false) {
       anchorRef.current.focus();
     }
     prevOpen.current = openMenuUser;
-
-    api
-      .get("courses/getCoursesByUser/" + userID,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.data.status && response.data.status === (401 || 498)) {
-          localStorage.clear();
-          history.push("/");
-        } else {
-          setSocioCourses(response.data.data);
-          console.log(socioCourses)
-        }
-      })
-      .catch((error) => {
-        localStorage.clear();
-        history.push("/");
-      });
-
-  }, [openMenuUser,token]);
-
-  
+  }, [openMenuUser]);
 
   return (
     <div className="d-flex">
@@ -226,7 +198,7 @@ export default function Header(page) {
             noWrap
             className={classes.title}
           >
-            {page.title}
+            {pageInfo.title}
           </Typography>
           <div>
             <Button
@@ -297,7 +269,7 @@ export default function Header(page) {
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
-        className="theme-dark"
+        className="theme-dark mr-sidebar"
         open={open}
       >
         <div className="row m-0">
@@ -331,33 +303,45 @@ export default function Header(page) {
             <ListItemText primary="Live" />
           </ListItem>
         </List>
-          {courses.search("448026") !== -1 && (
-            <List>
-            <ListItem button onClick={handleClickListConfiguration}>
+        {courses.search("448026") !== -1 && (
+          <List>
+            <ListItem button onClick={() => setOpenSocio(!openSocio)}>
               <ListItemIcon>
                 <AccountBoxIcon style={{ color: "#fafafa" }} />
               </ListItemIcon>
               <ListItemText primary="Sócio" />
-              {configuration ? <ExpandLess /> : <ExpandMore />}
+              {openSocio ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={configuration} timeout="auto" unmountOnExit>
+            <Collapse in={openSocio} className="sub-menu" timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem
-                  button
-                  className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/live" })}
-                >
-                  <ListItemIcon>
-                    <RadioButtonUncheckedIcon
-                      style={{ fontSize: 15, color: "#fafafa" }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Live" />
-                </ListItem>                
+                {menuSocio.length > 0
+                  ? menuSocio.map((list) => (
+                      <div key={list.id}>
+                        {list.can_affiliate === "Y" && (
+                          <ListItem
+                            button
+                            className="nested"
+                            onClick={() =>
+                              handlePush({
+                                pathname: "/socio/" + list.id,
+                              })
+                            }
+                          >
+                            <ListItemIcon>
+                              <RadioButtonUncheckedIcon
+                                style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
+                              />
+                            </ListItemIcon>
+                            <ListItemText primary={list.title} />
+                          </ListItem>
+                        )}
+                      </div>
+                    ))
+                  : null}
               </List>
             </Collapse>
-            </List>
-          )}
+          </List>
+        )}
         <Divider />
         {localStorage.getItem("permission") === "admin" && (
           <List
@@ -374,14 +358,14 @@ export default function Header(page) {
             }
             className={classes.root}
           >
-            <ListItem button onClick={handleClickListConfiguration}>
+            <ListItem button onClick={() => setConfiguration(!configuration)}>
               <ListItemIcon>
                 <TuneIcon style={{ color: "#fafafa" }} />
               </ListItemIcon>
               <ListItemText primary="Configurações" />
               {configuration ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={configuration} timeout="auto" unmountOnExit>
+            <Collapse in={configuration} className="sub-menu" timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem
                   button
@@ -390,7 +374,7 @@ export default function Header(page) {
                 >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
-                      style={{ fontSize: 15, color: "#fafafa" }}
+                      style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
                     />
                   </ListItemIcon>
                   <ListItemText primary="Live" />
@@ -402,7 +386,7 @@ export default function Header(page) {
                 >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
-                      style={{ fontSize: 15, color: "#fafafa" }}
+                      style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
                     />
                   </ListItemIcon>
                   <ListItemText primary="Sócio" />
@@ -414,7 +398,7 @@ export default function Header(page) {
                 >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
-                      style={{ fontSize: 15, color: "#fafafa" }}
+                      style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
                     />
                   </ListItemIcon>
                   <ListItemText primary="Usuários" />
@@ -422,39 +406,39 @@ export default function Header(page) {
               </List>
             </Collapse>
             {/* MRZAMP */}
-            <ListItem button onClick={handleClickListMrZap}>
+            <ListItem button onClick={() => setMrZap(!mrzap)}>
               <ListItemIcon>
                 <WhatsAppIcon style={{ color: "#fafafa" }} />
               </ListItemIcon>
               <ListItemText primary="Mr Zap" />
               {mrzap ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={mrzap} timeout="auto" unmountOnExit>
+            <Collapse in={mrzap} className="sub-menu" timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem
                   button
                   className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/mrzap/dashboard" })}
+                  onClick={() =>
+                    handlePush({ pathname: "/admin/mrzap/dashboard" })
+                  }
                 >
                   <ListItemIcon>
-                    <DashboardIcon
-                      style={{ fontSize: 15, color: "#fafafa" }}
-                    />
+                    <DashboardIcon style={{ fontSize: 13, color: "#fafafa", marginLeft: "15px" }} />
                   </ListItemIcon>
                   <ListItemText primary="Dashboard" />
                 </ListItem>
                 <ListItem
                   button
                   className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/mrzap/campanha" })}
+                  onClick={() =>
+                    handlePush({ pathname: "/admin/mrzap/campanha" })
+                  }
                 >
                   <ListItemIcon>
-                    <ListIcon
-                      style={{ fontSize: 15, color: "#fafafa" }}
-                    />
+                    <ListIcon style={{ fontSize: 13, color: "#fafafa", marginLeft: "15px" }} />
                   </ListItemIcon>
                   <ListItemText primary="Campanha" />
-                </ListItem>                
+                </ListItem>
               </List>
             </Collapse>
           </List>

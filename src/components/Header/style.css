@@ -10,3 +10,11 @@
 .menu-user-option {
     margin-left: 5px;
 }
+
+#root .mr-sidebar .MuiTypography-body1 {
+    font-size: 14px;
+}
+
+#root .mr-sidebar .sub-menu .MuiTypography-body1 {
+    font-size: 13px;
+}

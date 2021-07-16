@@ -14,6 +14,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../components/Footer";
+import Maintenance from "../../components/Maintenance";
 
 class Logon extends React.Component {
   constructor(props) {
@@ -59,6 +60,17 @@ class Logon extends React.Component {
       localStorage.setItem("permission", response.data.permission);
       localStorage.setItem("courses", response.data.courses);
 
+      const res = await api.get(
+        "courses/getCoursesByUser/" + response.data.id,
+        {
+          headers: {
+            Authorization: `Bearer ${response.data.token}`,
+          },
+        }
+      );
+
+      localStorage.setItem("menu-socio", JSON.stringify(res.data.data.all));
+
       this.props.history.push("/dashboard");
     } catch (err) {
       this.setState({ loading: false });
@@ -72,14 +84,15 @@ class Logon extends React.Component {
     }
   }
 
-  handleClick(event){
-    this.props.history.push('/register')
+  handleClick(event) {
+    this.props.history.push("/register");
   }
 
   render() {
     const loading = this.state.loading;
     return (
       <Container maxWidth="xl">
+        {/* <Maintenance /> */}
         <div className="logon-container">
           <section className="form card">
             <div className="row m-0 mb-5">

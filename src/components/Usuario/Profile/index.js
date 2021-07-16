@@ -134,11 +134,11 @@ class Profile extends React.PureComponent {
         }
         this.setState({
           spinner: false,
-          courses: response.data.all,
+          courses: response.data.data.all,
         });
 
-        response.data.all.forEach((element) => {
-          response.data.checked.forEach((el) => {
+        response.data.data.all.forEach((element) => {
+          response.data.data.checked.forEach((el) => {
             element.id === el.course_id
               ? this.setState((prevState) => ({
                   checkedState: [...prevState.checkedState, el.course_id],
