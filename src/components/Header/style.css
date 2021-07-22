@@ -18,3 +18,9 @@
 #root .mr-sidebar .sub-menu .MuiTypography-body1 {
     font-size: 13px;
 }
+
+#root .mr-sidebar .sub-sub-menu {
+    background-color: #33333e;
+}
+
+#root .mr-sidebar .sub-master .MuiSvgIcon-root {}

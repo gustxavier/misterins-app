@@ -18,7 +18,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router";
-import { SimpleNoty } from "../../helpers/NotyFeedBack";
+import { simpleNoty } from "../../helpers/NotyFeedBack";
 import { Card } from "@material-ui/core";
 
 class UpdateLive extends React.Component {
@@ -106,7 +106,7 @@ class UpdateLive extends React.Component {
           localStorage.clear();
           this.props.history.push("/");
         } else {
-          SimpleNoty("Sucesso! Live Atualizada.", "success");
+          simpleNoty("Sucesso! Live Atualizada.", "success");
           this.setState({ loading: false, spinner: false });
           this.props.history.push("/admin/live");
         }

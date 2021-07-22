@@ -15,7 +15,7 @@ import {
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { withRouter } from "react-router";
 import "./style.css";
-import { SimpleNoty } from "../../helpers/NotyFeedBack";
+import { simpleNoty } from "../../helpers/NotyFeedBack";
 import api from "../../services/api";
 
 class UploadVideo extends React.Component {
@@ -84,7 +84,7 @@ class UploadVideo extends React.Component {
           this.props.history.push("/");
         } else {
           this.setState({ progress: 0 });
-          SimpleNoty("Sucesso!", "success");
+          simpleNoty("Sucesso!", "success");
           this.props.history.push("/admin/socio");
         }
       })

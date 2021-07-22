@@ -32,14 +32,8 @@ class Logon extends React.Component {
   }
 
   handleChange(event) {
-    const value =
-      event.target.type === "checkbox"
-        ? event.target.checked
-        : event.target.value;
-    const name = event.target.name;
-
     this.setState({
-      [name]: value,
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -136,7 +130,7 @@ class Logon extends React.Component {
                     errorMessages={["Por favor, insira sua senha"]}
                   />
 
-                  <Button className="button" type="submit" disabled={loading}>
+                  <button className="btn btn-primary w-100 mt-3" type="submit" disabled={loading}>
                     {loading && (
                       <span className="inline">
                         <FontAwesomeIcon icon={faSync} spin />{" "}
@@ -148,7 +142,7 @@ class Logon extends React.Component {
                         <Typography>Entrar</Typography>
                       </span>
                     )}
-                  </Button>
+                  </button>
                   <Button
                     className="button secondary mt-2"
                     variant="contained"
@@ -163,7 +157,6 @@ class Logon extends React.Component {
                     </span>
                   </Button>
                   <Link className="back-link" to="/reset">
-                    <FiLogIn size={16} color="#3498db" />
                     Esqueci minha senha
                   </Link>
                 </Grid>

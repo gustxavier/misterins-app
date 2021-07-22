@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "../../../components/Header";
-import Lista from "../../../components/Usuario/Lista";
+import List from "../../../components/Usuario/List";
 
 import "./style.css";
-import Inserir from "../../../components/Usuario/Inserir";
+import Insert from "../../../components/Usuario/Insert";
 import { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 
@@ -25,8 +25,8 @@ export default function Usuario() {
               <CircularProgress />
             </div>
           )}
-          <Lista />
-          <Inserir onSpinner={handleSpinner} />
+          <List />
+          <Insert onSpinner={handleSpinner} />
         </main>
       </div>
     </React.Fragment>

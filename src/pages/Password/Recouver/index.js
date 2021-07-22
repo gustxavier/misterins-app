@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
-import { SimpleNoty } from "../../../helpers/NotyFeedBack";
+import { simpleNoty } from "../../../helpers/NotyFeedBack";
 import Footer from "../../../components/Footer";
 
 class Recouver extends React.Component {
@@ -48,13 +48,13 @@ class Recouver extends React.Component {
       .post("recouver-password", this.state)
       .then((res) => {
         if (res.data.status) {
-          SimpleNoty(
+          simpleNoty(
             "Senha atualizada com sucesso. Você já pode acessar a plataforma com sua nova senha!",
             "success"
           );
           self.props.history.push("/");
         } else {
-          SimpleNoty(
+          simpleNoty(
             "Oops! Falha ao renovar sua senha. Entre em contato com o adminsitrador do sistema",
             "danger"
           );

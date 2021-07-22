@@ -8,8 +8,8 @@ import { FiArrowLeft } from "react-icons/fi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import InputMask from "react-input-mask";
-import { SimpleNoty } from "../../helpers/NotyFeedBack";
-import { SimpleSwal } from "../../helpers/SwalFeedBack";
+import { simpleNoty } from "../../helpers/NotyFeedBack";
+import { simpleSwal } from "../../helpers/SwalFeedBack";
 import "./styles.css";
 import Footer from "../../components/Footer";
 
@@ -85,7 +85,7 @@ class Register extends React.Component {
             });
           } else {
             self.setState({ loading: false });
-            SimpleSwal("<strong>Atenção</strong>", res.data.msg, "warning");
+            simpleSwal("<strong>Atenção</strong>", res.data.msg, "warning");
           }
         })
         .catch(function (error) {
@@ -95,7 +95,7 @@ class Register extends React.Component {
             let msg = error.response.data.errors["email"]
               ? error.response.data.errors["email"][0]
               : error.response.data.msg;
-            SimpleSwal("<strong>Atenção</strong>", msg, "warning");
+            simpleSwal("<strong>Atenção</strong>", msg, "warning");
 
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
@@ -115,7 +115,7 @@ class Register extends React.Component {
         });
     } catch (err) {
       self.setState({ loading: false });
-      SimpleNoty("Oops! Falha ao realizar o cadastro!", "warning");
+      simpleNoty("Oops! Falha ao realizar o cadastro!", "warning");
     }
   }
 
@@ -156,7 +156,6 @@ class Register extends React.Component {
               </Grid>
               <Grid item sm={8}>
                 <ValidatorForm
-                  // ref="form"
                   ref={(r) => (this.form = r)}
                   onSubmit={this.handleSubmit}
                   onError={(errors) => console.log(errors)}
@@ -264,8 +263,8 @@ class Register extends React.Component {
                           "Por favor, confirme sua senha",
                         ]}
                       />
-                      <Button
-                        className="button register"
+                      <button
+                        className="btn btn-primary w-100 mt-3"
                         type="submit"
                         disabled={this.state.loading}
                       >
@@ -280,7 +279,7 @@ class Register extends React.Component {
                             <Typography>Cadastrar</Typography>
                           </span>
                         )}
-                      </Button>
+                      </button>
                     </Grid>
                   </Grid>
                 </ValidatorForm>

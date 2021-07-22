@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import InputMask from "react-input-mask";
-import { SimpleNoty } from "../../../helpers/NotyFeedBack";
-import { SimpleSwal } from "../../../helpers/SwalFeedBack";
+import { simpleNoty } from "../../../helpers/NotyFeedBack";
+import { simpleSwal } from "../../../helpers/SwalFeedBack";
 import api from "../../../services/api";
 import { withRouter } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
@@ -18,7 +18,7 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import { Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
 import "./style.css";
 
-class Inserir extends React.Component {
+class Insert extends React.Component {
   constructor(props) {
     super(props);
 
@@ -36,8 +36,6 @@ class Inserir extends React.Component {
       emailImported: "",
       token: localStorage.getItem("token"),
     };
-
-    this.insertuser = React.createRef();
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -96,7 +94,8 @@ class Inserir extends React.Component {
           }
           self.setState({ showModal: false });
           if (res.data.status && !res.data.alertType) {
-            SimpleNoty("Usuário inserido", "success");
+            simpleNoty("Usuário inserido", "success");
+            self.props.onSpinner(false);
             self.props.history.push(
               "/admin/usuario/profile/" + res.data.data.id
             );
@@ -112,13 +111,13 @@ class Inserir extends React.Component {
             let msg = error.response.data.errors["email"]
               ? error.response.data.errors["email"][0]
               : error.response.data.msg;
-            SimpleSwal("<strong>Atenção</strong>", msg, "warning");
+            simpleSwal("<strong>Atenção</strong>", msg, "warning");
           }
         });
     } catch (err) {
       self.setState({ showModal: false });
       self.props.onSpinner(false);
-      SimpleNoty("Oops! Falha ao realizar o cadastro!", "warning");
+      simpleNoty("Oops! Falha ao realizar o cadastro!", "warning");
     }
     self.setState({ showModal: false });
   }
@@ -143,7 +142,7 @@ class Inserir extends React.Component {
             self.props.history.push("/");
           }
           self.setState({ showModalImported: false });
-          SimpleSwal(
+          simpleSwal(
             res.data.alertType === "warning"
               ? '"<strong>Oops</strong>"'
               : '"<strong>Sucesso</strong>"',
@@ -158,7 +157,7 @@ class Inserir extends React.Component {
     } catch (err) {
       self.setState({ showModalImported: false });
       self.props.onSpinner(false);
-      SimpleNoty("Oops! Falha ao realizar o cadastro!", "warning");
+      simpleNoty("Oops! Falha ao realizar o cadastro!", "warning");
     }
     self.setState({ showModal: false });
   }
@@ -376,4 +375,4 @@ class Inserir extends React.Component {
   }
 }
 
-export default withRouter(Inserir);
+export default withRouter(Insert);

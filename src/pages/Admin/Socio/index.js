@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Card, CardContent, Container, Grid } from "@material-ui/core";
-import UpdateCopy from "../../../components/Socio/UpdateCopy";
-import UploadVideo from "../../../components/Socio/UploadVideo";
-import InsertCopy from "../../../components/Socio/InsertCopy";
+import React, { useState } from "react";
 import Header from "../../../components/Header";
 import "./styles.css";
 import Footer from "../../../components/Footer";
 import { CircularProgress } from "@material-ui/core";
+import Insert from "../../../components/Socio/Copy/Admin/Insert";
+import List from "../../../components/Socio/Copy/Admin/List";
 
-export default function Copy() {
-  const [token] = useState(localStorage.getItem("token"));
-  const history = useHistory();
+export default function Socio() {
   const [spinner, setEventSpinner] = useState(false);
 
   function handleSpinner(event) {
@@ -22,7 +17,6 @@ export default function Copy() {
     <React.Fragment>
       <div className={"d-flex"}>
         <Header title={"Admin - Sócio"} />
-
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
           {spinner && (
@@ -30,37 +24,9 @@ export default function Copy() {
               <CircularProgress />
             </div>
           )}
-          <Container maxWidth="xl" className={"container"}>
-            <Grid container>
-              {localStorage.getItem("permission") === "admin" && (
-                <Grid item xs={12} md={12}>
-                  <Card className="card">
-                    <Grid container>
-                      <Grid item xs={12} md={12}>
-                        <CardContent>
-                          <h2 className="mr-text-center mr-text-light">
-                            O SÓCIO
-                          </h2>
-                          <Grid container>
-                            <Grid item xs={12} md={6}>
-                              <InsertCopy />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                              <UpdateCopy onSpinner={handleSpinner} />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                              <UploadVideo />
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                      </Grid>
-                    </Grid>
-                  </Card>
-                </Grid>
-              )}
-            </Grid>
-            <Footer />
-          </Container>
+          <List />
+          <Insert onSpinner={handleSpinner} />
+          <Footer />
         </main>
       </div>
     </React.Fragment>

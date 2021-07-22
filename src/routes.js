@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Lives from "./pages/Lives";
 import Socio from "./pages/Socio";
 import Dashboard from "./pages/Dashboard";
-import SocioAdmin from "./pages/Admin/Socio";
+import AdminSocio from "./pages/Admin/Socio";
 import LiveAdmin from "./pages/Admin/Live";
 import Usuario from "./pages/Admin/Usuario";
 import Profile from "./components/Usuario/Profile";
@@ -14,6 +14,7 @@ import Reset from "./pages/Password/Reset";
 import Recouver from "./pages/Password/Recouver";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import Error404 from "./components/Errors";
+import AdminSocioCopy from "./components/Socio/Copy/Admin/View/index.js";
 
 export default function Routes() {
 
@@ -31,7 +32,8 @@ export default function Routes() {
         <ProtectedRoute path="/admin/usuario/profile/:id" component={Profile} /> 
         <ProtectedRoute path="/admin/usuario" component={Usuario} /> 
         <ProtectedRoute path="/admin/live" component={LiveAdmin} /> 
-        <ProtectedRoute path="/admin/socio" component={SocioAdmin} /> 
+        <ProtectedRoute path="/admin/socio/copy/:id" component={AdminSocioCopy} /> 
+        <ProtectedRoute path="/admin/socio/:id" component={AdminSocio} /> 
         <Route path="/logon" component={Logon} /> 
         <Route path="/recouver/:hash" render={(props) => <Recouver {...props} />}/> 
         <Route path="/reset" component={Reset} /> 

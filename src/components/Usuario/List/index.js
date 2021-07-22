@@ -5,14 +5,15 @@ import {
   Grid,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import api from "../../../services/api.js";
-import { simpleSwal } from "../../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
-import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar, ptBR } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
 import "./style.css";
+import api from "../../../services/api";
+import { simpleSwal } from "../../../helpers/SwalFeedBack";
+import Swal from 'sweetalert2';
 
-export default function ListaCampanha() {
+export default function List() {
   const [items, setItems] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const [spinner, setSpinner] = useState(true);
@@ -79,6 +80,7 @@ export default function ListaCampanha() {
                     columns={columns}
                     pagination
                     pageSize={pageSize}
+                    localeText={ptBR.props.MuiDataGrid.localeText}
                     onPageSizeChange={handlePageSizeChange}
                     autoHeight={true}
                     onRowClick={handleRowClick}

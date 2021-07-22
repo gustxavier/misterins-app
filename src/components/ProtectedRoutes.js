@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { SimpleSwal } from "../helpers/SwalFeedBack";
+import { simpleSwal } from "../helpers/SwalFeedBack";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (token == null) {
-      SimpleSwal(
+      simpleSwal(
         "<strong>Atenção</strong>",
         "Sua conexão expirou. Faça login novamente.",
         "warning"

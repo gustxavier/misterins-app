@@ -109,9 +109,10 @@ export default function Header(pageInfo) {
   const [configuration, setConfiguration] = useState(false);
   const [mrzap, setMrZap] = useState(false);
   const [openSocio, setOpenSocio] = useState(false);
+  const [openAdminSocio, setOpenAdminSocio] = useState(false);
   const menuSocio = JSON.parse(localStorage.getItem("menu-socio"));
   const username = localStorage.getItem("username");
-  const courses = localStorage.getItem("courses");
+  const userPermCourses = localStorage.getItem("courses");
   const userID = localStorage.getItem("userid");
   const history = useHistory();
 
@@ -303,7 +304,7 @@ export default function Header(pageInfo) {
             <ListItemText primary="Live" />
           </ListItem>
         </List>
-        {courses.search("448026") !== -1 && (
+        {userPermCourses.search("448026") !== -1 && (
           <List>
             <ListItem button onClick={() => setOpenSocio(!openSocio)}>
               <ListItemIcon>
@@ -312,7 +313,12 @@ export default function Header(pageInfo) {
               <ListItemText primary="Sócio" />
               {openSocio ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={openSocio} className="sub-menu" timeout="auto" unmountOnExit>
+            <Collapse
+              in={openSocio}
+              className="sub-menu"
+              timeout="auto"
+              unmountOnExit
+            >
               <List component="div" disablePadding>
                 {menuSocio.length > 0
                   ? menuSocio.map((list) => (
@@ -329,7 +335,11 @@ export default function Header(pageInfo) {
                           >
                             <ListItemIcon>
                               <RadioButtonUncheckedIcon
-                                style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
+                                style={{
+                                  fontSize: 10,
+                                  color: "#fafafa",
+                                  marginLeft: "15px",
+                                }}
                               />
                             </ListItemIcon>
                             <ListItemText primary={list.title} />
@@ -365,7 +375,12 @@ export default function Header(pageInfo) {
               <ListItemText primary="Configurações" />
               {configuration ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={configuration} className="sub-menu" timeout="auto" unmountOnExit>
+            <Collapse
+              in={configuration}
+              className="sub-menu"
+              timeout="auto"
+              unmountOnExit
+            >
               <List component="div" disablePadding>
                 <ListItem
                   button
@@ -374,23 +389,70 @@ export default function Header(pageInfo) {
                 >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
-                      style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
+                      style={{
+                        fontSize: 10,
+                        color: "#fafafa",
+                        marginLeft: "15px",
+                      }}
                     />
                   </ListItemIcon>
                   <ListItemText primary="Live" />
                 </ListItem>
-                <ListItem
-                  button
-                  className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/socio" })}
-                >
-                  <ListItemIcon>
-                    <RadioButtonUncheckedIcon
-                      style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Sócio" />
-                </ListItem>
+                <List className="sub-master">
+                  <ListItem
+                    button
+                    onClick={() => setOpenAdminSocio(!openAdminSocio)}
+                  >
+                    <ListItemIcon>
+                      <RadioButtonUncheckedIcon
+                        style={{
+                          fontSize: 10,
+                          color: "#fafafa",
+                          marginLeft: "18px",
+                        }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary="Sócio" />
+                    {openAdminSocio ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse
+                    in={openAdminSocio}
+                    className="sub-menu sub-sub-menu"
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    <List component="div" disablePadding>
+                      {menuSocio.length > 0
+                        ? menuSocio.map((list) => (
+                            <div key={list.id}>
+                              {list.can_affiliate === "Y" && (
+                                <ListItem
+                                  button
+                                  className="nested"
+                                  onClick={() =>
+                                    handlePush({
+                                      pathname: "/admin/socio/" + list.id,
+                                    })
+                                  }
+                                >
+                                  <ListItemIcon>
+                                    <RadioButtonUncheckedIcon
+                                      style={{
+                                        fontSize: 10,
+                                        color: "#fafafa",
+                                        marginLeft: "15px",
+                                      }}
+                                    />
+                                  </ListItemIcon>
+                                  <ListItemText primary={list.title} />
+                                </ListItem>
+                              )}
+                            </div>
+                          ))
+                        : null}
+                    </List>
+                  </Collapse>
+                </List>
                 <ListItem
                   button
                   className="nested"
@@ -398,7 +460,11 @@ export default function Header(pageInfo) {
                 >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon
-                      style={{ fontSize: 10, color: "#fafafa", marginLeft: "15px" }}
+                      style={{
+                        fontSize: 10,
+                        color: "#fafafa",
+                        marginLeft: "15px",
+                      }}
                     />
                   </ListItemIcon>
                   <ListItemText primary="Usuários" />
@@ -413,7 +479,12 @@ export default function Header(pageInfo) {
               <ListItemText primary="Mr Zap" />
               {mrzap ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={mrzap} className="sub-menu" timeout="auto" unmountOnExit>
+            <Collapse
+              in={mrzap}
+              className="sub-menu"
+              timeout="auto"
+              unmountOnExit
+            >
               <List component="div" disablePadding>
                 <ListItem
                   button
@@ -423,7 +494,13 @@ export default function Header(pageInfo) {
                   }
                 >
                   <ListItemIcon>
-                    <DashboardIcon style={{ fontSize: 13, color: "#fafafa", marginLeft: "15px" }} />
+                    <DashboardIcon
+                      style={{
+                        fontSize: 13,
+                        color: "#fafafa",
+                        marginLeft: "15px",
+                      }}
+                    />
                   </ListItemIcon>
                   <ListItemText primary="Dashboard" />
                 </ListItem>
@@ -435,7 +512,13 @@ export default function Header(pageInfo) {
                   }
                 >
                   <ListItemIcon>
-                    <ListIcon style={{ fontSize: 13, color: "#fafafa", marginLeft: "15px" }} />
+                    <ListIcon
+                      style={{
+                        fontSize: 13,
+                        color: "#fafafa",
+                        marginLeft: "15px",
+                      }}
+                    />
                   </ListItemIcon>
                   <ListItemText primary="Campanha" />
                 </ListItem>

@@ -60,16 +60,15 @@ function ListVideos(param) {
         },
       })
       .then((response) => {
-        var link = document.createElement("a");
+        let link = document.createElement("a");
         link.href = window.URL.createObjectURL(new Blob([response.data]));
         link.download = file_name;
         link.click();
         setProgress(0);
+        link = null;
       })
       .catch((error) => {
         console.log(error);
-        // localStorage.clear();
-        // history.push("/");
       });
   }
 
@@ -106,7 +105,6 @@ function ListVideos(param) {
                             }
                             width={"100%"}
                           />
-
                           <Button
                             className="button mt-2"
                             align="center"

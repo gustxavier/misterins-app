@@ -5,37 +5,39 @@ import {
   Grid,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import api from "../../../services/api.js";
-import { SimpleSwal } from "../../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
-import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import { DataGrid,GridToolbar, ptBR } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
 import "./style.css";
+import { useParams } from "react-router-dom";
+import { simpleSwal } from "../../../../../helpers/SwalFeedBack.js";
+import api from "../../../../../services/api";
 
-export default function Lista() {
+export default function List() {
+  const params = useParams();
   const [items, setItems] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const [spinner, setSpinner] = useState(true);
   const history = useHistory();
   const columns = [
     { field: "id", headerName: "#", width: 90 },
-    { field: "name", headerName: "Nome", width: 250 },
-    { field: "email", headerName: "Email", width: 250 },
-    { field: "cpf", headerName: "CPF", width: 180 },
-    { field: "instagram", headerName: "Instagram", width: 250 },
-    { field: "facebook", headerName: "Facebook", width: 250 },
+    { field: "title", headerName: "Título", width: 350 },
+    { field: "important_text", headerName: "Texto Importante", width: 800 },
   ];
-  const [pageSize, setPageSize] = React.useState(50);
+  const [pageSize, setPageSize] = React.useState(25);
 
-  const handleRowClick = React.useCallback((params) => {
-    history.push({
-      pathname: "/admin/usuario/profile/"+params.row.id,
-    });
-  }, [history]);
+  const handleRowClick = React.useCallback(
+    (params) => {
+      history.push({
+        pathname: "/admin/socio/copy/" + params.row.id,
+      });
+    },
+    [history]
+  );
 
   useEffect(() => {
     api
-      .get("users", {
+      .get("copy/getCopyByCourseID/" + params.id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,10 +53,10 @@ export default function Lista() {
       })
       .catch((error) => {
         localStorage.clear();
-        SimpleSwal("<strong>Atenção</strong>", error, "warning");
+        simpleSwal("<strong>Atenção</strong>", error, "warning");
         history.push("/");
       });
-  }, [token, history]);
+  }, [token, history, params]);
 
   const handlePageSizeChange = (params) => {
     setPageSize(params.pageSize);
@@ -74,11 +76,11 @@ export default function Lista() {
               <CardContent>
                 <div style={{ height: "100%", width: "100%" }}>
                   <DataGrid
-                    // {...items}
                     rows={items}
                     columns={columns}
                     pagination
                     pageSize={pageSize}
+                    localeText={ptBR.props.MuiDataGrid.localeText}
                     onPageSizeChange={handlePageSizeChange}
                     autoHeight={true}
                     onRowClick={handleRowClick}

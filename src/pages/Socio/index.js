@@ -6,28 +6,29 @@ import {
   Typography,
   CircularProgress,
   LinearProgress,
-} from "@material-ui/core"
-import React, { useEffect, useState } from "react"
+} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 
-import "./style.css"
-import Header from "../../components/Header"
-import ListVideos from "../../components/Socio/ListVideos"
-import Footer from "../../components/Footer"
-import { useHistory, useParams } from "react-router-dom"
-import ListCopies from "../../components/Socio/ListCopies"
-import api from "../../services/api"
+import "./style.css";
+import Header from "../../components/Header";
+import ListVideos from "../../components/Socio/ListVideos";
+import Footer from "../../components/Footer";
+import { useHistory, useParams } from "react-router-dom";
+import ViewListCopies from "../../components/Socio/Copy/View/index.js";
+import api from "../../services/api";
 
 export default function Socio() {
-  const param = useParams()
-  const [spinner, setSpinner] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const token = localStorage.getItem("token")
-  const history = useHistory()
-  const [pagename, setPagename] = useState()
+  const param = useParams();
+  const courseID = param.id;
+  const [spinner, setSpinner] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const token = localStorage.getItem("token");
+  const history = useHistory();
+  const [pagename, setPagename] = useState();
 
   useEffect(() => {
     api
-      .get("courses/" + param.id, {
+      .get("courses/" + courseID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,23 +38,23 @@ export default function Socio() {
           !response.data.status &&
           (response.data.status === 401 || response.data.status === 498)
         ) {
-          localStorage.clear()
-          history.push("/")
+          localStorage.clear();
+          history.push("/");
         } else {
-          setPagename(response.data.data.title)
+          setPagename(response.data.data.title);
         }
       })
       .catch((error) => {
-        console.log("Ocorreu um erro ao buscar os items" + error)
-      })
-  }, [history, param, token])
+        console.log("Ocorreu um erro ao buscar os items" + error);
+      });
+  }, [history, param, token]);
 
   function handleProgress(event) {
-    setProgress(event)
+    setProgress(event);
   }
 
   function handleSpinner(event) {
-    setSpinner(event)
+    setSpinner(event);
   }
 
   return (
@@ -78,7 +79,7 @@ export default function Socio() {
           ) : null}
           <Container maxWidth="xl" className={"container"}>
             <Grid container>
-              <ListCopies courseID={param.id} />
+              <ViewListCopies courseID={param.id} />
               <ListVideos
                 courseID={param.id}
                 type={"story"}
@@ -96,5 +97,5 @@ export default function Socio() {
         </main>
       </div>
     </React.Fragment>
-  )
+  );
 }

@@ -289,6 +289,16 @@ input:-internal-autofill-selected {
     top: -5px;
 }
 
+.modal .modal-body {
+    padding: 10px 5px;
+}
+
+.modal .MuiFormLabel-root.Mui-focused,
+.modal .MuiInputLabel-outlined {
+    background-color: #fff;
+    padding: 0px 10px;
+}
+
 #root .modal .MuiInputBase-input {
     color: #222;
     background-color: #fff;
@@ -317,4 +327,8 @@ input:-internal-autofill-selected {
     top: 50%;
     width: 50%;
     margin: auto;
+}
+
+#root .MuiDataGrid-root .MuiDataGrid-row {
+    cursor: pointer;
 }

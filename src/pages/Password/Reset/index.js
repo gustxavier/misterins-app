@@ -17,6 +17,7 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined"
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 class Reset extends React.Component {
   constructor(props) {
@@ -103,14 +104,13 @@ class Reset extends React.Component {
                         "E-mail inválido!",
                       ]}
                     />
-                    <Button className="button" type="submit">
+                    <button className="btn btn-primary w-100 mt-3" type="submit">
                       <span className="inline">
                         <Typography>Avançar</Typography>
                       </span>
-                    </Button>
+                    </button>
                     <Link className="back-link" to="/">
-                      <FiLogIn size={16} color="#3498db" />
-                      voltar para login
+                      <ArrowBackIcon /> voltar para login
                     </Link>
                   </Grid>
                 </Grid>

@@ -11,7 +11,7 @@ import {
 // import { makeStyles } from "@material-ui/core/styles";
 import Header from "../../components/Header";
 import api from "../../services/api";
-// import { SimpleNoty } from "../../helpers/NotyFeedBack";
+// import { simpleNoty } from "../../helpers/NotyFeedBack";
 // import { forEach, isSet, map } from "lodash";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router";
@@ -68,7 +68,7 @@ export default function Lives() {
     // ).then(response => {
     //   if (response.data.status && response.data.status === (401 || 498)) {
     //     localStorage.clear();
-    //     SimpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
+    //     simpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
     //     history.push('/')
     //   } else {
     //     const div = document.createElement('div')
@@ -97,11 +97,11 @@ export default function Lives() {
   //     .then((response) => {
   //       if (response.status && response.status === (401 || 498)) {
   //         localStorage.clear();
-  //         SimpleSwal("<strong>Atenção</strong>", "Oops", "warning");
+  //         simpleSwal("<strong>Atenção</strong>", "Oops", "warning");
   //         this.props.history.push("/");
   //       }
   //       if ("msg" in response.data) {
-  //         SimpleSwal("<strong>Atenção</strong>", response.data.msg, "warning");
+  //         simpleSwal("<strong>Atenção</strong>", response.data.msg, "warning");
   //       } else {
   //         const div = document.createElement("div");
   //         div.innerHTML = formatHtmlQuestion(response.data);
@@ -146,7 +146,7 @@ export default function Lives() {
   //         (response.data.status === 401 || response.data.status === 498)
   //       ) {
   //         localStorage.clear();
-  //         SimpleSwal(
+  //         simpleSwal(
   //           "<strong>Atenção</strong>",
   //           response.data.message,
   //           "warning"
@@ -177,7 +177,7 @@ export default function Lives() {
   //         (response.data.status === 401 || response.data.status === 498)
   //       ) {
   //         localStorage.clear();
-  //         SimpleSwal(
+  //         simpleSwal(
   //           "<strong>Atenção</strong>",
   //           response.data.message,
   //           "warning"

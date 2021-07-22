@@ -21,7 +21,7 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { SimpleNoty } from "../../../helpers/NotyFeedBack";
+import { simpleNoty } from "../../../helpers/NotyFeedBack";
 import equal from "fast-deep-equal";
 
 import "./styles.css";
@@ -171,7 +171,7 @@ class Profile extends React.PureComponent {
           localStorage.clear();
           this.props.history.push("/");
         } else {
-          SimpleNoty("Sucesso! Dados Atualizados.", "success");
+          simpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
           this.props.history.push(
             "/admin/usuario/profile/" + this.state.id_user
@@ -195,7 +195,7 @@ class Profile extends React.PureComponent {
           localStorage.clear();
           this.props.history.push("/");
         } else {
-          SimpleNoty("Sucesso! Dados Atualizados.", "success");
+          simpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
           this.props.history.push(
             "/admin/usuario/profile/" + this.state.id_user
@@ -223,7 +223,7 @@ class Profile extends React.PureComponent {
           localStorage.clear();
           this.props.history.push("/");
         } else {
-          SimpleNoty("Sucesso! Dados Atualizados.", "success");
+          simpleNoty("Sucesso! Dados Atualizados.", "success");
           this.setState({ spinner: false });
           this.props.history.push(
             "/admin/usuario/profile/" + this.state.id_user

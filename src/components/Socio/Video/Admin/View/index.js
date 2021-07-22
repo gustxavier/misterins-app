@@ -2,27 +2,27 @@ import {
   Grid,
   Typography,
   Button,
-  CircularProgress,
   CardContent,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { useHistory, useParams } from "react-router-dom";
-import { SimpleNoty } from "../../helpers/NotyFeedBack";
+import { useHistory } from "react-router-dom";
+import { simpleNoty } from "../../../../../helpers/NotyFeedBack";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
-import api from "../../services/api";
+import api from "../../../../../services/api";
 import { Card } from "react-bootstrap";
 
-export default function ListCopies(params) {
+export default function ViewListCopies(params) {
   const [items, setItems] = useState([]);
   const token = localStorage.getItem("token");
   const history = useHistory();
-  const [spinner, setSpinner] = useState(true);
   const [linkButton, setLinkButton] = useState();
 
   useEffect(() => {
+    setLinkAffiliate();
+
     api
       .get("copy/getCopyByCourseID/" + params.courseID, {
         headers: {
@@ -38,46 +38,46 @@ export default function ListCopies(params) {
           history.push("/");
         } else {
           setItems(response.data.data);
-          setSpinner(false);
         }
       })
       .catch((error) => {
         console.log("Ocorreu um erro ao buscar os items" + error);
       });
-  }, [token, history, params]);
 
-  function handleAffiliate(courseID) {
-    switch (Number(courseID)) {
-      case 11:
-        setLinkButton(
-          "https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760"
-        );
-        break;
-      case 12:
-        setLinkButton(
-          "https://app-vlc.hotmart.com/affiliate-recruiting/view/4497O55977725"
-        );
-        break;
+    async function setLinkAffiliate() {
+      switch (Number(params.courseID)) {
+        case 11:
+          setLinkButton(
+            "https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760"
+          );
+          break;
+        case 12:
+          setLinkButton(
+            "https://app-vlc.hotmart.com/affiliate-recruiting/view/4497O55977725"
+          );
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
     }
-    window.open(linkButton);
-  }
+  }, [token, history, linkButton, params]);
 
   return (
     <Grid item xs={12} md={12} className="mb-4">
       <Card className="card">
         <CardContent>
-          <Button
+          <a
             title="Seja um afiliado Mister Ins"
-            className="affiliate-button"
-            onClick={() => handleAffiliate(params.courseID)}
+            className="affiliate-button btn"
+            href={linkButton}
+            target="_blank"
+            rel="noreferrer"
           >
             <Typography variant="h6">
               <ThumbUpAltIcon /> Afiliar-se
             </Typography>
-          </Button>
+          </a>
           <Typography
             gutterBottom
             variant="h6"
@@ -93,7 +93,7 @@ export default function ListCopies(params) {
                     <CopyToClipboard
                       text={list.title}
                       onCopy={() =>
-                        SimpleNoty("Sucesso! Título copiado.", "success")
+                        simpleNoty("Sucesso! Título copiado.", "success")
                       }
                     >
                       <Button
@@ -117,7 +117,7 @@ export default function ListCopies(params) {
                     <CopyToClipboard
                       text={list.important_text}
                       onCopy={() =>
-                        SimpleNoty(
+                        simpleNoty(
                           "Sucesso! Texto principal copiado.",
                           "success"
                         )
@@ -144,7 +144,7 @@ export default function ListCopies(params) {
                     <CopyToClipboard
                       text={list.description}
                       onCopy={() =>
-                        SimpleNoty("Sucesso! descrição copiada.", "success")
+                        simpleNoty("Sucesso! descrição copiada.", "success")
                       }
                     >
                       <Button
