@@ -5,23 +5,32 @@ import UpdateLive from "../../../components/Live/UpdateLive";
 import "./styles.css";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
+import { CircularProgress } from "@material-ui/core";
+import List from '../../../components/Live/Admin/List'
+import Insert from '../../../components/Live/Admin/Insert'
 
 export default function Live() {
-  const [token] = useState(localStorage.getItem("token"));
-  const history = useHistory();
 
-  useEffect(() => {
-    
-  }, [token, history]);
+  const [spinner, setEventSpinner] = useState(false);
+
+  function handleSpinner(event) {
+    setEventSpinner(event);
+  }
 
   return (
     <React.Fragment>
       <div className={"d-flex"}>
-        <Header title={"Admin - Live"} />
+        <Header title={"Admin - Lives"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
-          <UpdateLive />    
-          <Footer />      
+          {spinner && (
+            <div id="spinner-live" className="spinner">
+              <CircularProgress />
+            </div>
+          )}
+          <List />
+          <Insert onSpinner={handleSpinner} />
+          <Footer />
         </main>
       </div>
     </React.Fragment>

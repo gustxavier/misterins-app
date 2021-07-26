@@ -11,10 +11,10 @@ import { withRouter } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import { Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
+import { simpleNoty } from "../../../../helpers/NotyFeedBack";
+import { simpleSwal } from "../../../../helpers/SwalFeedBack";
+import api from "../../../../services/api";
 import "./style.css";
-import api from "../../../../../services/api";
-import { simpleNoty } from "../../../../../helpers/NotyFeedBack";
-import { simpleSwal } from "../../../../../helpers/SwalFeedBack";
 
 class Insert extends React.Component {
   constructor(props) {
@@ -80,7 +80,7 @@ class Insert extends React.Component {
             let msg = error.response.data.errors["email"]
               ? error.response.data.errors["email"][0]
               : error.response.data.msg;
-              simpleSwal("<strong>Atenção</strong>", msg, "warning");
+            simpleSwal("<strong>Atenção</strong>", msg, "warning");
           }
         });
     } catch (err) {

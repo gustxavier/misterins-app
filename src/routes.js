@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Logon from "./pages/Logon";
 import Register from "./pages/Register";
-import Lives from "./pages/Lives";
+import ViewLive from "./components/Live/View";
 import Socio from "./pages/Socio";
 import Dashboard from "./pages/Dashboard";
 import AdminSocio from "./pages/Admin/Socio";
@@ -27,7 +27,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <ProtectedRoute path="/socio/:id" component={Socio} /> 
-        <ProtectedRoute path="/lives" component={Lives} /> 
+        <ProtectedRoute path="/live/:id" component={ViewLive} /> 
         <ProtectedRoute path="/dashboard" component={Dashboard} /> 
         <ProtectedRoute path="/admin/usuario/profile/:id" component={Profile} /> 
         <ProtectedRoute path="/admin/usuario" component={Usuario} /> 

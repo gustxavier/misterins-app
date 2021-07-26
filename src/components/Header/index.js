@@ -297,7 +297,7 @@ export default function Header(pageInfo) {
             <ListItemText primary="Bem-vindo" />
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => handlePush({ pathname: "/lives" })}>
+          <ListItem button onClick={() => handlePush({ pathname: "/live/1" })}>
             <ListItemIcon>
               <LiveTvIcon style={{ color: "#fafafa" }} />
             </ListItemIcon>

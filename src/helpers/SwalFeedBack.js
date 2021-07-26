@@ -1,4 +1,3 @@
-import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import api from "../services/api";
 import { simpleNoty } from "./NotyFeedBack";

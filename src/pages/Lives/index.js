@@ -18,181 +18,19 @@ import { useHistory } from "react-router";
 // import { DataGrid } from "@material-ui/data-grid";
 import "./styles.css";
 import Footer from "../../components/Footer";
+import ViewLive from "../../components/Live/View";
 
 export default function Lives() {
-  // const [comment, setComment] = useState("");
-  // const [commentList, setCommentList] = useState([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [url, setUrl] = useState("");
-  const [hotmartID, setHotmartID] = useState("");
-  // const userid = localStorage.getItem("userid");
-  const token = localStorage.getItem("token");
-  const courses = localStorage.getItem("courses");
-  const history = useHistory();
-  const [spinner, setSpinner] = useState(true);
+  const [spinner, setEventSpinner] = useState(false);
 
-  useEffect(() => {
-    api
-      .get("lives", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (
-          response.data.status &&
-          (response.data.status === 401 || response.data.status === 498)
-        ) {
-          localStorage.clear();
-          history.push("/");
-        } else {
-          if (response.data.data.length > 0) {
-            setTitle(response.data.data[0].title);
-            setUrl(response.data.data[0].url);
-            setDescription(response.data.data[0].description);
-            setHotmartID(response.data.data[0].hotmart_id);
-          }
-        }
-        setSpinner(false);
-      });
-    // getAllComments()
-    // api.get('live-comment', {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   params: {
-    //     'user_id': localStorage.getItem('userid')
-    //   }
-    // }
-    // ).then(response => {
-    //   if (response.data.status && response.data.status === (401 || 498)) {
-    //     localStorage.clear();
-    //     simpleSwal('<strong>Atenção</strong>', response.data.message, 'warning')
-    //     history.push('/')
-    //   } else {
-    //     const div = document.createElement('div')
-    //     div.innerHTML = formatHtmlQuestion(response.data.data)
-    //     // document.getElementById('comments').append(div)
-    //     setSpinner(false)
-    //   }
-    // });
-  }, [history, token]);
-
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-
-  //   const data = {
-  //     user_id: event.target.user_id.value,
-  //     live_id: 1,
-  //     comment: event.target.comment.value,
-  //   };
-
-  //   api
-  //     .post("live-comment", data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response.status && response.status === (401 || 498)) {
-  //         localStorage.clear();
-  //         simpleSwal("<strong>Atenção</strong>", "Oops", "warning");
-  //         this.props.history.push("/");
-  //       }
-  //       if ("msg" in response.data) {
-  //         simpleSwal("<strong>Atenção</strong>", response.data.msg, "warning");
-  //       } else {
-  //         const div = document.createElement("div");
-  //         div.innerHTML = formatHtmlQuestion(response.data);
-  //         document.getElementById("comments").append(div);
-  //         setComment("");
-  //       }
-  //     });
-  // }
-
-  // function formatHtmlQuestion(data) {
-  //   let html = "";
-  //   for (var [key, value] of Object.entries(data)) {
-  //     if (key !== "status")
-  //       html +=
-  //         "<p><strong>" +
-  //         localStorage.getItem("username") +
-  //         "</strong> - " +
-  //         value["comment"] +
-  //         "</p>";
-  //   }
-  //   return html;
-  // }
-
-  // function handleChange(event) {
-  //   const value =
-  //     event.target.type === "checkbox"
-  //       ? event.target.checked
-  //       : event.target.value;
-  //   setComment(value);
-  // }
-
-  // async function getLiveLink(token) {
-  //   api
-  //     .get("lives", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (
-  //         response.data.status &&
-  //         (response.data.status === 401 || response.data.status === 498)
-  //       ) {
-  //         localStorage.clear();
-  //         simpleSwal(
-  //           "<strong>Atenção</strong>",
-  //           response.data.message,
-  //           "warning"
-  //         );
-  //         history.push("/");
-  //       } else {
-  //         if (response.data.data.length > 0) {
-  //           setTitle(response.data.data[0].title);
-  //           setUrl(response.data.data[0].url);
-  //           setDescription(response.data.data[0].description);
-  //           setHotmartID(response.data.data[0].hotmart_id);
-  //         }
-  //       }
-  //       setSpinner(false);
-  //     });
-  // }
-
-  // async function getAllComments() {
-  //   api
-  //     .get("live-comment/live/1", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (
-  //         response.data.status &&
-  //         (response.data.status === 401 || response.data.status === 498)
-  //       ) {
-  //         localStorage.clear();
-  //         simpleSwal(
-  //           "<strong>Atenção</strong>",
-  //           response.data.message,
-  //           "warning"
-  //         );
-  //         history.push("/");
-  //       } else {
-  //         setCommentList([...commentList, response.data.data]);
-  //       }
-  //     });
-  // }
+  function handleSpinner(event) {
+    setEventSpinner(event);
+  }
 
   return (
     <React.Fragment>
       <div className={"d-flex"}>
-        <Header title={"Live"} />
+        <Header title={"Admin - Lives"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
           {spinner && (
@@ -200,98 +38,10 @@ export default function Lives() {
               <CircularProgress />
             </div>
           )}
-          <Container maxWidth="lg" className={"container"}>
-            <Grid container spacing={3}>
-              {courses.search(hotmartID) !== -1 ? (
-                <Grid item sm={12} xs={12} md={12}>
-                  <Paper className="paper">
-                    {/* <Alert variant="outlined" severity="info">
-                      Para fazer uma pergunta acesse o instagram do Maico
-                      (maicoandrade) e faça uma pergunta nas caixinhas do
-                      storys.
-                    </Alert> */}
-                    <Typography
-                      variant="h4"
-                      align="center"
-                      style={{ color: "#fafafa" }}
-                    >
-                      {title}
-                    </Typography>
-                    <iframe
-                      width="100%"
-                      height="600px"
-                      src={url}
-                      title="Live"
-                      frameborder="0"
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                    <Typography>{description}</Typography>
-                  </Paper>
-                </Grid>
-              ) : (
-                <Grid item sm={12} xs={12}>
-                  <Paper className="paper">
-                    <Alert variant="outlined" severity="warning">
-                      Nenhuma live disponível. Se você ouviu rumores sobre live
-                      e não está vendo, provavelmente a live é fechada para
-                      alunos de um determinado curso.
-                    </Alert>
-                  </Paper>
-                </Grid>
-              )}
-              {/* <Grid item md={4} xs={12}>
-            <Card>
-              <CardContent className="bg-dark">
-                <h3 className="mr-text-light mr-font-weight-200">Minhas Perguntas</h3>
-                <div id="comments" className="comments">
-                  <Alert variant="outlined" severity="info">Limitamos apenas 10 perguntas por usuário para que consigamos responder a maioria.</Alert>
-                </div>
-                <div className="form-inline">
-                  <form autoComplete="off" className="send-comment" onSubmit={handleSubmit}>
-                    <input type="hidden" name="user_id" value={userid} />
-                    <FormGroup display="inline">
-                      <Grid container>
-                        <Grid item sm={10}>
-                          <TextField
-                            name="comment"
-                            id="comment"
-                            type="text"
-                            label="Adicionar pergunta"
-                            className="ext-input"
-                            fullWidth
-                            value={comment}
-                            onChange={e => handleChange(e)}
-                            required
-                          />
-                        </Grid>
-                        <Grid item sm={2}>
-                          <IconButton
-                            aria-label="Enviar"
-                            type="submit"
-                          >
-                            <SendSharp />
-                          </IconButton>
-                        </Grid>
-                      </Grid>
-                    </FormGroup>
-                  </form>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid> */}
-              {/* <Grid item sm={12}>
-            <ul>
-              {commentList.length > 0 ? commentList.map((list) =>
-              (                
-                <li key={list.id}>{list.comment}{console.log(list)} - teste</li>
-              )) : null
-              }
-            </ul>
-          </Grid> */}
-            </Grid>
-            <Footer />
-          </Container>
+          <ViewLive onSpinner={handleSpinner} />
+          {/* <List /> */}
+          {/* <Insert onSpinner={handleSpinner} /> */}
+          <Footer />
         </main>
       </div>
     </React.Fragment>

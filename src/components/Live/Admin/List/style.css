@@ -1,0 +1,20 @@
+#root .MuiDataGrid-root {
+    color: #fafafa !important;
+    border: none;
+}
+
+#root .MuiDataGrid-root .MuiTypography-colorInherit {
+    color: #fafafa;
+}
+
+#root .MuiDataGrid-root .MuiDataGrid-columnsContainer {
+    border-bottom: 2px solid rgb(65 65 75);
+}
+
+#root .MuiDataGrid-root .MuiDataGrid-cell {
+    border-bottom: 1px solid rgb(65 65 75);
+}
+
+#root .MuiIconButton-root {
+    color: #fafafa;
+}
