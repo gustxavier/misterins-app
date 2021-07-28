@@ -38,7 +38,7 @@ export default function Lives() {
               <CircularProgress />
             </div>
           )}
-          <ViewLive onSpinner={handleSpinner} />
+          <ViewLive/>
           {/* <List /> */}
           {/* <Insert onSpinner={handleSpinner} /> */}
           <Footer />

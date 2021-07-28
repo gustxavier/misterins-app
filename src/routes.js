@@ -3,11 +3,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Logon from "./pages/Logon";
 import Register from "./pages/Register";
-import ViewLive from "./components/Live/View";
+import LiveView from "./components/Live/View";
 import Socio from "./pages/Socio";
 import Dashboard from "./pages/Dashboard";
 import AdminSocio from "./pages/Admin/Socio";
-import LiveAdmin from "./pages/Admin/Live";
+import AdminLiveView from "./components/Live/Admin/View";
+import AdminLiveList from "./pages/Admin/Live";
 import Usuario from "./pages/Admin/Usuario";
 import Profile from "./components/Usuario/Profile";
 import Reset from "./pages/Password/Reset";
@@ -27,11 +28,12 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <ProtectedRoute path="/socio/:id" component={Socio} /> 
-        <ProtectedRoute path="/live/:id" component={ViewLive} /> 
+        <ProtectedRoute path="/live/:id" component={LiveView} /> 
         <ProtectedRoute path="/dashboard" component={Dashboard} /> 
         <ProtectedRoute path="/admin/usuario/profile/:id" component={Profile} /> 
         <ProtectedRoute path="/admin/usuario" component={Usuario} /> 
-        <ProtectedRoute path="/admin/live" component={LiveAdmin} /> 
+        <ProtectedRoute path="/admin/live/:id" component={AdminLiveView} /> 
+        <ProtectedRoute path="/admin/lives" component={AdminLiveList} /> 
         <ProtectedRoute path="/admin/socio/copy/:id" component={AdminSocioCopy} /> 
         <ProtectedRoute path="/admin/socio/:id" component={AdminSocio} /> 
         <Route path="/logon" component={Logon} /> 

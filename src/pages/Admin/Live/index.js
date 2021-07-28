@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import UpdateLive from "../../../components/Live/UpdateLive";
+import React, { useState } from "react";
 
 import "./styles.css";
 import Header from "../../../components/Header";

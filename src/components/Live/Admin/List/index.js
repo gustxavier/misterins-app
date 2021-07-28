@@ -3,15 +3,18 @@ import {
   CircularProgress,
   Container,
   Grid,
+  Tooltip,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { DataGrid,GridToolbar, ptBR } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar, ptBR } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
 import "./style.css";
 import { useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import { simpleSwal } from "../../../../helpers/SwalFeedBack";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 export default function List() {
   const params = useParams();
@@ -19,11 +22,29 @@ export default function List() {
   const [token] = useState(localStorage.getItem("token"));
   const [spinner, setSpinner] = useState(true);
   const history = useHistory();
+
   const columns = [
     { field: "id", headerName: "#", width: 90 },
     { field: "title", headerName: "Título", width: 450 },
     { field: "url", headerName: "Link", width: 800 },
-    { field: "is_active", headerName: "Ativo?", width: 120 },
+    {
+      field: "is_active",
+      headerName: "Status",
+      width: 120,
+      renderCell: (params) => (
+        <div>
+          {params.value === "Y" ? (
+            <Tooltip title="Ativo" aria-label="add">
+              <CheckCircleIcon className="text-success text-center" />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Inativo" aria-label="add">
+              <CancelIcon className="text-danger" />
+            </Tooltip>
+          )}
+        </div>
+      ),
+    },
   ];
   const [pageSize, setPageSize] = React.useState(25);
 

@@ -385,7 +385,7 @@ export default function Header(pageInfo) {
                 <ListItem
                   button
                   className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/live" })}
+                  onClick={() => handlePush({ pathname: "/admin/lives" })}
                 >
                   <ListItemIcon>
                     <RadioButtonUncheckedIcon

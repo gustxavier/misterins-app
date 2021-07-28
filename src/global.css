@@ -299,6 +299,10 @@ input:-internal-autofill-selected {
     padding: 0px 10px;
 }
 
+.modal .modal-title {
+    font-size: 18px;
+}
+
 #root .modal .MuiInputBase-input {
     color: #222;
     background-color: #fff;
@@ -331,4 +335,8 @@ input:-internal-autofill-selected {
 
 #root .MuiDataGrid-root .MuiDataGrid-row {
     cursor: pointer;
+}
+
+.form-control[type=file] {
+    padding: 10px 15px;
 }

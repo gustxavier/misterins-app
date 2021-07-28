@@ -1,34 +1,19 @@
 import React from "react";
 import api from "../../../services/api";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
 import Header from "../../Header";
-import InputMask from "react-input-mask";
 import {
-  Button,
-  CardContent,
   CircularProgress,
   Container,
   Typography,
   Grid,
-  Card,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
 } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { simpleNoty } from "../../../helpers/NotyFeedBack";
-import equal from "fast-deep-equal";
 
 import "./styles.css";
 import { Paper } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-class Profile extends React.PureComponent {
+class LiveView extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -74,7 +59,6 @@ class Profile extends React.PureComponent {
           url: response.data.data.url,
           description: response.data.data.description,
         });
-        // return response.data;
       });
   }
 
@@ -126,7 +110,7 @@ class Profile extends React.PureComponent {
             )}
             <Container maxWidth="lg" className={"container"}>
               <Grid container spacing={3}>
-                {localStorage.getItem('courses').search(448026) !== -1 ? (
+                {localStorage.getItem("courses").search(448026) !== -1 ? (
                   <Grid item sm={12} xs={12} md={12}>
                     <Paper className="paper">
                       {/* <Alert variant="outlined" severity="info">
@@ -173,4 +157,4 @@ class Profile extends React.PureComponent {
     );
   }
 }
-export default withRouter(Profile);
+export default withRouter(LiveView);

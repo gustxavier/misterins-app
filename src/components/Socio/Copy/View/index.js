@@ -73,9 +73,7 @@ export default function ListCopies(params) {
             title="Seja um afiliado Mister Ins"
             className="btn btn-primary mb-3"
           >
-            {/* <Typography variant="h6"> */}
             <ThumbUpAltIcon /> Afiliar-se
-            {/* </Typography> */}
           </a>
           <a
             href={linkMySells}
@@ -84,9 +82,7 @@ export default function ListCopies(params) {
             title="Parceiro: Gerar página de vendas"
             className="btn btn-light mb-3"
           >
-            {/* <Typography variant="h6"> */}
             <WebIcon /> Parceiro: Gerar Página de Vendas
-            {/* </Typography> */}
           </a>
           <Typography
             gutterBottom
