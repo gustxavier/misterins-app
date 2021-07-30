@@ -4,7 +4,6 @@ import {
   Fab,
   Grid,
   Typography,
-  CircularProgress,
 } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import InputMask from "react-input-mask";

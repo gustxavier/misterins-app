@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import { FiLogIn } from "react-icons/fi";
 import Noty from "noty";
 
 import "../../../node_modules/noty/lib/noty.css";
@@ -14,7 +13,6 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../components/Footer";
-import Maintenance from "../../components/Maintenance";
 
 class Logon extends React.Component {
   constructor(props) {

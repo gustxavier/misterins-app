@@ -39,7 +39,6 @@ import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import ListIcon from "@material-ui/icons/List";
 import logo from "../../assets/images/misterins-logo.png";
 import "./style.css";
-import api from "../../services/api";
 
 const drawerWidth = 240;
 
@@ -297,7 +296,7 @@ export default function Header(pageInfo) {
             <ListItemText primary="Bem-vindo" />
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => handlePush({ pathname: "/live/1" })}>
+          <ListItem button onClick={() => handlePush({ pathname: "/lives/" })}>
             <ListItemIcon>
               <LiveTvIcon style={{ color: "#fafafa" }} />
             </ListItemIcon>

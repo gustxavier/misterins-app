@@ -11,7 +11,6 @@ import { Card } from "@material-ui/core";
 import "./style.css";
 import api from "../../../services/api";
 import { simpleSwal } from "../../../helpers/SwalFeedBack";
-import Swal from 'sweetalert2';
 
 export default function List() {
   const [items, setItems] = useState([]);

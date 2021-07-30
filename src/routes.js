@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Logon from "./pages/Logon";
 import Register from "./pages/Register";
 import LiveView from "./components/Live/View";
+import LiveList from "./pages/Lives"
 import Socio from "./pages/Socio";
 import Dashboard from "./pages/Dashboard";
 import AdminSocio from "./pages/Admin/Socio";
@@ -18,16 +19,11 @@ import Error404 from "./components/Errors";
 import AdminSocioCopy from "./components/Socio/Copy/Admin/View/index.js";
 
 export default function Routes() {
-
-
-  useEffect(() => {
-    console.log()
-  }, [])
-
   return (
     <BrowserRouter>
       <Switch>
         <ProtectedRoute path="/socio/:id" component={Socio} /> 
+        <ProtectedRoute path="/lives" component={LiveList} /> 
         <ProtectedRoute path="/live/:id" component={LiveView} /> 
         <ProtectedRoute path="/dashboard" component={Dashboard} /> 
         <ProtectedRoute path="/admin/usuario/profile/:id" component={Profile} /> 

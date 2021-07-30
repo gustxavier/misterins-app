@@ -40,7 +40,7 @@ export default function ListCopies(params) {
       .catch((error) => {
         console.log("Ocorreu um erro ao buscar os items" + error);
       });
-  }, [token, history, params]);
+  }, [spinner ,token, history, params]);
 
   function handleAffiliate(courseID) {
     switch (Number(courseID)) {

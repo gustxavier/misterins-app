@@ -1,9 +1,6 @@
 import {
-  Card,
-  CardContent,
   Container,
   Grid,
-  Typography,
   CircularProgress,
   LinearProgress,
 } from "@material-ui/core";
@@ -47,7 +44,7 @@ export default function Socio() {
       .catch((error) => {
         console.log("Ocorreu um erro ao buscar os items" + error);
       });
-  }, [history, param, token]);
+  }, [history, param, token, courseID]);
 
   function handleProgress(event) {
     setProgress(event);

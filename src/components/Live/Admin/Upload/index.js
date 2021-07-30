@@ -1,4 +1,4 @@
-import { Grid, Input, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
@@ -6,7 +6,6 @@ import { ValidatorForm } from "react-material-ui-form-validator";
 import PublishIcon from "@material-ui/icons/Publish";
 import api from "../../../../services/api";
 import { simpleNoty } from "../../../../helpers/NotyFeedBack";
-import { simpleSwal } from "../../../../helpers/SwalFeedBack";
 import { withRouter } from "react-router-dom";
 
 class Upload extends React.Component {
@@ -71,7 +70,7 @@ class Upload extends React.Component {
         this.props.onSpinner(false);
       })
       .catch(function (error) {
-        console.log(error)
+        console.log(error);
         this.setState({ showModal: false });
         this.props.onSpinner(false);
       });

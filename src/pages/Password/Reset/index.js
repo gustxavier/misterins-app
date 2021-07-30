@@ -1,11 +1,9 @@
 import React from "react"
 import { Link, withRouter } from "react-router-dom"
-import { FiLogIn } from "react-icons/fi"
 import api from "../../../services/api"
 
 import "./styles.css"
 import {
-  Button,
   Container,
   Grid,
   Typography,

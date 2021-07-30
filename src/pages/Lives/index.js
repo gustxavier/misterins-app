@@ -1,24 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Container,
-  Grid,
   CircularProgress,
-  Paper,
-  Typography,
 } from "@material-ui/core";
-// import ChatMessage from "../../components/ChatMessage";
-// import { SendSharp } from "@material-ui/icons";
-// import { makeStyles } from "@material-ui/core/styles";
 import Header from "../../components/Header";
-import api from "../../services/api";
-// import { simpleNoty } from "../../helpers/NotyFeedBack";
-// import { forEach, isSet, map } from "lodash";
-import Alert from "@material-ui/lab/Alert";
-import { useHistory } from "react-router";
-// import { DataGrid } from "@material-ui/data-grid";
 import "./styles.css";
 import Footer from "../../components/Footer";
-import ViewLive from "../../components/Live/View";
+import List from "../../components/Live/List";
 
 export default function Lives() {
   const [spinner, setEventSpinner] = useState(false);
@@ -30,7 +17,7 @@ export default function Lives() {
   return (
     <React.Fragment>
       <div className={"d-flex"}>
-        <Header title={"Admin - Lives"} />
+        <Header title={"Lives"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
           {spinner && (
@@ -38,9 +25,7 @@ export default function Lives() {
               <CircularProgress />
             </div>
           )}
-          <ViewLive/>
-          {/* <List /> */}
-          {/* <Insert onSpinner={handleSpinner} /> */}
+          <List onSpinner={handleSpinner}/>
           <Footer />
         </main>
       </div>

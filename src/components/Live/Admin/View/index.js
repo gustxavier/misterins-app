@@ -3,9 +3,7 @@ import api from "../../../../services/api";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
 import Header from "../../../Header";
-import InputMask from "react-input-mask";
 import {
-  Button,
   CardContent,
   CircularProgress,
   Container,
@@ -19,8 +17,6 @@ import {
   FormControlLabel,
   Checkbox,
   TextField,
-  Input,
-  Switch,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import equal from "fast-deep-equal";
