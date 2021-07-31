@@ -28,27 +28,30 @@ class ListLives extends React.PureComponent {
 
   componentDidUpdate() {
     if (
-      this.state.lives !== "undefined" &&
-      this.state.livePermission !== "undefined" &&
-      this.state.items === "undefined"
+      this.state.lives.length > 0 &&
+      this.state.livePermission.length > 0 &&
+      this.state.items.length === 0
     ) {
-      console.log(localStorage.getItem("live-permission"));
       this.setListItems();
     }
-
-    if (
-      localStorage.getItem("live-permission") !== null &&
-      this.state.items === "undefined"
-    ) {
+    if (this.state.livePermission.length > 0 && this.state.items.length === 0) {
       this.setState({
         items: JSON.parse(localStorage.getItem("live-permission")),
       });
+      this.props.onSpinner(false);
     }
+  }
 
-    console.log(this.state.items)
+  componentWillUnmount() {
+    this.setState({
+      items: [],
+      lives: [],
+      livePermission: [],
+    });
   }
 
   getLives() {
+    this.props.onSpinner(true);
     api
       .get("lives", {
         headers: {
@@ -107,7 +110,7 @@ class ListLives extends React.PureComponent {
                 <Typography variant="h6" className="text-white">
                   Lives Ativas
                 </Typography>
-                {/* {this.state.lives.length > 0
+                {this.state.lives.length > 0
                   ? this.state.lives.map((listLive) => (
                       <div key={listLive.id} className="d-inline">
                         {listLive.is_active === "Y" && (
@@ -118,20 +121,37 @@ class ListLives extends React.PureComponent {
                                     {listLive.id === listPermission.live_id ? (
                                       <div>
                                         {this.state.userPermCourses.search(
-                                          listPermission.live_id
+                                          listPermission.hotmart_id
                                         ) !== -1 ? (
-                                          <div></div>
+                                          <div>
+                                            <a href={"/live/" + listLive.id}>
+                                              <Grid
+                                                item
+                                                md="6"
+                                                className="mb-3 text-center"
+                                              >
+                                                <p className="text-white mb-2">
+                                                  {listLive.title}
+                                                </p>
+                                                <img
+                                                  className="d-block w-100"
+                                                  src={
+                                                    "https://api.misterins.com.br/public/storage/" +
+                                                    listLive.thmbnail
+                                                  }
+                                                  alt="thumbnail"
+                                                />
+                                              </Grid>
+                                            </a>
+                                          </div>
                                         ) : null}
                                       </div>
                                     ) : null}
-                                    <p>
-                                      {listPermission.live_id + listLive.id}
-                                    </p>
                                   </div>
                                 ))
                               : null}
                           </div>
-                           <a href={"/live/" + list.id}>
+                          /* <a href={"/live/" + list.id}>
                           <Grid item md="6" className="mb-3 text-center">
                             <p className="text-white mb-2">{list.title}</p>
                             <img
@@ -143,11 +163,11 @@ class ListLives extends React.PureComponent {
                               alt="thumbnail"
                             />
                           </Grid>
-                        </a>  
+                        </a>   */
                         )}
                       </div>
                     ))
-                  : null} */}
+                  : null}
               </CardContent>
             </Card>
           </Grid>
