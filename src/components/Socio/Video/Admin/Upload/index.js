@@ -4,8 +4,8 @@ import { Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import PublishIcon from "@material-ui/icons/Publish";
-import api from "../../../../services/api";
-import { simpleNoty } from "../../../../helpers/NotyFeedBack";
+import api from "../../../../../services/api";
+import { simpleNoty } from "../../../../../helpers/NotyFeedBack";
 import { withRouter } from "react-router-dom";
 
 class Upload extends React.Component {
@@ -64,15 +64,12 @@ class Upload extends React.Component {
             simpleNoty(res.data.msg, res.data.alertType);
           } else {
             simpleNoty("Imagem inserida!", "success");
-            // this.props.onSpinner(false);
             this.props.history.push("/admin/socio/video/" + this.state.id_video);
           }
-          // this.props.onSpinner(false);
         }
       })
       .catch(function (error) {
         this.setState({ showModal: false });
-        // this.props.onSpinner(false);
       });
 
     this.setState({ showModal: false });

@@ -97,8 +97,8 @@ function ListVideos(param) {
                         className="single-video-download"
                       >
                         <div className="player">
-                          <img className="thumbnail-video d-block mb-2" src={list.thumbnail} alt="thumbnail"/>
-                          <a className="btn btn-primary d-table m-auto" href={list.url} target="_blank" title="thumbnail" rel="noreferrer"><GetAppIcon /> {list.title}</a>                          
+                          <img className="thumbnail-video d-block mb-2" src={"https://api.misterins.com.br/public/storage/"+list.thumbnail} alt="thumbnail"/>
+                          <a className="btn btn-primary d-table m-auto mb-5" href={list.url} target="_blank" title="thumbnail" rel="noreferrer"><GetAppIcon /> {list.title}</a>                          
                         </div>
                       </Grid>
                     ))

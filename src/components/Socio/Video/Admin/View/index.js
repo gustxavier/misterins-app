@@ -19,7 +19,7 @@ import { simpleNoty } from "../../../../../helpers/NotyFeedBack";
 import api from "../../../../../services/api";
 import Header from "../../../../Header";
 import { confirmToDelete } from "../../../../../helpers/SwalFeedBack";
-import Upload from "../../Upload";
+import Upload from "../../../../Live/Admin/Upload";
 
 class View extends React.PureComponent {
   constructor(props) {

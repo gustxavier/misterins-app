@@ -20,11 +20,6 @@ export default function Socio() {
         <Header title={"Admin - Sócio"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
-          {/* {spinner && (
-            <div id="spinner-live" className="spinner">
-              <CircularProgress />
-            </div>
-          )} */}
           <ListCopy />
           <ListVideo />
           <Footer />
