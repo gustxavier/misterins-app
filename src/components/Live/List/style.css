@@ -1,0 +1,11 @@
+.live-link {
+    text-decoration: none;
+}
+
+.link-border {
+    box-shadow: 0px 0px 2px #121215;
+}
+
+.link-border:hover {
+    box-shadow: 0px 0px 4px #121215;
+}

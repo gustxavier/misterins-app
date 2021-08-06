@@ -1,172 +1,233 @@
+import React from "react";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { withRouter } from "react-router-dom";
 import {
-  Grid,
-  Typography,
-  Button,
   CardContent,
+  CircularProgress,
+  Container,
+  Typography,
+  Grid,
+  Card,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
-import { useHistory } from "react-router-dom";
+import equal from "fast-deep-equal";
 import { simpleNoty } from "../../../../../helpers/NotyFeedBack";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 import api from "../../../../../services/api";
-import { Card } from "react-bootstrap";
+import Header from "../../../../Header";
+import { confirmToDelete } from "../../../../../helpers/SwalFeedBack";
+import Upload from "../../Upload";
 
-export default function ViewListCopies(params) {
-  const [items, setItems] = useState([]);
-  const token = localStorage.getItem("token");
-  const history = useHistory();
-  const [linkButton, setLinkButton] = useState();
+class View extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    setLinkAffiliate();
+    this.state = {
+      spinner: true,
+      id_video: props.match.params.id,
+      course_id: "",
+      title: "",
+      url: "",
+      thumbnail: "",
+      type: "",
+      token: localStorage.getItem("token"),
+    };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getVideo = this.getVideo.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  componentDidMount() {
+    this.setState({ spinner: true });
+    this.getVideo();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!equal(this.props.match.params.id, prevProps.match.params.id)) {
+      this.setState({ id_video: this.props.match.params.id, spinner: true });
+      this.getVideo();
+    }
+  }
+
+  getVideo() {
+    this.setState({ spinner: true });
     api
-      .get("copy/getCopyByCourseID/" + params.courseID, {
+      .get("partnervideo/" + this.state.id_video, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${this.state.token}`,
         },
       })
       .then((response) => {
         if (
-          !response.data.status &&
+          response.data.status &&
           (response.data.status === 401 || response.data.status === 498)
         ) {
           localStorage.clear();
-          history.push("/");
-        } else {
-          setItems(response.data.data);
+          this.props.history.push("/");
         }
-      })
-      .catch((error) => {
-        console.log("Ocorreu um erro ao buscar os items" + error);
+        this.setState({
+          spinner: false,
+          id_video: response.data.data.id,
+          title: response.data.data.title,
+          url: response.data.data.url,
+          thumbnail: response.data.data.thumbnail,
+          type: response.data.data.type,
+          course_id: response.data.data.course_id,
+        });
       });
+  }
 
-    async function setLinkAffiliate() {
-      switch (Number(params.courseID)) {
-        case 11:
-          setLinkButton(
-            "https://app-vlc.hotmart.com/affiliate-recruiting/view/2201V44551760"
-          );
-          break;
-        case 12:
-          setLinkButton(
-            "https://app-vlc.hotmart.com/affiliate-recruiting/view/4497O55977725"
-          );
-          break;
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({ spinner: true });
 
-        default:
-          break;
-      }
-    }
-  }, [token, history, linkButton, params]);
+    api
+      .put("partnervideo/" + this.state.id_video, this.state, {
+        headers: {
+          Authorization: `Bearer ${this.state.token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.status && response.data.status === (401 || 498)) {
+          localStorage.clear();
+          this.props.history.push("/");
+        } else {
+          simpleNoty("Sucesso! Dados Atualizados.", "success");
+          this.setState({ spinner: false });
+          this.props.history.push("/admin/socio/video/" + this.state.id_video);
+        }
+      });
+  }
 
-  return (
-    <Grid item xs={12} md={12} className="mb-4">
-      <Card className="card">
-        <CardContent>
-          <a
-            title="Seja um afiliado Mister Ins"
-            className="affiliate-button btn"
-            href={linkButton}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Typography variant="h6">
-              <ThumbUpAltIcon /> Afiliar-se
-            </Typography>
-          </a>
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="h6"
-            className="white"
-          >
-            Copy dos Anúncios
-          </Typography>
-          {items.length > 0
-            ? items.map((list) => (
-                <div className="copy" key={list.id}>
-                  <Grid item mb={4} md={4} xs={12}>
-                    <CopyToClipboard
-                      text={list.title}
-                      onCopy={() =>
-                        simpleNoty("Sucesso! Título copiado.", "success")
-                      }
-                    >
-                      <Button
-                        className="mb-1"
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        startIcon={<FileCopyIcon />}
+  confirm() {
+    let path = "partnervideo/" + this.state.id_video;
+    let redirect = "/admin/socio/" + this.state.course_id;
+    confirmToDelete(this.props, path, redirect);
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className={"d-flex"}>
+          <Header title={"Admin - Video"} />
+          <main className={"content-dark"}>
+            <div className={"app-bar-spacer"} />
+            {this.state.spinner && (
+              <div id="spinner-live" className="spinner">
+                <CircularProgress />
+              </div>
+            )}
+            <Container maxWidth="lg" className={"container"}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Card className="card" mb={2}>
+                    <CardContent>
+                      <Grid container>
+                        <Grid item sm={12}>
+                          <Typography variant="h5" className="text-white mb-4">
+                            Vídeo
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container>
+                        <Grid item sm={6}>
+                          <img
+                            className="d-block w-50"
+                            src={
+                              "https://api.misterins.com.br/public/storage/" +
+                              this.state.thumbnail
+                            }
+                            alt="thumbnail"
+                          />
+                          <Upload
+                            id={this.state.id_video}
+                            onSpinner={this.handleSpinner}
+                          />
+                        </Grid>
+                      </Grid>
+                      <ValidatorForm
+                        ref={(r) => (this.form = r)}
+                        onSubmit={this.handleSubmit}
+                        onError={(errors) => console.log(errors)}
                       >
-                        Copiar
-                      </Button>
-                    </CopyToClipboard>
-                    <Typography className="white">
-                      <strong>Título</strong>
-                    </Typography>
-                    <Typography gutterBottom variant="body2" className="white">
-                      {list.title}
-                    </Typography>
-                  </Grid>
-                  <Grid item mb={4} md={4} xs={12}>
-                    <CopyToClipboard
-                      text={list.important_text}
-                      onCopy={() =>
-                        simpleNoty(
-                          "Sucesso! Texto principal copiado.",
-                          "success"
-                        )
-                      }
-                    >
-                      <Button
-                        className="mb-1"
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        startIcon={<FileCopyIcon />}
-                      >
-                        Copiar
-                      </Button>
-                    </CopyToClipboard>
-                    <Typography className="white">
-                      <strong>Texto Principal</strong>
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
-                      {list.important_text}
-                    </Typography>
-                  </Grid>
-                  <Grid item mb={4} md={4} xs={12}>
-                    <CopyToClipboard
-                      text={list.description}
-                      onCopy={() =>
-                        simpleNoty("Sucesso! descrição copiada.", "success")
-                      }
-                    >
-                      <Button
-                        className="mb-1"
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        startIcon={<FileCopyIcon />}
-                      >
-                        Copiar
-                      </Button>
-                    </CopyToClipboard>
-                    <Typography className="white">
-                      <strong>Descrição</strong>
-                    </Typography>
-                    <Typography variant="body2">{list.description}</Typography>
-                  </Grid>
-                </div>
-              ))
-            : null}
-        </CardContent>
-      </Card>
-    </Grid>
-  );
+                        <Grid container>
+                          <Grid item sm={12}>
+                            <TextValidator
+                              name="title"
+                              id="title"
+                              label="Título"
+                              variant="outlined"
+                              className="TextFieldBlock mb-2"
+                              value={this.state.title}
+                              onChange={this.handleChange}
+                              validators={["required"]}
+                              errorMessages={["Por favor, insira o título"]}
+                            />
+                            <TextValidator
+                              name="url"
+                              id="url"
+                              label="URL"
+                              variant="outlined"
+                              className="mb-2"
+                              value={this.state.url}
+                              onChange={this.handleChange}
+                              validators={["required"]}
+                              errorMessages={[
+                                "Por favor, insira a url para download",
+                              ]}
+                            />
+                            <FormControl variant="outlined">
+                              <InputLabel id="demo-simple-select-outlined-label">
+                                Tipo de Postagem
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                value={this.state.type}
+                                name="type"
+                                validators={["required"]}
+                                className="mb-3"
+                                onChange={this.handleChange}
+                                label="Tipo de postagem"
+                              >
+                                <MenuItem value={"feed"}>Feed</MenuItem>
+                                <MenuItem value={"story"}>Storys</MenuItem>
+                              </Select>
+                            </FormControl>
+                            <button className="btn btn-primary" type="submit">
+                              <span className="inline">
+                                <Typography>Atualizar</Typography>
+                              </span>
+                            </button>
+                            <button
+                              type="reset"
+                              className="btn btn-danger"
+                              onClick={() => this.confirm()}
+                            >
+                              Excluir
+                            </button>
+                          </Grid>
+                        </Grid>
+                      </ValidatorForm>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Container>
+          </main>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
+export default withRouter(View);

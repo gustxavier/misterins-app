@@ -8,11 +8,11 @@ import React, { useEffect, useState } from "react";
 
 import "./style.css";
 import Header from "../../components/Header";
-import ListVideos from "../../components/Socio/ListVideos";
 import Footer from "../../components/Footer";
 import { useHistory, useParams } from "react-router-dom";
 import ViewListCopies from "../../components/Socio/Copy/View/index.js";
 import api from "../../services/api";
+import ListVideos from "../../components/Socio/Video/List";
 
 export default function Socio() {
   const param = useParams();

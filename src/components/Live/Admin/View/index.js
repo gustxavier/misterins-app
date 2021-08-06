@@ -81,6 +81,12 @@ class Profile extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    this.setState({
+      thumbnail: "",
+    });
+  }
+
   getLive() {
     this.setState({ spinner: true });
     api
@@ -90,7 +96,6 @@ class Profile extends React.PureComponent {
         },
       })
       .then((response) => {
-        console.log();
         if (response.data.status === 401 || response.data.status === 498) {
           localStorage.clear();
           this.props.history.push("/");
@@ -106,7 +111,6 @@ class Profile extends React.PureComponent {
           hour: response.data.data.hour,
           is_active: response.data.data.is_active,
         });
-        // return response.data;
       });
   }
 
@@ -212,11 +216,11 @@ class Profile extends React.PureComponent {
     });
   }
 
-  handleSwitchActive() {
+  handleSwitchActive(event) {
     if (this.state.is_active === "Y") {
-      this.setState({ is_active: "N" });
+      this.setState({ [event.target.name]: "N" });
     } else {
-      this.setState({ is_active: "Y" });
+      this.setState({ [event.target.name]: "Y" });
     }
   }
 
@@ -242,21 +246,6 @@ class Profile extends React.PureComponent {
                       </Typography>
                       <Grid container>
                         <Grid item sm={6}>
-                          <div className="form-check form-switch mb-3">
-                            <label
-                              className="form-check-label text-white"
-                              for="flexSwitchCheckDefault"
-                            >
-                              Live ativa
-                            </label>
-                            <input
-                              checked={this.state.is_active === "Y" ? true : false}
-                              className="form-check-input"
-                              type="checkbox"
-                              id="flexSwitchCheckDefault"
-                              onChange={this.handleSwitchActive}
-                            />
-                          </div>
                           <img
                             className="d-block w-50"
                             src={
@@ -278,6 +267,25 @@ class Profile extends React.PureComponent {
                       >
                         <Grid container>
                           <Grid item sm={6}>
+                            <div className="form-check form-switch mb-4">
+                              <label
+                                className="form-check-label text-white"
+                                htmlFor="flexSwitchCheckDefault"
+                              >
+                                Live ativa
+                              </label>
+                              <input
+                                checked={
+                                  this.state.is_active === "Y" ? true : false
+                                }
+                                className="form-check-input"
+                                type="checkbox"
+                                name="is_active"
+                                id="flexSwitchCheckDefault"
+                                value={this.state.is_active}
+                                onChange={this.handleSwitchActive}
+                              />
+                            </div>
                             <TextValidator
                               label="Título"
                               variant="outlined"

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Fab,
-  Grid,
-  Typography,
-  TextField,
-} from "@material-ui/core";
+import { Grid, Typography, TextField } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
@@ -24,12 +18,11 @@ class Insert extends React.Component {
       spinner: false,
       title: "",
       importante_text: "",
-      description: "",     
+      description: "",
       course_id: this.props.match.params.id,
       showModal: false,
       token: localStorage.getItem("token"),
     };
-
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -65,9 +58,7 @@ class Insert extends React.Component {
           if (res.data.status && !res.data.alertType) {
             simpleNoty("Copy inserida!", "success");
             self.props.onSpinner(false);
-            self.props.history.push(
-              "/admin/socio/" + this.state.course_id
-            );
+            self.props.history.push("/admin/socio/" + this.state.course_id);
           } else {
             self.props.onSpinner(false);
           }
@@ -80,7 +71,7 @@ class Insert extends React.Component {
             let msg = error.response.data.errors["email"]
               ? error.response.data.errors["email"][0]
               : error.response.data.msg;
-              simpleSwal("<strong>Atenção</strong>", msg, "warning");
+            simpleSwal("<strong>Atenção</strong>", msg, "warning");
           }
         });
     } catch (err) {
@@ -100,12 +91,23 @@ class Insert extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Fab color="primary" aria-label="add" onClick={this.modal}>
-          <AddIcon />
-        </Fab>
-        <Modal show={this.state.showModal} onHide={this.modal} size="lg" className="modal-copy">
+        <button
+          color="primary"
+          aria-label="add"
+          className="btn btn-primary mb-3 d-inline"
+          onClick={this.modal}
+          style={{ float: "right" }}
+        >
+          <AddIcon /> Adicionar nova
+        </button>
+        <Modal
+          show={this.state.showModal}
+          onHide={this.modal}
+          size="lg"
+          className="modal-copy"
+        >
           <ModalHeader>
-            <ModalTitle>Inserir novo</ModalTitle>
+            <ModalTitle>Inserir nova copy</ModalTitle>
             <button
               type="button"
               className="btn-close"
@@ -120,7 +122,9 @@ class Insert extends React.Component {
             <ModalBody>
               <Grid container>
                 <Grid item sm={12}>
-                <p className="text-dark"><i>Atenção! Não é permitido inserir emoticon.</i></p>
+                  <p className="text-dark">
+                    <i>Atenção! Não é permitido inserir emoticon.</i>
+                  </p>
                   <TextValidator
                     name="title"
                     id="title"
@@ -162,11 +166,18 @@ class Insert extends React.Component {
               </Grid>
             </ModalBody>
             <ModalFooter>
-              <Button className="button" type="submit">
+              <button
+                type="button"
+                className="btn btn-secondary mt-0"
+                onClick={this.modal}
+              >
+                Cancelar
+              </button>
+              <button className="btn btn-primary" type="submit">
                 <span className="inline">
                   <Typography>Cadastrar</Typography>
                 </span>
-              </Button>
+              </button>
             </ModalFooter>
           </ValidatorForm>
         </Modal>

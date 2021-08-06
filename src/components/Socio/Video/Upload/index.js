@@ -14,7 +14,7 @@ class Upload extends React.Component {
 
     this.state = {
       spinner: false,
-      id_live: props.match.params.id,
+      id_video: props.match.params.id,
       thumbnail: "",
       showModal: false,
       token: localStorage.getItem("token"),
@@ -48,15 +48,14 @@ class Upload extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSpinner(true);
+    // this.props.onSpinner(true);
     api
-      .put("lives/uploadThumbnail/" + this.state.id_live, this.state, {
+      .put("partnervideo/uploadThumbnail/" + this.state.id_video, this.state, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.status === 401 || res.data.status === 498) {
           localStorage.clear();
           this.props.history.push("/");
@@ -65,16 +64,15 @@ class Upload extends React.Component {
             simpleNoty(res.data.msg, res.data.alertType);
           } else {
             simpleNoty("Imagem inserida!", "success");
-            this.props.onSpinner(false);
-            this.props.history.push("/admin/live/" + this.state.id_live);
+            // this.props.onSpinner(false);
+            this.props.history.push("/admin/socio/video/" + this.state.id_video);
           }
-          this.props.onSpinner(false);
+          // this.props.onSpinner(false);
         }
       })
       .catch(function (error) {
-        console.log(error);
         this.setState({ showModal: false });
-        this.props.onSpinner(false);
+        // this.props.onSpinner(false);
       });
 
     this.setState({ showModal: false });
@@ -101,7 +99,7 @@ class Upload extends React.Component {
           show={this.state.showModal}
           onHide={this.modal}
           size="lg"
-          className="modal-copy"
+          className="modal-video"
         >
           <ModalHeader>
             <ModalTitle>Upload</ModalTitle>

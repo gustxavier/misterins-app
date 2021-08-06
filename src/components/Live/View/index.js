@@ -23,6 +23,8 @@ class LiveView extends React.PureComponent {
       title: "",
       url: "",
       description: "",
+      date_formated: "",
+      hour: "",
       courses: [],
       checkedState: [],
     };
@@ -45,6 +47,7 @@ class LiveView extends React.PureComponent {
         },
       })
       .then((response) => {
+        console.log(response);
         if (
           response.data.status &&
           (response.data.status === 401 || response.data.status === 498)
@@ -58,6 +61,8 @@ class LiveView extends React.PureComponent {
           title: response.data.data.title,
           url: response.data.data.url,
           description: response.data.data.description,
+          date_formated: response.data.data.date_formated,
+          hour: response.data.data.hour,
         });
       });
   }
@@ -113,11 +118,6 @@ class LiveView extends React.PureComponent {
                 {localStorage.getItem("courses").search(448026) !== -1 ? (
                   <Grid item sm={12} xs={12} md={12}>
                     <Paper className="paper">
-                      {/* <Alert variant="outlined" severity="info">
-                      Para fazer uma pergunta acesse o instagram do Maico
-                      (maicoandrade) e faça uma pergunta nas caixinhas do
-                      storys.
-                    </Alert> */}
                       <Typography
                         variant="h5"
                         align="center"
@@ -126,6 +126,9 @@ class LiveView extends React.PureComponent {
                       >
                         {this.state.title}
                       </Typography>
+                      <p className="mb-2 text-center">
+                        {this.state.date_formated + ", " + this.state.hour}
+                      </p>
                       <iframe
                         width="100%"
                         height="600px"
@@ -135,7 +138,8 @@ class LiveView extends React.PureComponent {
                         allow="autoplay; fullscreen; picture-in-picture"
                         allowFullScreen
                       ></iframe>
-                      <Typography>{this.state.description}</Typography>
+                      <Typography className="mb-3 mt-2">Descrição</Typography>
+                      <p>{this.state.description}</p>
                     </Paper>
                   </Grid>
                 ) : (

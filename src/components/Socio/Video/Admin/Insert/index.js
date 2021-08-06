@@ -1,13 +1,18 @@
 import React from "react";
-import { Fab, Grid, TextField } from "@material-ui/core";
+import {
+  FormControl,
+  Grid,
+  InputLabel,  
+  Select,
+} from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import { Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
-import { simpleNoty } from "../../../../helpers/NotyFeedBack";
-import api from "../../../../services/api";
 import "./style.css";
+import { simpleNoty } from "../../../../../helpers/NotyFeedBack";
+import api from "../../../../../services/api";
 
 class Insert extends React.Component {
   constructor(props) {
@@ -15,12 +20,11 @@ class Insert extends React.Component {
 
     this.state = {
       spinner: false,
+      course_id: this.props.match.params.id,
       title: "",
       url: "",
-      description: "",
       thumbnail: "",
-      date: "",
-      hour: "",
+      type: "",
       token: localStorage.getItem("token"),
       showModal: false,
     };
@@ -32,8 +36,13 @@ class Insert extends React.Component {
   }
 
   handleChange(event) {
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: value,
     });
   }
 
@@ -41,7 +50,7 @@ class Insert extends React.Component {
     event.preventDefault();
     this.props.onSpinner(true);
     api
-      .post("lives", this.state, {
+      .post("partnervideo", this.state, {
         headers: {
           Authorization: `Bearer ${this.state.token}`,
         },
@@ -56,12 +65,12 @@ class Insert extends React.Component {
         } else {
           this.setState({ showModal: false });
           simpleNoty("Sucesso! Live inserida!", "success");
-          this.props.history.push("/admin/live/" + res.data.data.id);
+          this.props.history.push("/admin/socio/video/" + res.data.data.id);
         }
         this.props.onSpinner(false);
       })
       .catch(function (error) {
-        this.props.onSpinner(false);
+        // this.props.onSpinner(false);
         simpleNoty(
           "Oops! Falha ao realizar o cadastro! Entre em contato com o administrador.",
           "danger"
@@ -71,7 +80,6 @@ class Insert extends React.Component {
     this.setState({ showModal: false });
   }
 
-  
   onChangeInputFile(e) {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
@@ -95,17 +103,22 @@ class Insert extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Fab color="primary" aria-label="add" onClick={this.modal}>
-          <AddIcon />
-        </Fab>
+        <button
+          className="btn btn-primary mb-3 d-inline"
+          aria-label="add"
+          onClick={this.modal}
+          style={{ float: "right" }}
+        >
+          <AddIcon /> Adicionar novo
+        </button>
         <Modal
           show={this.state.showModal}
           onHide={this.modal}
           size="lg"
-          className="modal-live"
+          className="modal-video"
         >
           <ModalHeader>
-            <ModalTitle>Adicionar nova live</ModalTitle>
+            <ModalTitle>Adicionar novo download</ModalTitle>
             <button
               type="button"
               className="btn-close"
@@ -144,35 +157,31 @@ class Insert extends React.Component {
                     errorMessages={["Por favor, insira a url do vídeo"]}
                   />
                 </Grid>
-                <Grid item sm={6}>
-                  <TextValidator
-                    label="Data"
-                    className="w-100"
+                <Grid item sm={12}>                  
+                  <FormControl
                     variant="outlined"
-                    type="date"
-                    name="date"
-                    // defaultValue="25/11/2018"
-                    value={this.state.date}
-                    onChange={this.handleChange}
-                    validators={["required"]}
-                    errorMessages={["Por favor, insira a data"]}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item sm={6}>
-                  <TextValidator
-                    label="Hora"
-                    className="w-100"
-                    variant="outlined"
-                    type="time"
-                    name="hour"
-                    value={this.state.hour}
-                    onChange={this.handleChange}
-                    validators={["required"]}
-                    errorMessages={["Por favor, insira a hora"]}
-                  />
+                    className="form-control"
+                  >
+                    <InputLabel htmlFor="outlined-age-native-simple">
+                      Tipo de postagem
+                    </InputLabel>
+                    <Select
+                      native
+                      value={this.state.type}
+                      onChange={this.handleChange}
+                      label="Tipo de postagem"
+                      validators={["required"]}
+                      errorMessages={["Por favor, selecione um tipo de postagem"]}
+                      inputProps={{
+                        name: "type",
+                        id: "outlined-age-native-simple",
+                      }}
+                    >
+                      <option aria-label="None" value="0" />
+                      <option value={'feed'}>Feed</option>
+                      <option value={'story'}>Story</option>
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item sm={12}>
                   <label className="form-label">Thumbnail</label>
@@ -183,19 +192,6 @@ class Insert extends React.Component {
                     name="thumbnail"
                     accept="image/*"
                     onChange={this.onChangeInputFile}
-                  />
-                </Grid>
-                <Grid item sm={12}>
-                  <TextField
-                    name="description"
-                    className="w-100"
-                    id="description"
-                    label="Descrição"
-                    variant="outlined"
-                    multiline
-                    rows={2}
-                    value={this.state.description}
-                    onChange={this.handleChange}
                   />
                 </Grid>
               </Grid>

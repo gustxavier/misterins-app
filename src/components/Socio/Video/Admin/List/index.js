@@ -24,14 +24,15 @@ export default function List() {
   const columns = [
     { field: "id", headerName: "#", width: 90 },
     { field: "title", headerName: "Título", width: 350 },
-    { field: "importante_text", headerName: "Texto Importante", width: 800 },
+    { field: "path", headerName: "URL", width: 500 },
+    { field: "type", headerName: "Tipo", width: 350 },
   ];
   const [pageSize, setPageSize] = React.useState(25);
 
   const handleRowClick = React.useCallback(
     (params) => {
       history.push({
-        pathname: "/admin/socio/copy/" + params.row.id,
+        pathname: "/admin/socio/video/" + params.row.id,
       });
     },
     [history]
@@ -39,7 +40,7 @@ export default function List() {
 
   useEffect(() => {
     api
-      .get("copy/getCopyByCourseID/" + params.id, {
+      .get("partnervideo/getVideosByCourse/" + params.id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,8 +81,8 @@ export default function List() {
           <Grid item xs={12}>
             <Card className="card">
               <CardContent>
-              <Typography variant="h6" className="text-white d-inline">Copy</Typography>        
-              <Insert onSpinner={handleSpinner} />      
+              <Typography variant="h6" className="text-white d-inline">Vídeos</Typography>
+              <Insert onSpinner={handleSpinner} />   
                 <div style={{ height: "400px", width: "100%", overflow: "auto" }}>
                   <DataGrid
                     rows={items}

@@ -1,22 +1,21 @@
-import { Button, CardContent, Grid, Typography } from "@material-ui/core";
+import { CardContent, Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import api from "../../services/api";
+import api from "../../../../services/api";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import { useHistory } from "react-router";
-import ReactPlayer from "react-player";
 import { Card } from "react-bootstrap";
-
+import './style.css';
 function ListVideos(param) {
   const [items, setItems] = useState([]);
   const [token] = useState(localStorage.getItem("token"));
   const history = useHistory();
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
   const [spinner, setSpinner] = useState(true);
 
   useEffect(() => {
-    if (param.onChange) {
-      param.onChange(progress);
-    }
+    // if (param.onChange) {
+    //   param.onChange(progress);
+    // }
 
     if (param.onLoad) {
       param.onLoad(spinner);
@@ -45,32 +44,32 @@ function ListVideos(param) {
           history.push("/");
         });
     }
-  }, [param, progress, history, token, spinner]);
+  }, [param, history, token, spinner]);
 
-  async function download(id, file_name) {
-    setProgress(0.1);
-    api
-      .get("partnervideo/downloadVideo/" + id, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: "blob",
-        onDownloadProgress: (progressEvent) => {
-          setProgress((progressEvent.loaded * 100) / progressEvent.total);
-        },
-      })
-      .then((response) => {
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(new Blob([response.data]));
-        link.download = file_name;
-        link.click();
-        setProgress(0);
-        link = null;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // async function download(id, file_name) {
+  //   setProgress(0.1);
+  //   api
+  //     .get("partnervideo/downloadVideo/" + id, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       responseType: "blob",
+  //       onDownloadProgress: (progressEvent) => {
+  //         setProgress((progressEvent.loaded * 100) / progressEvent.total);
+  //       },
+  //     })
+  //     .then((response) => {
+  //       let link = document.createElement("a");
+  //       link.href = window.URL.createObjectURL(new Blob([response.data]));
+  //       link.download = file_name;
+  //       link.click();
+  //       setProgress(0);
+  //       link = null;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   return (
     <Grid item xs={12} md={12}>
@@ -98,25 +97,8 @@ function ListVideos(param) {
                         className="single-video-download"
                       >
                         <div className="player">
-                          <ReactPlayer
-                            url={
-                              "https://api.misterins.com.br/public/storage/" +
-                              list.path
-                            }
-                            width={"100%"}
-                          />
-                          <Button
-                            className="button mt-2"
-                            align="center"
-                            onClick={() => download(list.id, list.file_name)}
-                            endIcon={<GetAppIcon />}
-                            title="Download"
-                            type="submit"
-                          >
-                            <span className="inline">
-                              <Typography>{list.title}</Typography>
-                            </span>
-                          </Button>
+                          <img className="thumbnail-video d-block mb-2" src={list.thumbnail} alt="thumbnail"/>
+                          <a className="btn btn-primary d-table m-auto" href={list.url} target="_blank" title="thumbnail" rel="noreferrer"><GetAppIcon /> {list.title}</a>                          
                         </div>
                       </Grid>
                     ))

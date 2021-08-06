@@ -3,6 +3,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import api from "../../../services/api";
+import "./style.css";
 
 class ListLives extends React.PureComponent {
   constructor(props) {
@@ -88,9 +89,7 @@ class ListLives extends React.PureComponent {
     this.state.lives.forEach((element) => {
       this.state.livePermission.forEach((el) => {
         element.id === el.live_id
-          ? //courses.splice(1, 0, [el.live_id, el.hotmart_id])
-            //push({live_id: el.live_id,hotmart_id: el.hotmart_id})
-            (courses = [
+          ? (courses = [
               ...courses,
               { live_id: el.live_id, hotmart_id: el.hotmart_id },
             ])
@@ -108,66 +107,63 @@ class ListLives extends React.PureComponent {
             <Card className="card">
               <CardContent>
                 <Typography variant="h6" className="text-white">
-                  Lives Ativas
+                  Disponíveis
                 </Typography>
-                {this.state.lives.length > 0
-                  ? this.state.lives.map((listLive) => (
-                      <div key={listLive.id} className="d-inline">
-                        {listLive.is_active === "Y" && (
-                          <div>
-                            {this.state.items.length > 0
-                              ? this.state.items.map((listPermission) => (
-                                  <div key={listPermission.id}>
-                                    {listLive.id === listPermission.live_id ? (
-                                      <div>
-                                        {this.state.userPermCourses.search(
-                                          listPermission.hotmart_id
-                                        ) !== -1 ? (
-                                          <div>
-                                            <a href={"/live/" + listLive.id}>
-                                              <Grid
-                                                item
-                                                md="6"
-                                                className="mb-3 text-center"
-                                              >
+                <div className="row mt-3">
+                  {this.state.lives.length > 0
+                    ? this.state.lives.map((listLive) => (
+                        <div key={listLive.id} className="col-6 ">
+                          {listLive.is_active === "Y" && (
+                            <div>
+                              {this.state.items.length > 0
+                                ? this.state.items.map((listPermission) => (
+                                    <div key={listPermission.id}>
+                                      {listLive.id ===
+                                      listPermission.live_id ? (
+                                        <div>
+                                          {
+                                            this.state.userPermCourses.search(
+                                              listPermission.hotmart_id
+                                            ) !== -1 ? (
+                                              <div className="text-center link-border p-2">
                                                 <p className="text-white mb-2">
                                                   {listLive.title}
                                                 </p>
                                                 <img
-                                                  className="d-block w-100"
+                                                  className="d-block w-100 mb-2"
                                                   src={
                                                     "https://api.misterins.com.br/public/storage/" +
-                                                    listLive.thmbnail
+                                                    listLive.thumbnail
                                                   }
                                                   alt="thumbnail"
                                                 />
-                                              </Grid>
-                                            </a>
-                                          </div>
-                                        ) : null}
-                                      </div>
-                                    ) : null}
-                                  </div>
-                                ))
-                              : null}
-                          </div>
-                          /* <a href={"/live/" + list.id}>
-                          <Grid item md="6" className="mb-3 text-center">
-                            <p className="text-white mb-2">{list.title}</p>
-                            <img
-                              className="d-block w-100"
-                              src={
-                                "https://api.misterins.com.br/public/storage/" +
-                                list.thmbnail
-                              }
-                              alt="thumbnail"
-                            />
-                          </Grid>
-                        </a>   */
-                        )}
-                      </div>
-                    ))
-                  : null}
+                                                <p className="text-white mb-2">
+                                                  {listLive.date_formated}
+                                                </p>
+                                                <p className="text-white mb-2">
+                                                  {listLive.hour}
+                                                </p>
+                                                <a
+                                                  className="live-link btn btn-primary"
+                                                  href={"/live/" + listLive.id}
+                                                  title="Asisstir Live"
+                                                >
+                                                  Assistir Live
+                                                </a>
+                                              </div>
+                                            ) : null
+                                          }
+                                        </div>
+                                      ) : null}
+                                    </div>
+                                  ))
+                                : null}
+                            </div>
+                          )}
+                        </div>
+                      ))
+                    : null}
+                </div>
               </CardContent>
             </Card>
           </Grid>

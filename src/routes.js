@@ -17,6 +17,7 @@ import Recouver from "./pages/Password/Recouver";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import Error404 from "./components/Errors";
 import AdminSocioCopy from "./components/Socio/Copy/Admin/View/index.js";
+import AdminSocioVideo from "./components/Socio/Video/Admin/View/index.js";
 
 export default function Routes() {
   return (
@@ -30,6 +31,7 @@ export default function Routes() {
         <ProtectedRoute path="/admin/usuario" component={Usuario} /> 
         <ProtectedRoute path="/admin/live/:id" component={AdminLiveView} /> 
         <ProtectedRoute path="/admin/lives" component={AdminLiveList} /> 
+        <ProtectedRoute path="/admin/socio/video/:id" component={AdminSocioVideo} /> 
         <ProtectedRoute path="/admin/socio/copy/:id" component={AdminSocioCopy} /> 
         <ProtectedRoute path="/admin/socio/:id" component={AdminSocio} /> 
         <Route path="/logon" component={Logon} /> 

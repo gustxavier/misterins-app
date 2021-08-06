@@ -352,7 +352,10 @@ export default function Header(pageInfo) {
           </List>
         )}
         <Divider />
-        {localStorage.getItem("permission") === "admin" && (
+        {(localStorage.getItem("permission") === "admin" ||
+          localStorage.getItem("permission") === "criacao" ||
+          localStorage.getItem("permission") === "campaign" ||
+          localStorage.getItem("permission") === "support") && (
           <List
             component="nav"
             aria-labelledby="nested-list-subheader"
@@ -367,6 +370,7 @@ export default function Header(pageInfo) {
             }
             className={classes.root}
           >
+            {/************** CONFIGURAÇÃO ****************/}
             <ListItem button onClick={() => setConfiguration(!configuration)}>
               <ListItemIcon>
                 <TuneIcon style={{ color: "#fafafa" }} />
@@ -381,148 +385,165 @@ export default function Header(pageInfo) {
               unmountOnExit
             >
               <List component="div" disablePadding>
-                <ListItem
-                  button
-                  className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/lives" })}
-                >
-                  <ListItemIcon>
-                    <RadioButtonUncheckedIcon
-                      style={{
-                        fontSize: 10,
-                        color: "#fafafa",
-                        marginLeft: "15px",
-                      }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Live" />
-                </ListItem>
-                <List className="sub-master">
+                {(localStorage.getItem("permission") === "admin" ||
+                  localStorage.getItem("permission") === "criacao") && (
                   <ListItem
                     button
-                    onClick={() => setOpenAdminSocio(!openAdminSocio)}
+                    className="nested"
+                    onClick={() => handlePush({ pathname: "/admin/lives" })}
                   >
                     <ListItemIcon>
                       <RadioButtonUncheckedIcon
                         style={{
                           fontSize: 10,
                           color: "#fafafa",
-                          marginLeft: "18px",
+                          marginLeft: "15px",
                         }}
                       />
                     </ListItemIcon>
-                    <ListItemText primary="Sócio" />
-                    {openAdminSocio ? <ExpandLess /> : <ExpandMore />}
+                    <ListItemText primary="Live" />
                   </ListItem>
-                  <Collapse
-                    in={openAdminSocio}
-                    className="sub-menu sub-sub-menu"
-                    timeout="auto"
-                    unmountOnExit
+                )}
+                {(localStorage.getItem("permission") === "admin" ||
+                  localStorage.getItem("permission") === "campaign") && (
+                  <List className="sub-master">
+                    <ListItem
+                      button
+                      onClick={() => setOpenAdminSocio(!openAdminSocio)}
+                    >
+                      <ListItemIcon>
+                        <RadioButtonUncheckedIcon
+                          style={{
+                            fontSize: 10,
+                            color: "#fafafa",
+                            marginLeft: "18px",
+                          }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText primary="Sócio" />
+                      {openAdminSocio ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse
+                      in={openAdminSocio}
+                      className="sub-menu sub-sub-menu"
+                      timeout="auto"
+                      unmountOnExit
+                    >
+                      <List component="div" disablePadding>
+                        {menuSocio.length > 0
+                          ? menuSocio.map((list) => (
+                              <div key={list.id}>
+                                {list.can_affiliate === "Y" && (
+                                  <ListItem
+                                    button
+                                    className="nested"
+                                    onClick={() =>
+                                      handlePush({
+                                        pathname: "/admin/socio/" + list.id,
+                                      })
+                                    }
+                                  >
+                                    <ListItemIcon>
+                                      <RadioButtonUncheckedIcon
+                                        style={{
+                                          fontSize: 10,
+                                          color: "#fafafa",
+                                          marginLeft: "15px",
+                                        }}
+                                      />
+                                    </ListItemIcon>
+                                    <ListItemText primary={list.title} />
+                                  </ListItem>
+                                )}
+                              </div>
+                            ))
+                          : null}
+                      </List>
+                    </Collapse>
+                  </List>
+                )}
+                {(localStorage.getItem("permission") === "admin" ||
+                  localStorage.getItem("permission") === "support") && (
+                  <ListItem
+                    button
+                    className="nested"
+                    onClick={() => handlePush({ pathname: "/admin/usuario" })}
                   >
-                    <List component="div" disablePadding>
-                      {menuSocio.length > 0
-                        ? menuSocio.map((list) => (
-                            <div key={list.id}>
-                              {list.can_affiliate === "Y" && (
-                                <ListItem
-                                  button
-                                  className="nested"
-                                  onClick={() =>
-                                    handlePush({
-                                      pathname: "/admin/socio/" + list.id,
-                                    })
-                                  }
-                                >
-                                  <ListItemIcon>
-                                    <RadioButtonUncheckedIcon
-                                      style={{
-                                        fontSize: 10,
-                                        color: "#fafafa",
-                                        marginLeft: "15px",
-                                      }}
-                                    />
-                                  </ListItemIcon>
-                                  <ListItemText primary={list.title} />
-                                </ListItem>
-                              )}
-                            </div>
-                          ))
-                        : null}
-                    </List>
-                  </Collapse>
-                </List>
-                <ListItem
-                  button
-                  className="nested"
-                  onClick={() => handlePush({ pathname: "/admin/usuario" })}
-                >
-                  <ListItemIcon>
-                    <RadioButtonUncheckedIcon
-                      style={{
-                        fontSize: 10,
-                        color: "#fafafa",
-                        marginLeft: "15px",
-                      }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Usuários" />
-                </ListItem>
+                    <ListItemIcon>
+                      <RadioButtonUncheckedIcon
+                        style={{
+                          fontSize: 10,
+                          color: "#fafafa",
+                          marginLeft: "15px",
+                        }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary="Usuários" />
+                  </ListItem>
+                )}
               </List>
             </Collapse>
-            {/* MRZAMP */}
-            <ListItem button onClick={() => setMrZap(!mrzap)}>
-              <ListItemIcon>
-                <WhatsAppIcon style={{ color: "#fafafa" }} />
-              </ListItemIcon>
-              <ListItemText primary="Mr Zap" />
-              {mrzap ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse
-              in={mrzap}
-              className="sub-menu"
-              timeout="auto"
-              unmountOnExit
-            >
-              <List component="div" disablePadding>
-                <ListItem
-                  button
-                  className="nested"
-                  onClick={() =>
-                    handlePush({ pathname: "/admin/mrzap/dashboard" })
-                  }
-                >
+            {/************** END CONFIGURAÇÃO ****************/}
+            {/************** MR ZAP ****************/}
+            {(localStorage.getItem("permission") === "admin" ||
+              localStorage.getItem("permission") === "campaign") && (
+              <div>
+                <ListItem button onClick={() => setMrZap(!mrzap)}>
                   <ListItemIcon>
-                    <DashboardIcon
-                      style={{
-                        fontSize: 13,
-                        color: "#fafafa",
-                        marginLeft: "15px",
-                      }}
-                    />
+                    <WhatsAppIcon style={{ color: "#fafafa" }} />
                   </ListItemIcon>
-                  <ListItemText primary="Dashboard" />
+                  <ListItemText primary="Mr Zap" />
+                  {mrzap ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <ListItem
-                  button
-                  className="nested"
-                  onClick={() =>
-                    handlePush({ pathname: "/admin/mrzap/campanha" })
-                  }
+
+                <Collapse
+                  in={mrzap}
+                  className="sub-menu"
+                  timeout="auto"
+                  unmountOnExit
                 >
-                  <ListItemIcon>
-                    <ListIcon
-                      style={{
-                        fontSize: 13,
-                        color: "#fafafa",
-                        marginLeft: "15px",
-                      }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Campanha" />
-                </ListItem>
-              </List>
-            </Collapse>
+                  <List component="div" disablePadding>
+                    <ListItem
+                      button
+                      className="nested"
+                      onClick={() =>
+                        handlePush({ pathname: "/admin/mrzap/dashboard" })
+                      }
+                    >
+                      <ListItemIcon>
+                        <DashboardIcon
+                          style={{
+                            fontSize: 13,
+                            color: "#fafafa",
+                            marginLeft: "15px",
+                          }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText primary="Dashboard" />
+                    </ListItem>
+                    <ListItem
+                      button
+                      className="nested"
+                      onClick={() =>
+                        handlePush({ pathname: "/admin/mrzap/campanha" })
+                      }
+                    >
+                      <ListItemIcon>
+                        <ListIcon
+                          style={{
+                            fontSize: 13,
+                            color: "#fafafa",
+                            marginLeft: "15px",
+                          }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText primary="Campanha" />
+                    </ListItem>
+                  </List>
+                </Collapse>
+              </div>
+            )}
+            {/************** END MR ZAP ****************/}
           </List>
         )}
       </Drawer>
