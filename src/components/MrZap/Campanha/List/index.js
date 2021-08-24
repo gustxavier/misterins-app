@@ -3,13 +3,15 @@ import {
   CircularProgress,
   Container,
   Grid,
+  Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import api from "../../../services/api.js";
-import { simpleSwal } from "../../../helpers/SwalFeedBack";
+import api from "../../../../services/api.js";
+import { simpleSwal } from "../../../../helpers/SwalFeedBack";
 import { useHistory } from "react-router";
-import { DataGrid, GridToolbar } from "@material-ui/data-grid";
+import { DataGrid, GridToolbar, ptBR } from "@material-ui/data-grid";
 import { Card } from "@material-ui/core";
+import InserirCampanha from "../Insert";
 import "./style.css";
 
 export default function ListaCampanha() {
@@ -20,22 +22,24 @@ export default function ListaCampanha() {
   const columns = [
     { field: "id", headerName: "#", width: 90 },
     { field: "name", headerName: "Nome", width: 250 },
-    { field: "email", headerName: "Email", width: 250 },
-    { field: "cpf", headerName: "CPF", width: 180 },
-    { field: "instagram", headerName: "Instagram", width: 250 },
-    { field: "facebook", headerName: "Facebook", width: 250 },
+    { field: "slug", headerName: "Slug", width: 400 },
+    { field: "start", headerName: "Início", width: 250 },
+    { field: "end", headerName: "Fim", width: 250 },
   ];
   const [pageSize, setPageSize] = React.useState(50);
 
-  const handleRowClick = React.useCallback((params) => {
-    history.push({
-      pathname: "/admin/usuario/profile/"+params.row.id,
-    });
-  }, [history]);
+  const handleRowClick = React.useCallback(
+    (params) => {
+      history.push({
+        pathname: "/admin/mrzap/campaign/" + params.row.id,
+      });
+    },
+    [history]
+  );
 
   useEffect(() => {
     api
-      .get("users", {
+      .get("campaign", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,6 +64,10 @@ export default function ListaCampanha() {
     setPageSize(params.pageSize);
   };
 
+  const handleSpinner = (event) => {
+    setSpinner(event);
+  };
+
   return (
     <div>
       {spinner && (
@@ -72,14 +80,18 @@ export default function ListaCampanha() {
           <Grid item xs={12}>
             <Card className="card">
               <CardContent>
+                <Typography variant="h6" className="text-white d-inline">
+                  Campanhas
+                </Typography>
+                <InserirCampanha onSpinner={handleSpinner} />
                 <div style={{ height: "100%", width: "100%" }}>
                   <DataGrid
-                    // {...items}
                     rows={items}
                     columns={columns}
                     pagination
                     pageSize={pageSize}
                     onPageSizeChange={handlePageSizeChange}
+                    localeText={ptBR.props.MuiDataGrid.localeText}
                     autoHeight={true}
                     onRowClick={handleRowClick}
                     components={{

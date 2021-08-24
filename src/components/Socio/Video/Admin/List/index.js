@@ -24,7 +24,7 @@ export default function List() {
   const columns = [
     { field: "id", headerName: "#", width: 90 },
     { field: "title", headerName: "Título", width: 350 },
-    { field: "path", headerName: "URL", width: 500 },
+    { field: "url", headerName: "URL", width: 500 },
     { field: "type", headerName: "Tipo", width: 350 },
   ];
   const [pageSize, setPageSize] = React.useState(25);

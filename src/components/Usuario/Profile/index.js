@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import Header from "../../Header";
 import InputMask from "react-input-mask";
 import {
-  Button,
   CardContent,
   CircularProgress,
   Container,
@@ -361,9 +360,9 @@ class Profile extends React.PureComponent {
                                     />
                                   )}
                                 </InputMask>
-                                <Button className="button" type="submit">
+                                <button className="btn btn-primary btn-inline mt-3 w-100" type="submit">
                                   <Typography> Atualizar dados</Typography>
-                                </Button>
+                                </button>
                               </Grid>
                             </Grid>
                           </ValidatorForm>
@@ -425,12 +424,12 @@ class Profile extends React.PureComponent {
                                     />
                                   </Grid>
                                   <Grid item sm={4}>
-                                    <Button
-                                      className="button btn-inline"
+                                    <button
+                                      className="btn btn-primary btn-inline"
                                       type="submit"
                                     >
                                       <Typography>Salvar</Typography>
-                                    </Button>
+                                    </button>
                                   </Grid>
                                 </Grid>
                               </AccordionDetails>
@@ -488,12 +487,12 @@ class Profile extends React.PureComponent {
                                         : null}
                                     </Grid>
                                     <Grid item sm={4}>
-                                      <Button
-                                        className="button btn-inline"
+                                      <button
+                                        className="btn btn-primary btn-inline mt-3 w-100"
                                         type="submit"
                                       >
                                         <Typography>Atualizar</Typography>
-                                      </Button>
+                                      </button>
                                     </Grid>
                                   </Grid>
                                 </AccordionDetails>

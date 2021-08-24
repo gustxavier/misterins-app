@@ -48,7 +48,6 @@ class Upload extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // this.props.onSpinner(true);
     api
       .put("partnervideo/uploadThumbnail/" + this.state.id_video, this.state, {
         headers: {
@@ -64,12 +63,15 @@ class Upload extends React.Component {
             simpleNoty(res.data.msg, res.data.alertType);
           } else {
             simpleNoty("Imagem inserida!", "success");
-            this.props.history.push("/admin/socio/video/" + this.state.id_video);
+            this.props.history.push(
+              "/admin/socio/video/" + this.state.id_video
+            );
           }
         }
       })
       .catch(function (error) {
-        this.setState({ showModal: false });
+        console.log(error);
+        // this.setState({ showModal: false });
       });
 
     this.setState({ showModal: false });

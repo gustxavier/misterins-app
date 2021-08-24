@@ -141,14 +141,16 @@ class View extends React.PureComponent {
                       </Grid>
                       <Grid container>
                         <Grid item sm={6}>
-                          <img
-                            className="d-block w-50"
-                            src={
-                              "https://api.misterins.com.br/public/storage/" +
-                              this.state.thumbnail
-                            }
-                            alt="thumbnail"
-                          />
+                          {this.state.thumbnail !== "" && (
+                            <img
+                              className="d-block w-50"
+                              src={
+                                "https://api.misterins.com.br/public/storage/" +
+                                this.state.thumbnail
+                              }
+                              alt="thumbnail"
+                            />
+                          )}
                           <Upload
                             id={this.state.id_video}
                             onSpinner={this.handleSpinner}

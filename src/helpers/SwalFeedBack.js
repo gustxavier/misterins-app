@@ -42,7 +42,9 @@ export function confirmToDelete(props, path, redirect) {
               "warning"
             );
           }
-          props.history.push(redirect);
+          props.history.push({
+            pathname: redirect,
+          });
         })
         .catch((response) => {
           simpleNoty(

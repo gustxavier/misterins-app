@@ -4,6 +4,7 @@ import {
   Container,
   Grid,
   Tooltip,
+  Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -14,7 +15,8 @@ import { useParams } from "react-router-dom";
 import api from "../../../../services/api";
 import { simpleSwal } from "../../../../helpers/SwalFeedBack";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
+import Insert from "../Insert";
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 
 export default function List() {
   const params = useParams();
@@ -26,7 +28,7 @@ export default function List() {
   const columns = [
     { field: "id", headerName: "#", width: 90 },
     { field: "title", headerName: "Título", width: 450 },
-    { field: "url", headerName: "Link", width: 800 },
+    { field: "url", headerName: "Link", width: 750 },
     {
       field: "is_active",
       headerName: "Status",
@@ -35,11 +37,11 @@ export default function List() {
         <div>
           {params.value === "Y" ? (
             <Tooltip title="Ativo" aria-label="add">
-              <CheckCircleIcon className="text-success text-center" />
+              <span className="badge bg-success w-100"><CheckCircleIcon className="text-center" /> Ativo</span>
             </Tooltip>
           ) : (
             <Tooltip title="Inativo" aria-label="add">
-              <CancelIcon className="text-danger" />
+            <span className="badge bg-warning text-dark"><ReportProblemIcon className="text-center text-dark" /> Inativo</span>
             </Tooltip>
           )}
         </div>
@@ -96,6 +98,8 @@ export default function List() {
           <Grid item xs={12}>
             <Card className="card">
               <CardContent>
+              <Typography variant="h6" className="text-white d-inline">Lives</Typography>        
+              <Insert/>
                 <div style={{ height: "100%", width: "100%" }}>
                   <DataGrid
                     rows={items}

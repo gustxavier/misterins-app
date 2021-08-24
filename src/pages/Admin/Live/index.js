@@ -5,7 +5,6 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import { CircularProgress } from "@material-ui/core";
 import List from '../../../components/Live/Admin/List'
-import Insert from '../../../components/Live/Admin/Insert'
 
 export default function Live() {
 
@@ -26,8 +25,7 @@ export default function Live() {
               <CircularProgress />
             </div>
           )}
-          <List />
-          <Insert onSpinner={handleSpinner} />
+          <List onSpinner={handleSpinner}/>          
           <Footer />
         </main>
       </div>

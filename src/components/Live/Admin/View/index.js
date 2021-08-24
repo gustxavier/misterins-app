@@ -246,14 +246,16 @@ class Profile extends React.PureComponent {
                       </Typography>
                       <Grid container>
                         <Grid item sm={6}>
-                          <img
-                            className="d-block w-50"
-                            src={
-                              "https://api.misterins.com.br/public/storage/" +
-                              this.state.thumbnail
-                            }
-                            alt="thumbnail"
-                          />
+                          {this.state.thumbnail !== "" && (
+                            <img
+                              className="d-block w-50"
+                              src={
+                                "https://api.misterins.com.br/public/storage/" +
+                                this.state.thumbnail
+                              }
+                              alt="thumbnail"
+                            />
+                          )}
                           <Upload
                             id={this.state.id_live}
                             onSpinner={this.handleSpinner}
@@ -266,7 +268,7 @@ class Profile extends React.PureComponent {
                         onError={(errors) => console.log(errors)}
                       >
                         <Grid container>
-                          <Grid item sm={6}>
+                          <Grid item sm={12}>
                             <div className="form-check form-switch mb-4">
                               <label
                                 className="form-check-label text-white"
@@ -286,6 +288,8 @@ class Profile extends React.PureComponent {
                                 onChange={this.handleSwitchActive}
                               />
                             </div>
+                          </Grid>
+                          <Grid item sm={6}>
                             <TextValidator
                               label="Título"
                               variant="outlined"

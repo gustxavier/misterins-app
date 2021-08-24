@@ -48,7 +48,6 @@ class Upload extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSpinner(true);
     api
       .put("lives/uploadThumbnail/" + this.state.id_live, this.state, {
         headers: {
@@ -56,7 +55,6 @@ class Upload extends React.Component {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.status === 401 || res.data.status === 498) {
           localStorage.clear();
           this.props.history.push("/");
@@ -65,20 +63,16 @@ class Upload extends React.Component {
             simpleNoty(res.data.msg, res.data.alertType);
           } else {
             simpleNoty("Imagem inserida!", "success");
-            this.props.onSpinner(false);
             this.props.history.push("/admin/live/" + this.state.id_live);
+            this.setState({ showModal: false });
           }
-          this.props.onSpinner(false);
         }
       })
       .catch(function (error) {
         console.log(error);
-        this.setState({ showModal: false });
-        this.props.onSpinner(false);
+        localStorage.clear();
+        this.props.history.push("/");
       });
-
-    this.setState({ showModal: false });
-    this.setState({ thumbnail: "" });
   }
 
   modal() {

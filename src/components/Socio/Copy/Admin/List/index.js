@@ -89,8 +89,8 @@ export default function List() {
                     pagination
                     pageSize={pageSize}
                     rowHeight={38}
-                    localeText={ptBR.props.MuiDataGrid.localeText}
                     onPageSizeChange={handlePageSizeChange}
+                    localeText={ptBR.props.MuiDataGrid.localeText}
                     autoHeight={true}
                     onRowClick={handleRowClick}
                     components={{

@@ -18,3 +18,7 @@
 #root .MuiIconButton-root {
     color: #fafafa;
 }
+
+#root .badge .MuiSvgIcon-root {
+    font-size: 19px;
+}

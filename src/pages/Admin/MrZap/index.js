@@ -1,11 +1,10 @@
 import React from "react";
 import Header from "../../../components/Header";
-import Lista from "../../../components/MrZap/Lista";
 
 import "./style.css";
-import Inserir from "../../../components/MrZap/InserirCampanha";
 import { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
+import ListaCampanha from "../../../components/MrZap/Campanha/List";
 
 export default function MrZap() {
   const [spinner, setEventSpinner] = useState(false);
@@ -17,7 +16,7 @@ export default function MrZap() {
   return (
     <React.Fragment>
       <div className={"d-flex"}>
-        <Header title={"Admin - Usuários"} />
+        <Header title={"Admin - Campanhas"} />
         <main className={"content-dark"}>
           <div className={"app-bar-spacer"} />
           {spinner && (
@@ -25,8 +24,7 @@ export default function MrZap() {
               <CircularProgress />
             </div>
           )}
-          <Lista />
-          <Inserir onSpinner={handleSpinner} />
+          <ListaCampanha onSpinner={handleSpinner}/>
         </main>
       </div>
     </React.Fragment>

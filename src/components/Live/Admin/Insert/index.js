@@ -1,5 +1,5 @@
 import React from "react";
-import { Fab, Grid, TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { withRouter } from "react-router-dom";
 import AddIcon from "@material-ui/icons/Add";
@@ -95,9 +95,15 @@ class Insert extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Fab color="primary" aria-label="add" onClick={this.modal}>
-          <AddIcon />
-        </Fab>
+        <button
+          color="primary"
+          aria-label="add"
+          className="btn btn-primary mb-3 d-inline"
+          onClick={this.modal}
+          style={{ float: "right" }}
+        >
+          <AddIcon /> Adicionar nova
+        </button>
         <Modal
           show={this.state.showModal}
           onHide={this.modal}
