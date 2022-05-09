@@ -41,22 +41,6 @@ yarn start
 ```
 
 <span id="telas"></span>
-## Telas
+## LINK ONLINE
 
-#### Usuário
-
-* Cadastro de Usuário
-* Login
-
-![](../.assets/registro.gif)
-
-![](../.assets/login.gif)
-
-#### Tarefas
-
-* Criar Listas
-* Criar Inserções
-* Deletar 
-* Editar
-
-![](../.assets/tarefa.gif)
+[link to app](https://app.misterins.com.br)
